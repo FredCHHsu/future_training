@@ -1,6 +1,6 @@
 # Front-End Starter
 
-FrontEnd Starter Using React, Redux with Webpack(Eslint: airbnb) and Gulp(Sass, BrowserSync).
+FrontEnd Starter Using React, Redux, React-Router with Webpack(Eslint: airbnb) and Gulp(Sass, BrowserSync).
 
 ### Getting Start ###
 ```
