@@ -1,4 +1,4 @@
-# SimpleInfo Official Website -frontend
+# Front-End Starter
 
 ### Getting Start ###
 ```
