@@ -1,4 +1,4 @@
-# Redux Starter
+# SimpleInfo Official Website -frontend
 
 ### Getting Start ###
 ```

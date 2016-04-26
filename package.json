@@ -1,6 +1,6 @@
 {
-  "name": "ReduxStarter",
-  "description": "Super Simple Redux Starter",
+  "name": "SimpleInfo_Official_Website-frontend",
+  "description": "Based on Ultimate Frontend Starter of Simpleinfo",
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
