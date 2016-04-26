@@ -9,6 +9,8 @@ import React from 'react';
 // }
 
 const App = () =>
-  <div>Hello World</div>;
+  <div>
+    <h1 className="test">Hello WorXD</h1>
+  </div>;
 
 export default App;
