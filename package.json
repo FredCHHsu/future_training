@@ -1,6 +1,6 @@
 {
   "name": "FrontEnd Starter",
-  "description": "FrontEnd Starter Using React-Redux with Webpack(including Airbnb Eslint) and Gulp(Sass)",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
