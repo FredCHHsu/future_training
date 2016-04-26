@@ -1,11 +1,15 @@
+// require
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const minifyCSS = require('gulp-minify-css');
 
+// require and init browserSync
 const browserSync = require('browser-sync').create();
-const devUrl = 'http://localhost:8080/';
+
+// const
+const devUrl = 'http://localhost:8080/'; // equal to webpack entry
 const src = './style/style.scss';
 const dest = './public';
 
