@@ -25,7 +25,7 @@ gulp.task('sass', () =>
     browsers: ['> 1%', 'last 10 version'],
   }))
   .pipe(minifyCSS())
-  .pipe(sourcemaps.write())
+  .pipe(sourcemaps.write('./')) // relative to the dest path for seperated map file
   .pipe(gulp.dest(dest))
   .pipe(browserSync.stream())
 );

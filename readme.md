@@ -14,7 +14,7 @@ FrontEnd Starter Using React, Redux with Webpack(Eslint: airbnb) and Gulp(Sass, 
   then go localhost:8080
 ```
 
-### Using BrowserSync for SCSS Development ###
+### Using BrowserSync for Style Development ###
 ```
   > gulp
   then go localhost:3000
@@ -23,7 +23,7 @@ FrontEnd Starter Using React, Redux with Webpack(Eslint: airbnb) and Gulp(Sass, 
 ### We Could Use Hot-Dev-Server and BrowserSync on the Same Time ###
 ```
   > npm run dev-hot
-  > command + T (open new terminal window within same folder)
+  > command + T (open new window of terminal with same folder)
   > gulp
   then go localhost:3000
 ```
