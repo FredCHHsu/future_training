@@ -16,5 +16,5 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <Router history={browserHistory} routes={routes} />
   </Provider>,
-  document.querySelector('#app')
+  document.querySelector('#app-entry-point')
 );
