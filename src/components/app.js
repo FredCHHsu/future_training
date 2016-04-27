@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const App = (props) =>
-  <div id="App">
+  <div>
     {props.children}
   </div>;
 
