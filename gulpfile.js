@@ -7,14 +7,14 @@ const sourcemaps = require('gulp-sourcemaps');
 // PostCSS
 const postcss = require('gulp-postcss');
 const reporter = require('postcss-reporter');
-const scss = require('postcss-scss');
+const scssSyntax = require('postcss-scss');
 const autoprefixer = require('autoprefixer');
 const stylelint = require('stylelint');
 const doiuse = require('doiuse');
 const processors = [
   stylelint(),
   doiuse({ browsers: ['ie >= 11', 'last 2 version'] }),
-  autoprefixer({ browsers: ['> 1%', 'last 2 version'] }),
+  autoprefixer({ browsers: ['> 5%', 'last 2 version'] }),
   reporter(),
 ];
 
@@ -28,7 +28,7 @@ const dest = './public';
 
 gulp.task('sass', () =>
   gulp.src(src)
-  .pipe(postcss(processors, { syntax: scss }))
+  .pipe(postcss(processors, { syntax: scssSyntax }))
   .pipe(sourcemaps.init())
   .pipe(sass({
     includePaths: ['./node_modules/susy/sass/'],
@@ -52,7 +52,7 @@ gulp.task('default', ['sass', 'watch']);
 
 gulp.task('production', () =>
   gulp.src(src)
-  .pipe(postcss(processors, { syntax: scss }))
+  .pipe(postcss(processors, { syntax: scssSyntax }))
   .pipe(sass({
     includePaths: ['./node_modules/susy/sass/'],
   }).on('error', sass.logError))
