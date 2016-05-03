@@ -1,3 +1,6 @@
+$main-color: lightblue;
+
 .hello {
-  color: lightblue;
+  color: $main-color;
+  display: flex;
 }
