@@ -1,6 +1,7 @@
 # Front-End Starter
 
-FrontEnd Starter Using React, Redux, React-Router with Webpack(Eslint: airbnb) and Gulp(Sass, BrowserSync).
+FrontEnd Starter Using React, Redux, React-Router with Webpack(Eslint: airbnb) and
+SASS with Gulp(PostCSS(stylelint, autoprefixer), BrowserSync).
 
 ### Getting Start ###
 ```
@@ -26,4 +27,10 @@ FrontEnd Starter Using React, Redux, React-Router with Webpack(Eslint: airbnb) a
   > command + T (open new window of terminal with same folder)
   > gulp
   then go localhost:3000
+```
+
+### Deploy: Remember to Compile Production Version ###
+```
+  > webpack
+  > gulp production
 ```
