@@ -14,8 +14,6 @@
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-1": "^6.1.18",
     "browser-sync": "^2.12.5",
-    "css-loader": "^0.23.1",
-    "cssnano": "^3.5.2",
     "doiuse": "^2.3.0",
     "eslint": "^2.8.0",
     "eslint-config-airbnb": "^8.0.0",
