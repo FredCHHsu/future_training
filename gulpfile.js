@@ -10,8 +10,10 @@ const reporter = require('postcss-reporter');
 const scss = require('postcss-scss');
 const autoprefixer = require('autoprefixer');
 const stylelint = require('stylelint');
+const doiuse = require('doiuse');
 const processors = [
   stylelint(),
+  doiuse({ browsers: ['ie >= 11', 'last 2 version'] }),
   autoprefixer({ browsers: ['> 1%', 'last 2 version'] }),
   reporter(),
 ];
