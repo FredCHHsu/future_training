@@ -35,7 +35,6 @@
     "style-loader": "^0.13.0",
     "stylelint": "^6.2.2",
     "stylelint-config-standard": "^6.0.0",
-    "stylelint-statement-max-nesting-depth": "^2.0.1",
     "susy": "^2.2.12",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.0"

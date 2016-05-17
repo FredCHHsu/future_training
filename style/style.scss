@@ -2,5 +2,18 @@ $main-color: lightblue;
 
 .hello {
   color: $main-color;
-  display: flex;
+  display: flex; // caniuse tester
+
+  & .nest1 {
+    color: red;
+
+    & .nest2 {
+      color: green;
+
+      & .nest3 { // max-nesting-depth rule tester
+        color: yellow;
+
+      }
+    }
+  }
 }

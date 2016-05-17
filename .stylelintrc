@@ -1,9 +1,6 @@
 {
   "extends": "stylelint-config-standard",
-  "plugins": [
-    "stylelint-statement-max-nesting-depth"
-  ],
   "rules": {
-    "statement-max-nesting-depth": [2, { countAtRules: false }],
+    "max-nesting-depth": 2,
   }
 }
