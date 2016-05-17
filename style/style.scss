@@ -1,3 +1,4 @@
+@import 'import_tester';
 $main-color: lightblue;
 
 .hello {
@@ -9,11 +10,6 @@ $main-color: lightblue;
 
     & .nest2 {
       color: green;
-
-      & .nest3 { // max-nesting-depth rule tester
-        color: yellow;
-
-      }
     }
   }
 }
