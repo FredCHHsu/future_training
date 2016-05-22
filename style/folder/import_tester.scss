@@ -1,0 +1,20 @@
+.world {
+  font-size: 2em;
+
+  & .nest1 {
+    color: red;
+
+    & .nest2 {
+      color: green;
+
+      & .nest3 { // max-nesting-depth rule tester
+        color: yellow;
+
+      }
+    }
+  }
+}
+
+.hello {
+  font-size: 2em; // test sourcemaps
+}
