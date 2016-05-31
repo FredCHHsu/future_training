@@ -7,7 +7,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 // Pre-SASS processors
 const scssSyntax = require('postcss-scss');
-const stylelint = require('stylelint');
+// const stylelint = require('stylelint');
 const doiuse = require('doiuse');
 const reporter = require('postcss-reporter');
 // After-SASS processors
@@ -24,7 +24,7 @@ const src = './style/**/*.scss';
 const dest = './public';
 
 const preSASSProcessors = [
-  stylelint(),
+  // stylelint(), // Using SASS-Linter pulgin for editor(Atom) instead
   doiuse({ browsers: ['ie >= 11', 'last 2 version'] }),
   reporter({ clearMessages: true }),
 ];
