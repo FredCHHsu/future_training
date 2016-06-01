@@ -1,0 +1,16 @@
+//-----------------------------
+//
+// Mixins for Debugging
+//
+//-----------------------------
+
+// toggle for switching debugging on and off
+$debug: true !default;
+
+$debug-colors: (DarkRed, DarkOrange, Gold, SeaGreen, RoyalBlue, MidnightBlue, RebeccaPurple);
+
+@mixin debug-block($n) {
+  @if ($debug == true) {
+    border: 2px solid nth($debug-colors, $n);
+  }
+}

@@ -1,15 +1,33 @@
-@import './folder/import_tester';
-$main-color: lightblue;
+//---------------------------
+//
+// Styles
+// ======
+//
+// Awesome SASS structure inspired by Dropbox Scooter.
+//
+//---------------------------
 
-.hello {
-  color: $main-color;
-  display: flex; // caniuse tester
+// Susy
+// @import "../../../../node_modules/susy/sass/susy";
+@import 'susy'; // using includePaths in gulp
 
-  & .nest1 {
-    color: red;
+// Variables
+@import 'variables/all';
 
-    & .nest2 {
-      color: green;
-    }
-  }
-}
+// Functions
+@import 'functions/all';
+
+// Mixins
+@import 'mixins/all';
+
+// Helpers
+@import 'helpers/all';
+
+// Base styles
+@import 'base/all';
+
+// Layouts
+@import 'layouts/all';
+
+// Components
+@import 'components/all';

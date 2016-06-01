@@ -1,0 +1,41 @@
+//---------------------------
+//
+// Typography
+//
+//---------------------------
+
+body {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 2.4em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+h4 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+h5,
+h6 {
+  // You shold not using more than 4 layers of header
+}
+
+a {
+  // text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
