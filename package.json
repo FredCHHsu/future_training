@@ -35,6 +35,7 @@
     "style-loader": "^0.13.0",
     "stylelint": "^6.5.0",
     "stylelint-config-standard": "^6.0.0",
+    "susy": "^2.2.12",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.0"
   },
@@ -45,7 +46,6 @@
     "react-redux": "^4.0.0",
     "react-router": "^2.3.0",
     "redux": "^3.0.4",
-    "redux-promise": "^0.5.3",
-    "susy": "^2.2.12"
+    "redux-promise": "^0.5.3"
   }
 }
