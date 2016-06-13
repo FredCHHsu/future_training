@@ -6,7 +6,7 @@
 
 $image-path: './images/';
 
-@mixin background-image($name, $size: null, $position: center, $repeat: no-repeat) {
+@mixin mixin-background-image($name, $size: null, $position: center, $repeat: no-repeat) {
   background-image: url('#{$image-path}#{$name}');
   @if ($size != null) {
     background-size: $size;
