@@ -1,0 +1,63 @@
+//-----------------------------------
+//
+// SUSY Media Query Breakpoints
+//
+//-----------------------------------
+
+$media-xl: (
+  min-width: 1300px,
+);
+
+$media-lg: (
+  max-width: 1299px,
+);
+
+$media-md: (
+  max-width: 992px,
+);
+
+$media-sm: (
+  max-width: 768px,
+);
+
+$media-xs: (
+  max-width: 321px,
+);
+
+
+// Top-Down RWD with Max-Width
+// Using iOS as standard devices
+// // Tablets
+// $iPadPro: (
+//   max-width: 1025px,
+//   max-height: 1367px,
+//   orientation: portrait
+// );
+//
+// $iPadMini: (
+//   max-width: 769px,
+//   max-height: 1025px,
+//   orientation: portrait
+// );
+//
+// $iPadAir: $iPadMini;
+//
+// Mobile Devices
+//
+// $iPhone6p: (
+//   max-width: 415px,
+//   max-height: 737px,
+//   orientation: portrait
+// );
+//
+// $iPhone6: (
+//   max-width: 376px,
+//   max-height: 668px,
+//   orientation: portrait
+// );
+//
+// $iPhone5: (
+//   max-width: 321px,
+//   max-height: 569px,
+//   orientation: portrait
+// );
