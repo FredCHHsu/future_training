@@ -24,6 +24,26 @@ $media-xs: (
   max-width: 321px,
 );
 
+$media-height-xl: (
+  min-height: 1081px,
+);
+
+$media-height-lg: (
+  max-height: 1080px,
+);
+
+$media-height-md: (
+  max-height: 720px,
+);
+
+$media-height-sm: (
+  max-height: 667px,
+);
+
+$media-height-xs: (
+  max-height: 480px,
+);
+
 
 // Top-Down RWD with Max-Width
 // Using iOS as standard devices
