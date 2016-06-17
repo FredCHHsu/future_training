@@ -4,6 +4,10 @@ rules:
     - 1
     -
       include: true
+  mixins-before-declarations:
+    - 1
+    -
+      exclude: ['susy-breakpoint']
   property-sort-order:
     - 1
     -
