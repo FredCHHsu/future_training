@@ -26,11 +26,6 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
-      // {
-      //   test: /\.scss$/,
-      //   loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap'],
-      //   exclude: /node_modules/,
-      // },
     ],
   },
   eslint: {
@@ -38,7 +33,7 @@ module.exports = {
     failOnWarning: false,
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'], //, '.scss'],
+    extensions: ['', '.js', '.jsx'],
   },
   devServer: {
     historyApiFallback: true,
