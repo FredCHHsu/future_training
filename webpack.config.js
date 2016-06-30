@@ -3,7 +3,7 @@ module.exports = {
     './src/index.js',
   ],
   output: {
-    path: __dirname + '/public/',
+    path: `${__dirname}/public/`,
     publicPath: '/public/',
     filename: 'bundle.js',
   },
@@ -26,11 +26,11 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
-      {
-        test: /\.scss$/,
-        loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap'],
-        exclude: /node_modules/,
-      },
+      // {
+      //   test: /\.scss$/,
+      //   loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap'],
+      //   exclude: /node_modules/,
+      // },
     ],
   },
   eslint: {
@@ -38,7 +38,7 @@ module.exports = {
     failOnWarning: false,
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.scss'],
+    extensions: ['', '.js', '.jsx'], //, '.scss'],
   },
   devServer: {
     historyApiFallback: true,
