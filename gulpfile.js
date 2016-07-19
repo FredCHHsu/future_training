@@ -1,79 +1,178 @@
-// require gulp and sass core
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
+// reference
+// https://github.com/kriasoft/react-starter-kit/blob/88eabc907aa0f3f8be6a00663f265cbc94262276/gulpfile.js#L114-L141
+// http://drewbarontini.com/articles/building-a-better-gulpfile/
+//
+//
+// -------------------------------------
+// Gulp Modules that I haven't try
+// -------------------------------------
+// gulp-autoprefixer : Prefix CSS
+// gulp-coffee       : Compile CoffeeScript files
+// gulp-coffeelint   : Lint your CoffeeScript
+// gulp-concat       : Concatenate files
+// gulp-csscss       : CSS redundancy analyzer
+// gulp-jshint       : JavaScript code quality tool
+// gulp-load-plugins : Automatically load Gulp plugins
+// gulp-minify-css   : Minify CSS
+// gulp-parker       : Stylesheet analysis tool
+// gulp-plumber      : Prevent pipe breaking from errors
+// gulp-rename       : Rename files
+// gulp-svgmin       : Minify SVG files
+// gulp-svgstore     : Combine SVG files into one
+// gulp-uglify       : Minify JavaScript with UglifyJS
+// gulp-util         : Utility functions
+// gulp-watch        : Watch stream
+// -------------------------------------
 
-// PostCSS
-const postcss = require('gulp-postcss');
-// Pre-SASS processors
+
+// Modules loading by gulp-load-plugins
+// -------------------------------------
+// gulp-htmlmin      : Minify HTML
+// gulp-sass         : Compile Sass
+// gulp-sourcemaps   : Source map support
+// gulp-postcss      : Pipe CSS through PostCSS processors
+// -------------------------------------
+
+// require gulp and related tools
+// ===========================================
+const gulp = require('gulp');
+const $ = require('gulp-load-plugins')();
+const runSequence = require('run-sequence'); // Run a series of dependent Gulp tasks in order
+const browserSync = require('browser-sync');
+const argv = require('minimist')(process.argv.slice(2));
+
+// require webpack
+// ===========================================
+const webpack = require('webpack');
+
+// require sass and postcss
+// ===========================================
+// Before-SASS processors
 const scssSyntax = require('postcss-scss');
-// const stylelint = require('stylelint');
 const doiuse = require('doiuse');
 const reporter = require('postcss-reporter');
 // After-SASS processors
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
-// require and init browserSync
-const browserSync = require('browser-sync').create();
 
+// settings
+// ===========================================
 // URL const
-const devUrl = 'http://localhost:8080/'; // equal to webpack entry
-const entryFile = './style/style.scss';
-const src = './style/**/*.scss';
-const dest = './public';
+// const devUrl = 'http://localhost:8080/'; // equal to webpack entry
+const DEST = './build';
+const RELEASE = !!argv.release;
+const AUTOPREFIXER_BROWSERS = [
+  '> 5%',
+  'last 2 version',
+];
+const src = {};
+let watch = false;
+const reload = browserSync.reload;
 
+
+// default task
+// ===========================================
+gulp.task('default', ['serve']);
+
+// HTML pages
+// ===========================================
+gulp.task('pages', () => {
+  src.pages = 'src/**/*.html';
+  return gulp.src(src.pages)
+    .pipe($.if(RELEASE, $.htmlmin({
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyJS: true,
+    })))
+    .pipe(gulp.dest(DEST))
+    .pipe($.if(watch, reload({ stream: true })));
+});
+
+// Compile SASS
+// ===========================================
 const preSASSProcessors = [
-  // stylelint(), // Using SASS-Linter pulgin for editor(Atom) instead
-  doiuse({ browsers: ['ie >= 11', 'last 2 version'] }),
+  doiuse({ browsers: AUTOPREFIXER_BROWSERS }),
   reporter({ clearMessages: true }),
 ];
 
 const afterSASSProcessors = [
-  autoprefixer({ browsers: ['> 5%', 'last 2 version'] }),
+  autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }),
 ];
 
 const afterProcessorsProduction = [
-  autoprefixer({ browsers: ['> 5%', 'last 2 version'] }),
+  autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }),
   cssnano(),
 ];
 
 // PostCSS before Sass compilation
-gulp.task('pre-sass', () =>
-  gulp.src(src)
-  .pipe(postcss(preSASSProcessors, { syntax: scssSyntax }))
-);
+gulp.task('before-sass', () => {
+  src.styles = './styles/**/*.{css,scss}';
+  return gulp.src(src.styles)
+  .pipe($.postcss(preSASSProcessors, { syntax: scssSyntax }));
+});
 
 // Sass compilation with PostCSS
 gulp.task('sass', () =>
-  gulp.src(entryFile)
-  .pipe(sourcemaps.init())
-  .pipe(sass({
+  gulp.src('./styles/style.scss')
+  .pipe($.sourcemaps.init())
+  .pipe($.sass({
     includePaths: ['./node_modules/susy/sass/'],
-  }).on('error', sass.logError))
-  .pipe(postcss(afterSASSProcessors))
-  .pipe(sourcemaps.write('./')) // relative to the dest path for seperated map file
-  .pipe(gulp.dest(dest))
-  .pipe(browserSync.stream())
+  }).on('error', $.sass.logError))
+  .pipe($.postcss(afterSASSProcessors))
+  .pipe($.sourcemaps.write('./')) // relative to the dest path for seperated map file
+  .pipe(gulp.dest(`${DEST}/css`))
+  .pipe($.if(watch, reload({ stream: true })))
 );
 
-gulp.task('browserSync', () =>
-  browserSync.init({
-    proxy: devUrl,
-  })
-);
 
-gulp.task('watch', ['browserSync'], () =>
-  gulp.watch('./style/**/*.scss', ['pre-sass', 'sass'])
-);
+// Build the app from source code
+// ===========================================
+gulp.task('build', (cb) => {
+  runSequence(['pages', 'before-sass', 'sass'], cb);
+});
 
-gulp.task('default', ['pre-sass', 'sass', 'watch']);
+// Launch a lightweight HTTP Server
+// ===========================================
+gulp.task('serve', (cb) => {
+  watch = true;
+  runSequence('build', () => {
+    browserSync({
+      notify: false,
+      // Run as an https by uncommenting 'https: true'
+      // Note: this uses an unsigned certificate which on first access
+      //       will present a certificate warning in the browser.
+      // https: true,
+      server: {
+        baseDir: ['build'],
+      },
+    });
 
-gulp.task('production', () =>
-  gulp.src(entryFile)
-  .pipe(sass({
-    includePaths: ['./node_modules/susy/sass/'],
-  }).on('error', sass.logError))
-  .pipe(postcss(afterProcessorsProduction))
-  .pipe(gulp.dest(dest))
-);
+    // gulp.watch(src.assets, ['assets']);
+    // gulp.watch(src.images, ['images']);
+    gulp.watch(src.pages, ['pages']);
+    gulp.watch(src.styles, ['before-sass', 'sass']);
+    cb();
+  });
+});
+
+// gulp.task('browserSync', () =>
+//   browserSync.init({
+//     proxy: devUrl,
+//   })
+// );
+//
+// gulp.task('watch', ['browserSync'], () =>
+//   gulp.watch('./styles/**/*.scss', ['before-sass', 'sass'])
+// );
+//
+// gulp.task('default', ['before-sass', 'sass', 'watch']);
+//
+// gulp.task('production', () =>
+//   gulp.src(entryFile)
+//   .pipe(sass({
+//     includePaths: ['./node_modules/susy/sass/'],
+//   }).on('error', sass.logError))
+//   .pipe(postcss(afterProcessorsProduction))
+//   .pipe(gulp.dest(DEST))
+// );
