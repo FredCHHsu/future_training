@@ -31,6 +31,7 @@
 // gulp-sass         : Compile Sass
 // gulp-sourcemaps   : Source map support
 // gulp-postcss      : Pipe CSS through PostCSS processors
+// gulp-util         : Utility functions
 // -------------------------------------
 
 // require gulp and related tools
@@ -44,6 +45,7 @@ const argv = require('minimist')(process.argv.slice(2));
 // require webpack
 // ===========================================
 const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.js');
 
 // require sass and postcss
 // ===========================================
@@ -95,11 +97,9 @@ const preSASSProcessors = [
   doiuse({ browsers: AUTOPREFIXER_BROWSERS }),
   reporter({ clearMessages: true }),
 ];
-
 const afterSASSProcessors = [
   autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }),
 ];
-
 const afterProcessorsProduction = [
   autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }),
   cssnano(),
@@ -111,7 +111,6 @@ gulp.task('before-sass', () => {
   return gulp.src(src.styles)
   .pipe($.postcss(preSASSProcessors, { syntax: scssSyntax }));
 });
-
 // Sass compilation with PostCSS
 gulp.task('sass', () =>
   gulp.src('./styles/style.scss')
@@ -125,11 +124,41 @@ gulp.task('sass', () =>
   .pipe($.if(watch, reload({ stream: true })))
 );
 
+// Build js Bundle Using Webpack
+// ===========================================
+gulp.task('bundle', (cb) => {
+  let started = false;
+  const config = webpackConfig(RELEASE);
+  const bundler = webpack(config);
+
+  function bundle (err, stats) {
+    if (err) {
+      throw new $.util.PluginError('webpack', err);
+    }
+
+    !!argv.verbose && $.util.log('[webpack]', stats.toString({colors: true}));
+
+    if (watch) {
+      reload(config.output.filename);
+    }
+
+    if (!started) {
+      started = true;
+      return cb();
+    }
+  }
+
+  if (watch) {
+    bundler.watch(200, bundle);
+  } else {
+    bundler.run(bundle);
+  }
+});
 
 // Build the app from source code
 // ===========================================
 gulp.task('build', (cb) => {
-  runSequence(['pages', 'before-sass', 'sass'], cb);
+  runSequence(['pages', 'before-sass', 'sass', 'bundle'], cb);
 });
 
 // Launch a lightweight HTTP Server
