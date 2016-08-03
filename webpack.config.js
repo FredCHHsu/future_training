@@ -4,8 +4,8 @@ module.exports = (release) => {
       './src/app/index.js',
     ],
     output: {
-      path: `${__dirname}/build/js`,
-      publicPath: './build/js',
+      path: `${__dirname}/public/js`,
+      publicPath: './public/js',
       filename: 'bundle.js',
     },
     devtool: 'source-map',

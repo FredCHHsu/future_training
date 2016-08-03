@@ -62,7 +62,7 @@ const cssnano = require('cssnano');
 // ===========================================
 // URL const
 // const devUrl = 'http://localhost:8080/'; // equal to webpack entry
-const DEST = './build';
+const DEST = './public';
 const RELEASE = !!argv.release;
 const AUTOPREFIXER_BROWSERS = [
   '> 5%',
@@ -71,6 +71,7 @@ const AUTOPREFIXER_BROWSERS = [
 const src = {};
 let watch = false;
 const reload = browserSync.reload;
+const stream = browserSync.stream;
 
 
 // default task
@@ -88,7 +89,7 @@ gulp.task('pages', () => {
       minifyJS: true,
     })))
     .pipe(gulp.dest(DEST))
-    .pipe($.if(watch, reload({ stream: true })));
+    .pipe($.if(watch, stream()));
 });
 
 // Compile SASS
@@ -121,7 +122,7 @@ gulp.task('sass', () =>
   .pipe($.postcss(afterSASSProcessors))
   .pipe($.sourcemaps.write('./')) // relative to the dest path for seperated map file
   .pipe(gulp.dest(`${DEST}/css`))
-  .pipe($.if(watch, reload({ stream: true })))
+  .pipe($.if(watch, stream({ match: '**/*.css' })))
 );
 
 // Build js Bundle Using Webpack
@@ -167,13 +168,13 @@ gulp.task('serve', (cb) => {
   watch = true;
   runSequence('build', () => {
     browserSync({
-      notify: false,
+      notify: true,
       // Run as an https by uncommenting 'https: true'
       // Note: this uses an unsigned certificate which on first access
       //       will present a certificate warning in the browser.
       // https: true,
       server: {
-        baseDir: ['build'],
+        baseDir: ['public'],
       },
     });
 
