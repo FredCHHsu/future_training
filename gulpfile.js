@@ -122,6 +122,7 @@ gulp.task('sass', () =>
   .pipe($.postcss(afterSASSProcessors))
   .pipe($.sourcemaps.write('./')) // relative to the dest path for seperated map file
   .pipe(gulp.dest(`${DEST}/css`))
+  // Prevent reload full page by update sourcemap
   .pipe($.if(watch, stream({ match: '**/*.css' })))
 );
 

@@ -1,6 +1,6 @@
 //---------------------------
 //
-// Layouts
+// Layouts / Partials
 // =======
 //
 // Layouts classes are common design patterns, not unique to the site specifically.
@@ -14,3 +14,8 @@
 
 @import 'grid';
 @import 'display';
+@import 'header';
+@import 'footer';
+@import 'sidebar';
+@import 'forms';
+@import 'navigation';
