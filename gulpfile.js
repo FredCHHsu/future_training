@@ -108,13 +108,13 @@ const afterProcessorsProduction = [
 
 // PostCSS before Sass compilation
 gulp.task('before-sass', () => {
-  src.styles = 'src/styles/**/*.{css,scss}';
+  src.styles = 'styles/**/*.{css,scss}';
   return gulp.src(src.styles)
   .pipe($.postcss(preSASSProcessors, { syntax: scssSyntax }));
 });
 // Sass compilation with PostCSS
 gulp.task('sass', () =>
-  gulp.src('src/styles/style.scss')
+  gulp.src('styles/style.scss')
   .pipe($.sourcemaps.init())
   .pipe($.sass({
     includePaths: ['./node_modules/susy/sass/'],

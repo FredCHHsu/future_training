@@ -1,7 +1,7 @@
 module.exports = (release) => {
   return {
     entry: [
-      './src/app/index.js',
+      './src/index.js',
     ],
     output: {
       path: `${__dirname}/public/js`,
