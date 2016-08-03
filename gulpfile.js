@@ -44,8 +44,8 @@ const argv = require('minimist')(process.argv.slice(2));
 
 // require webpack
 // ===========================================
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
+// const webpack = require('webpack');
+// const webpackConfig = require('./webpack.config.js');
 
 // require sass and postcss
 // ===========================================
@@ -61,7 +61,7 @@ const cssnano = require('cssnano');
 // settings
 // ===========================================
 // URL const
-// const devUrl = 'http://localhost:8080/'; // equal to webpack entry
+const webpackDevServerUrl = 'http://localhost:8080/'; // equal to webpack entry
 const DEST = './public';
 const RELEASE = !!argv.release;
 const AUTOPREFIXER_BROWSERS = [
@@ -128,39 +128,40 @@ gulp.task('sass', () =>
 
 // Build js Bundle Using Webpack
 // ===========================================
-gulp.task('bundle', (cb) => {
-  let started = false;
-  const config = webpackConfig(RELEASE);
-  const bundler = webpack(config);
-
-  function bundle (err, stats) {
-    if (err) {
-      throw new $.util.PluginError('webpack', err);
-    }
-
-    !!argv.verbose && $.util.log('[webpack]', stats.toString({colors: true}));
-
-    if (watch) {
-      reload(config.output.filename);
-    }
-
-    if (!started) {
-      started = true;
-      return cb();
-    }
-  }
-
-  if (watch) {
-    bundler.watch(200, bundle);
-  } else {
-    bundler.run(bundle);
-  }
-});
+// gulp.task('bundle', (cb) => {
+//   let started = false;
+//   const config = webpackConfig(RELEASE);
+//   const bundler = webpack(config);
+//
+//   function bundle (err, stats) {
+//     if (err) {
+//       throw new $.util.PluginError('webpack', err);
+//     }
+//
+//     !!argv.verbose && $.util.log('[webpack]', stats.toString({colors: true}));
+//
+//     if (watch) {
+//       reload(config.output.filename);
+//     }
+//
+//     if (!started) {
+//       started = true;
+//       return cb();
+//     }
+//   }
+//
+//   if (watch) {
+//     bundler.watch(200, bundle);
+//   } else {
+//     bundler.run(bundle);
+//   }
+// });
 
 // Build the app from source code
 // ===========================================
 gulp.task('build', (cb) => {
-  runSequence(['pages', 'before-sass', 'sass', 'bundle'], cb);
+  // runSequence(['pages', 'before-sass', 'sass', 'bundle'], cb);
+  runSequence(['pages', 'before-sass', 'sass'], cb);
 });
 
 // Launch a lightweight HTTP Server
@@ -174,9 +175,10 @@ gulp.task('serve', (cb) => {
       // Note: this uses an unsigned certificate which on first access
       //       will present a certificate warning in the browser.
       // https: true,
-      server: {
-        baseDir: ['public'],
-      },
+      // server: {
+      //   baseDir: ['public'],
+      // },
+      proxy: { target: webpackDevServerUrl },
     });
 
     // gulp.watch(src.assets, ['assets']);
@@ -189,7 +191,7 @@ gulp.task('serve', (cb) => {
 
 // gulp.task('browserSync', () =>
 //   browserSync.init({
-//     proxy: devUrl,
+//     proxy: webpackDevServerUrl,
 //   })
 // );
 //
