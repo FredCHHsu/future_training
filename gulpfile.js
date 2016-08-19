@@ -7,8 +7,6 @@
 // Gulp Modules that I haven't try
 // -------------------------------------
 // gulp-autoprefixer : Prefix CSS
-// gulp-coffee       : Compile CoffeeScript files
-// gulp-coffeelint   : Lint your CoffeeScript
 // gulp-concat       : Concatenate files
 // gulp-csscss       : CSS redundancy analyzer
 // gulp-jshint       : JavaScript code quality tool
@@ -20,7 +18,6 @@
 // gulp-svgmin       : Minify SVG files
 // gulp-svgstore     : Combine SVG files into one
 // gulp-uglify       : Minify JavaScript with UglifyJS
-// gulp-util         : Utility functions
 // gulp-watch        : Watch stream
 // -------------------------------------
 
@@ -190,23 +187,14 @@ gulp.task('serve', (cb) => {
   });
 });
 
-// gulp.task('browserSync', () =>
-//   browserSync.init({
-//     proxy: webpackDevServerUrl,
-//   })
-// );
-//
-// gulp.task('watch', ['browserSync'], () =>
-//   gulp.watch('./styles/**/*.scss', ['before-sass', 'sass'])
-// );
-//
-// gulp.task('default', ['before-sass', 'sass', 'watch']);
-//
-// gulp.task('production', () =>
-//   gulp.src(entryFile)
-//   .pipe(sass({
-//     includePaths: ['./node_modules/susy/sass/'],
-//   }).on('error', sass.logError))
-//   .pipe(postcss(afterProcessorsProduction))
-//   .pipe(gulp.dest(DEST))
-// );
+
+gulp.task('production', () =>
+  gulp.src('styles/style.scss')
+  .pipe($.sourcemaps.init())
+  .pipe($.sass({
+    includePaths: ['./node_modules/susy/sass/'],
+  }).on('error', $.sass.logError))
+  .pipe($.postcss(afterProcessorsProduction))
+  .pipe($.sourcemaps.write('./')) // relative to the dest path for seperated map file
+  .pipe(gulp.dest(`${DEST}/css`))
+);
