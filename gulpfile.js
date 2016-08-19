@@ -32,6 +32,7 @@
 // gulp-sourcemaps   : Source map support
 // gulp-postcss      : Pipe CSS through PostCSS processors
 // gulp-util         : Utility functions
+// gulp-if           : if functions
 // -------------------------------------
 
 // require gulp and related tools
