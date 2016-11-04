@@ -12,7 +12,7 @@ SASS with Gulp(PostCSS(stylelint, autoprefixer), BrowserSync).
 
 ### Using Hot Module Replacement for Javascript Development ###
 ```
-  > npm run hot
+  > npm run dev
   then go http://localhost:8080
 ```
 
