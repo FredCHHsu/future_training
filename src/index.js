@@ -1,3 +1,8 @@
+// if (module.hot) {
+//   module.hot.accept();
+//   module.hot.decline('./routes.js');
+// }
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

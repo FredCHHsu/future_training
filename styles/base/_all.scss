@@ -1,0 +1,18 @@
+//---------------------------
+//
+// Base
+// ====
+//
+// Reset, normalisation, and raw tag styles.
+// Outside of these files, all CSS selectors should be class names.
+//
+// The base/ folder holds what we might call the boilerplate code for the project.
+// In there, you might find the reset file, some typographic rules, and probably
+// a stylesheet defining some standard styles for commonly used HTML elements.
+//
+//---------------------------
+
+@import 'reset';
+@import 'font';
+@import 'base';
+@import 'typography';

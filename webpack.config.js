@@ -1,10 +1,12 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: [
     './src/index.js',
   ],
   output: {
-    path: __dirname + '/public/',
-    publicPath: '/public/',
+    path: `${__dirname}/public/js`,
+    publicPath: '/js', // relative to contentBase
     filename: 'bundle.js',
   },
   devtool: 'source-map',
@@ -20,15 +22,10 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015'],
-        },
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.scss$/,
-        loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap'],
+        loaders: [
+          'react-hot',
+          'babel?presets[]=es2015,presets[]=react,presets[]=stage-2',
+        ],
         exclude: /node_modules/,
       },
     ],
@@ -38,10 +35,15 @@ module.exports = {
     failOnWarning: false,
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.scss'],
+    extensions: ['', '.js', '.jsx'],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      NODE_ENV: JSON.stringify('production'),
+    }),
+  ],
   devServer: {
     historyApiFallback: true,
-    contentBase: './',
+    contentBase: './public',
   },
 };

@@ -1,8 +1,8 @@
 # Front-End Starter
 
-Using React, Redux, React-Router with Webpack(Eslint: airbnb) and
+React, Redux, React-Router, Eslint via Webpack and
 
-SASS with Gulp(PostCSS(stylelint, autoprefixer), BrowserSync).
+SASS, PostCSS, BrowserSync via Gulp.
 
 ### Getting Start ###
 ```
@@ -11,6 +11,7 @@ SASS with Gulp(PostCSS(stylelint, autoprefixer), BrowserSync).
 ```
 
 ### Using Hot Module Replacement for Javascript Development ###
+Auto refresh browser after change is OK, but HMR is still some problem.
 ```
   > npm run dev
   then go http://localhost:8080

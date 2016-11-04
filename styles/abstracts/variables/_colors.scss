@@ -5,67 +5,24 @@
 //---------------------------
 
 // define theme colors
-$simpleinfo: (
+//
+// $theme: (
+//   typeName: (
+//     base: #ffffff, // must have a base color
+//   ),
+// );
+
+$theme: (
   font: (
-    base: #25282b,
+    base: #222222,
   ),
 
   default: (
-    base: #eaeaea,
-  ),
-
-  success: (
-    base: #2ec4b6,
-  ),
-
-  danger: (
-    base: #dc1c19,
-  ),
-
-  primary: (
-    base: #0d4966,
-    light90: #255b75,
-    light80: #3d6d85,
-    light70: #557f94,
-    light60: #6e92a3,
-    light50: #86a4b2,
-    light40: #9eb6c2,
-    light30: #b6c8d1,
-    light20: #cfdbe0,
-    light10: #e6ecef,
-    light05: #f3f6f7,
-  ),
-
-  secondary: (
-    base:  #fdd000,
-    light90: #fdd519,
-    light80: #fdd933,
-    light70: #fede4c,
-    light60: #fee366,
-    light50: #fee77f,
-    light40: #feec99,
-    light30: #fef1b2,
-    light20: #fff8d9,
-    light10: #fffae5,
-    light05: #fffdf2,
-  ),
-
-  tertiary: (
-    base: #06aed5,
-  ),
-
-  basic: (
-    dark100: #000,
-    dark70:  #727171,
-    base:  #9fa0a0,
-    light30: #c4c4c4,
-    light10: #eaeaea,
-    light05: #f7f8f8,
-    light0:  #fff,
+    base: #aaaaaa,
   ),
 );
 
-$theme-colors: $simpleinfo;
+$theme-colors: $theme;
 
 // standard colors
 $standard-colors: (
