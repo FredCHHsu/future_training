@@ -14,7 +14,7 @@ $susy: (
   container-position: center,
   columns: 12,
   gutters: 20px/135px,
-  column-width: 135px,
+  column-width: false,
   global-box-sizing: border-box,
   last-flow: to,
   debug: (
