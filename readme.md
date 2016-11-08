@@ -1,8 +1,10 @@
 # Front-End Starter
 
-React, Redux, React-Router, Eslint via Webpack and
+React, Redux, React-Router, ESLint via Webpack and
 
 SASS, PostCSS, BrowserSync via Gulp.
+
+Jest for Test.
 
 ### Getting Start ###
 ```
@@ -21,6 +23,11 @@ Auto refresh browser after change is OK, but HMR is still some problem.
 ```
   > gulp
   then go http://localhost:3000
+```
+
+### Test ###
+```
+  > npm t
 ```
 
 ### We Could Use Hot-Dev-Server and BrowserSync on the Same Time ###
