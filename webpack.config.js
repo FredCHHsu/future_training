@@ -2,6 +2,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: [
+    'react-hot-loader/patch',
     './src/index.js',
   ],
   output: {
@@ -23,8 +24,7 @@ module.exports = {
       {
         test: /\.js$/,
         loaders: [
-          'react-hot',
-          'babel?presets[]=es2015,presets[]=react,presets[]=stage-2',
+          'babel',
         ],
         exclude: /node_modules/,
       },
