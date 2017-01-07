@@ -1,7 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import CandlestickChart from '../candlestickChart';
 import { connect } from 'react-redux';
-import { startGame, gameTick } from '../../actions/index';
+import { fetchData, startGame, gameTick } from '../../actions/index';
+
+const dataUrl = '/data.csv';
 
 class IndexPage extends Component {
   constructor(props) {
@@ -11,6 +13,9 @@ class IndexPage extends Component {
     this.state = {
       game: null,
     };
+  }
+  componentWillMount() {
+    this.props.fetchData(dataUrl);
   }
   startGame() {
     this.props.startGame();
@@ -34,6 +39,7 @@ class IndexPage extends Component {
 }
 
 IndexPage.propTypes = {
+  fetchData: PropTypes.func,
   startGame: PropTypes.func,
   gameTick: PropTypes.func,
 };
@@ -42,4 +48,5 @@ const mapStateToProps = (state) => ({
   game: state.game,
 });
 
-export default connect(mapStateToProps, { startGame, gameTick })(IndexPage);
+export default connect(mapStateToProps,
+  { fetchData, startGame, gameTick })(IndexPage);
