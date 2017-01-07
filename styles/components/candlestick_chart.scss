@@ -1,0 +1,19 @@
+path {
+  &.candle {
+    stroke: #000000;
+
+    &.body {
+      stroke-width: 0;
+    }
+
+    &.up {
+      fill: #DD0000;
+      stroke: #DD0000;
+    }
+
+    &.down {
+      fill: #009900;
+      stroke: #009900;
+    }
+  }
+}
