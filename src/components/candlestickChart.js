@@ -56,11 +56,12 @@ class CandlestickChart extends Component {
   }
   componentDidUpdate() {
     if (this.props.data && !this.state.chartInitilized) {
-      this.draw(this.props.data.slice(0, 100));
+      this.draw(this.props.data.slice(0, this.props.barsInChart));
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ chartInitilized: true });
     } else if (this.props.data) {
-      this.draw(this.props.data.slice(0 + this.props.gameTime, 100 + this.props.gameTime));
+      this.draw(this.props.data.slice(this.props.gameTime + 0,
+                                      this.props.gameTime + this.props.barsInChart));
     }
   }
   draw(data) {
@@ -80,11 +81,13 @@ class CandlestickChart extends Component {
 CandlestickChart.propTypes = {
   data: PropTypes.array,
   gameTime: PropTypes.number,
+  barsInChart: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
   data: state.game.data,
   gameTime: state.game.time,
+  barsInChart: state.chart.barsInChart,
 });
 
 export default connect(mapStateToProps, null)(CandlestickChart);

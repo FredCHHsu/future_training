@@ -17,14 +17,24 @@ class IndexPage extends Component {
   componentWillMount() {
     this.props.fetchData(dataUrl);
   }
+  componentDidUpdate() {
+    if (this.props.gameData &&
+        this.props.gameData.length <= this.props.barsInChart + this.props.gameTime) {
+      this.endGame();
+    }
+  }
   startGame() {
-    this.props.startGame();
-    this.setState({
-      game: setInterval(this.props.gameTick, 1000),
-    });
+    if (!this.props.gameStart) {
+      this.props.startGame();
+      this.setState({
+        game: setInterval(this.props.gameTick, this.props.gameSpeed),
+      });
+    }
   }
   endGame() {
     clearInterval(this.state.game);
+    // eslint-disable-next-line no-console
+    console.log('END GAME');
   }
   render() {
     return (
@@ -42,10 +52,19 @@ IndexPage.propTypes = {
   fetchData: PropTypes.func,
   startGame: PropTypes.func,
   gameTick: PropTypes.func,
+  gameStart: PropTypes.bool,
+  gameSpeed: PropTypes.number,
+  gameData: PropTypes.array,
+  gameTime: PropTypes.number,
+  barsInChart: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
-  game: state.game,
+  gameStart: state.game.start,
+  gameSpeed: state.game.durationBetweenBars,
+  gameData: state.game.data,
+  gameTime: state.game.time,
+  barsInChart: state.chart.barsInChart,
 });
 
 export default connect(mapStateToProps,

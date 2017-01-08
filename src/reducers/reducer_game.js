@@ -8,7 +8,7 @@ const initialState = {
   startDate: '2014/03/11',
   endDate: '2014/03/11',
   barPeroid: '1min',
-  barsPerSecond: 1,
+  durationBetweenBars: 1000,
   time: 0,
   data: null,
 };
