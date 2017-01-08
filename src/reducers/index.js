@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import GameSettingsReducer from './reducer_settings';
+import game from './reducer_game';
+import chart from './reducer_chart';
 
 const Reducers = combineReducers({
-  GameSettings: GameSettingsReducer,
+  game,
+  chart,
 });
 
 export default Reducers;
