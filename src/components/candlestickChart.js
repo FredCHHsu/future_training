@@ -19,6 +19,25 @@ const candlestick = techan.plot.candlestick()
 const xAxis = d3.axisBottom().scale(xScale);
 const yAxis = d3.axisLeft().scale(yScale);
 
+const timeAnnotation = techan.plot.axisannotation()
+            .axis(xAxis)
+            .orient('bottom')
+            .format(d3.timeFormat('%Y-%m-%d'))
+            .width(65)
+            .translate([0, chartHeight]);
+
+const priceAnnotation = techan.plot.axisannotation()
+                        .axis(yAxis)
+                        .orient('left')
+                        .format(d3.format(',.2f'));
+
+const crosshair = techan.plot.crosshair()
+                  .xScale(xScale)
+                  .yScale(yScale)
+                  .xAnnotation(timeAnnotation)
+                  .yAnnotation([priceAnnotation]);
+//                   .on('move', move);
+
 class CandlestickChart extends Component {
   constructor(props) {
     super(props);
@@ -51,6 +70,9 @@ class CandlestickChart extends Component {
        .style('text-anchor', 'end')
        .text('Price');
 
+    svg.append('g')
+       .attr('class', 'crosshair');
+
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ svg });
   }
@@ -60,8 +82,9 @@ class CandlestickChart extends Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ chartInitilized: true });
     } else if (this.props.data) {
-      this.draw(this.props.data.slice(this.props.gameTime + 0,
-                                      this.props.gameTime + this.props.barsInChart));
+      // draw last n(barsInChart) candlesticks
+      this.draw(this.props.data.slice(this.props.lastTickOnChart - this.props.barsInChart,
+                                      this.props.lastTickOnChart));
     }
   }
   draw(data) {
@@ -72,6 +95,7 @@ class CandlestickChart extends Component {
     svg.selectAll('g.candlestick').datum(data).call(candlestick);
     svg.selectAll('g.x.axis').call(xAxis);
     svg.selectAll('g.y.axis').call(yAxis);
+    svg.select('g.crosshair').call(crosshair);
   }
   render() {
     return (<div id="candlestick-main-chart"></div>);
@@ -80,13 +104,13 @@ class CandlestickChart extends Component {
 
 CandlestickChart.propTypes = {
   data: PropTypes.array,
-  gameTime: PropTypes.number,
+  lastTickOnChart: PropTypes.number,
   barsInChart: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
   data: state.game.data,
-  gameTime: state.game.time,
+  lastTickOnChart: state.game.lastTickIndex + 1,
   barsInChart: state.chart.barsInChart,
 });
 

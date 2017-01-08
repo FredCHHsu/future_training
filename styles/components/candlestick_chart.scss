@@ -17,3 +17,17 @@ path {
     }
   }
 }
+
+.crosshair {
+  cursor: crosshair;
+  font-size: 10px;
+}
+
+.crosshair path.wire {
+  stroke: #DDDDDD;
+  stroke-dasharray: 1, 1;
+}
+
+.crosshair .axisannotation path {
+  fill: #DDDDDD;
+}

@@ -9,7 +9,7 @@ const initialState = {
   endDate: '2014/03/11',
   barPeroid: '1min',
   durationBetweenBars: 1000,
-  time: 0,
+  lastTickIndex: 99,
   data: null,
 };
 
@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
       console.log(START_GAME);
       return { ...state, start: true };
     case GAME_TICK:
-      return { ...state, time: state.time + 1 };
+      return { ...state, lastTickIndex: state.lastTickIndex + 1 };
     default:
       return state;
   }

@@ -10,6 +10,8 @@ class IndexPage extends Component {
     super(props);
     this.startGame = this.startGame.bind(this);
     this.endGame = this.endGame.bind(this);
+    this.buy = this.buy.bind(this);
+    this.short = this.short.bind(this);
     this.state = {
       game: null,
     };
@@ -19,22 +21,34 @@ class IndexPage extends Component {
   }
   componentDidUpdate() {
     if (this.props.gameData &&
-        this.props.gameData.length <= this.props.barsInChart + this.props.gameTime) {
+        this.props.gameData.length <= this.props.lastTickIndex + 1) {
       this.endGame();
     }
   }
   startGame() {
-    if (!this.props.gameStart) {
-      this.props.startGame();
-      this.setState({
-        game: setInterval(this.props.gameTick, this.props.gameSpeed),
-      });
-    }
+    // if (!this.props.gameStart) {
+    this.props.startGame();
+    this.setState({
+      game: setInterval(this.props.gameTick, this.props.gameSpeed),
+    });
+    // }
   }
   endGame() {
     clearInterval(this.state.game);
     // eslint-disable-next-line no-console
     console.log('END GAME');
+  }
+  buy() {
+    /* eslint-disable no-console */
+    console.log('Buy at:');
+    console.log(this.props.gameData[this.props.lastTickIndex]);
+    /* eslint-enable */
+  }
+  short() {
+    /* eslint-disable no-console */
+    console.log('Short at:');
+    console.log(this.props.gameData[this.props.lastTickIndex]);
+    /* eslint-enable */
   }
   render() {
     return (
@@ -43,6 +57,8 @@ class IndexPage extends Component {
         <CandlestickChart />
         <button onClick={this.startGame}>Go!</button>
         <button onClick={this.endGame}>End</button>
+        <button onClick={this.buy}>Buy</button>
+        <button onClick={this.short}>Short</button>
       </div>
     );
   }
@@ -55,16 +71,14 @@ IndexPage.propTypes = {
   gameStart: PropTypes.bool,
   gameSpeed: PropTypes.number,
   gameData: PropTypes.array,
-  gameTime: PropTypes.number,
-  barsInChart: PropTypes.number,
+  lastTickIndex: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
   gameStart: state.game.start,
   gameSpeed: state.game.durationBetweenBars,
   gameData: state.game.data,
-  gameTime: state.game.time,
-  barsInChart: state.chart.barsInChart,
+  lastTickIndex: state.game.lastTickIndex,
 });
 
 export default connect(mapStateToProps,
