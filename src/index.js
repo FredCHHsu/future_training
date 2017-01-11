@@ -2,21 +2,21 @@
 import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app';
-import configureStore from './configureStore';
+import AppWrapper from './app_wrapper';
+import configureStore from './configure_store';
 
 const store = configureStore();
 
 ReactDOM.render(
   <AppContainer>
-    <App store={store} />
+    <AppWrapper store={store} />
   </AppContainer>,
   document.querySelector('#app-entry-point')
 );
 
 if (module.hot) {
-  module.hot.accept('./app', () => {
-    const NextApp = require('./app').default;
+  module.hot.accept('./app_wrapper', () => {
+    const NextApp = require('./app_wrapper').default;
     ReactDOM.render(
       <NextApp store={store} />,
       document.querySelector('#app-entry-point')

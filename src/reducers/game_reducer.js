@@ -1,4 +1,4 @@
-import { FETCH_DATA, START_GAME, GAME_TICK } from '../actions/index';
+import { FETCH_DATA, START_GAME, GAME_TICK } from '../actions/types';
 import * as d3 from 'd3';
 
 const parseDate = d3.timeParse('%d-%b-%y');

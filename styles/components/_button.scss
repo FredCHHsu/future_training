@@ -1,0 +1,17 @@
+button {
+  border: 2px solid;
+  border-radius: 15px;
+  background-color: transparent;
+  padding: 10px;
+  width: 8em;
+
+  &.buy,
+  &.cover {
+    border-color: theme-color(candlestick, up);
+  }
+
+  &.short,
+  &.sell {
+    border-color: theme-color(candlestick, down);
+  }
+}
