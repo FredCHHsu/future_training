@@ -4,6 +4,8 @@
 //
 //---------------------------
 
-.susy-container {
+.susy-container,
+.container {
   @include container; // susy provided
+  max-width: 960px;
 }

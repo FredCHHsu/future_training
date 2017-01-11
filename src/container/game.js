@@ -12,10 +12,8 @@ class GamePage extends Component {
     super(props);
     this.startGame = this.startGame.bind(this);
     this.endGame = this.endGame.bind(this);
-    this.buy = this.buy.bind(this);
-    this.short = this.short.bind(this);
-    this.sell = this.sell.bind(this);
-    this.cover = this.cover.bind(this);
+    this.goUp = this.goUp.bind(this);
+    this.goDown = this.goDown.bind(this);
     this.state = {
       game: null,
     };
@@ -31,41 +29,49 @@ class GamePage extends Component {
     }
   }
   startGame() {
-    // if (!this.props.gameStart) {
-    this.props.gameControl.startGame();
-    this.setState({
-      game: setInterval(this.props.gameControl.gameTick, this.props.gameSpeed),
-    });
-    // }
+    if (!this.state.game) {
+      this.props.gameControl.startGame();
+      this.setState({
+        game: setInterval(this.props.gameControl.gameTick, this.props.gameSpeed),
+      });
+    }
   }
   endGame() {
     clearInterval(this.state.game);
-    // eslint-disable-next-line no-console
+    this.setState({ game: null });
     console.log('END GAME');
   }
-  buy() {
-    this.props.trade.buy(this.props.gameData[this.props.lastTickIndex]);
+  goUp() {
+    if (this.props.position >= 0) {
+      this.props.trade.buy(this.props.gameData[this.props.lastTickIndex]);
+    } else if (this.props.position < 0) {
+      this.props.trade.cover(this.props.gameData[this.props.lastTickIndex]);
+    }
   }
-  sell() {
-    this.props.trade.sell(this.props.gameData[this.props.lastTickIndex]);
-  }
-  short() {
-    this.props.trade.short(this.props.gameData[this.props.lastTickIndex]);
-  }
-  cover() {
-    this.props.trade.cover(this.props.gameData[this.props.lastTickIndex]);
+  goDown() {
+    if (this.props.position > 0) {
+      this.props.trade.sell(this.props.gameData[this.props.lastTickIndex]);
+    } else if (this.props.position <= 0) {
+      this.props.trade.short(this.props.gameData[this.props.lastTickIndex]);
+    }
   }
   render() {
     return (
       <div id="index-page">
-        <h1 className="hello">Index Page</h1>
-        <CandlestickChart />
-        <button className="" onClick={this.startGame}>Go!</button>
-        <button className="" onClick={this.endGame}>End</button>
-        <button className="buy" onClick={this.buy}>Buy</button>
-        <button className="sell" onClick={this.sell}>Sell</button>
-        <button className="short" onClick={this.short}>Short</button>
-        <button className="cover" onClick={this.cover}>Cover</button>
+        <div className="container">
+          <CandlestickChart />
+          <div className="game-panel">
+            <button className="game-play -buy" onClick={this.goUp}>Buy / Cover</button>
+            <span className="position">{this.props.position}</span>
+            <button className="game-play -sell" onClick={this.goDown}>Sell / Short</button>
+          </div>
+          <div className="game-panel">
+            <button className="game-play -control" onClick={this.startGame}>
+              <i className="icon-control-play" /></button>
+            <button className="game-play -control" onClick={this.endGame}>
+              <i className="icon-control-pause" /></button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -78,6 +84,7 @@ GamePage.propTypes = {
   gameSpeed: PropTypes.number,
   gameData: PropTypes.array,
   lastTickIndex: PropTypes.number,
+  position: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
@@ -85,6 +92,7 @@ const mapStateToProps = (state) => ({
   gameSpeed: state.game.durationBetweenBars,
   gameData: state.game.data,
   lastTickIndex: state.game.lastTickIndex,
+  position: state.trade.position,
 });
 
 function mapDispatchToProps(dispatch) {
