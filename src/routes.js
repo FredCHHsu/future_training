@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
-import IndexPage from './components/pages/index';
+import GamePage from './container/game';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={IndexPage} />
+    <IndexRoute component={GamePage} />
   </Route>
 );

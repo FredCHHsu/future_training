@@ -13,12 +13,18 @@
 // );
 
 $theme: (
+  candlestick: (
+    up: #d00,
+    down: #090,
+    base: #ddd,
+  ),
+
   font: (
-    base: #222222,
+    base: #222,
   ),
 
   default: (
-    base: #aaaaaa,
+    base: #aaa,
   ),
 );
 

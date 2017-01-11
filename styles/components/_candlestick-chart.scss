@@ -1,0 +1,72 @@
+path {
+  &.candle {
+    stroke: #000000;
+
+    &.body {
+      stroke-width: 0;
+    }
+
+    &.up {
+      fill: theme-color(candlestick, up);
+      stroke: theme-color(candlestick, up);
+    }
+
+    &.down {
+      fill: theme-color(candlestick, down);
+      stroke: theme-color(candlestick, down);
+    }
+  }
+}
+
+.crosshair {
+  cursor: crosshair;
+  font-size: 10px;
+
+  path {
+    &.wire {
+      stroke: theme-color(candlestick);
+      stroke-dasharray: 1, 1;
+    }
+  }
+
+  .axisannotation path {
+    fill: theme-color(candlestick);
+  }
+}
+
+
+path.tradearrow {
+  // stroke: none;
+  &.buy {
+    fill: theme-color(candlestick, up);
+  }
+
+  &.sell {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: theme-color(candlestick, up);
+  }
+
+  &.short {
+    fill: theme-color(candlestick, down);
+  }
+
+  &.cover {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: theme-color(candlestick, down);
+  }
+
+  path.highlight {
+    fill: none;
+    stroke-width: 2;
+
+    &.buy, &.cover {
+      stroke: #0000FF;
+    }
+
+    &.sell, &.short {
+      stroke: #9900FF;
+    }
+  }
+}

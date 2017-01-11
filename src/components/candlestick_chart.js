@@ -16,6 +16,13 @@ const candlestick = techan.plot.candlestick()
                     .xScale(xScale)
                     .yScale(yScale);
 
+const tradearrow = techan.plot.tradearrow()
+        .xScale(xScale)
+        .yScale(yScale)
+        .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'));
+        // .on('mouseenter', enter)
+        // .on('mouseout', out);
+
 const xAxis = d3.axisBottom().scale(xScale);
 const yAxis = d3.axisLeft().scale(yScale);
 
@@ -58,6 +65,9 @@ class CandlestickChart extends Component {
        .attr('class', 'candlestick');
 
     svg.append('g')
+       .attr('class', 'tradearrow');
+
+    svg.append('g')
        .attr('class', 'x axis')
        .attr('transform', `translate(0, ${chartHeight})`);
 
@@ -87,12 +97,13 @@ class CandlestickChart extends Component {
                                       this.props.lastTickOnChart));
     }
   }
-  draw(data) {
+  draw(data, trades = this.props.tradeLog) {
     xScale.domain(data.map(candlestick.accessor().d));
     yScale.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
 
     const svg = this.state.svg;
     svg.selectAll('g.candlestick').datum(data).call(candlestick);
+    svg.selectAll('g.tradearrow').datum(trades).call(tradearrow);
     svg.selectAll('g.x.axis').call(xAxis);
     svg.selectAll('g.y.axis').call(yAxis);
     svg.select('g.crosshair').call(crosshair);
@@ -106,12 +117,14 @@ CandlestickChart.propTypes = {
   data: PropTypes.array,
   lastTickOnChart: PropTypes.number,
   barsInChart: PropTypes.number,
+  tradeLog: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
   data: state.game.data,
   lastTickOnChart: state.game.lastTickIndex + 1,
   barsInChart: state.chart.barsInChart,
+  tradeLog: state.trade.log,
 });
 
 export default connect(mapStateToProps, null)(CandlestickChart);
