@@ -70,6 +70,8 @@ class GamePage extends Component {
               <i className="icon-control-play" /></button>
             <button className="game-play -control" onClick={this.endGame}>
               <i className="icon-control-pause" /></button>
+            <button className="game-play -control">
+              <i className="icon-settings" /></button>
           </div>
         </div>
       </div>
