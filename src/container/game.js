@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as gameControlActions from '../actions/game';
 import * as tradeActions from '../actions/trade';
+import GameControlButton from '../components/game_control_button';
 
 const dataUrl = '/data.csv';
 
@@ -61,17 +62,14 @@ class GamePage extends Component {
         <div className="container">
           <CandlestickChart />
           <div className="game-panel">
-            <button className="game-play -buy" onClick={this.goUp}>Buy / Cover</button>
+            <GameControlButton handleClick={this.goUp} icon="trendingUp" />
             <span className="position">{this.props.position}</span>
-            <button className="game-play -sell" onClick={this.goDown}>Sell / Short</button>
+            <GameControlButton handleClick={this.goDown} icon="trendingDown" />
           </div>
           <div className="game-panel">
-            <button className="game-play -control" onClick={this.startGame}>
-              <i className="icon-control-play" /></button>
-            <button className="game-play -control" onClick={this.endGame}>
-              <i className="icon-control-pause" /></button>
-            <button className="game-play -control">
-              <i className="icon-settings" /></button>
+            <GameControlButton handleClick={this.startGame} icon="play" />
+            <GameControlButton handleClick={this.endGame} icon="pause" />
+            <GameControlButton handleClick={this.endGame} icon="settings" />
           </div>
         </div>
       </div>
