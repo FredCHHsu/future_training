@@ -40,7 +40,7 @@ class GamePage extends Component {
   endGame() {
     clearInterval(this.state.game);
     this.setState({ game: null });
-    console.log('END GAME');
+    this.props.gameControl.pauseGame();
   }
   goUp() {
     if (this.props.position >= 0) {
@@ -59,11 +59,11 @@ class GamePage extends Component {
   render() {
     return (
       <div id="index-page">
-        <div className="container">
-          <div className="game-area">
+        <div className="container main-game">
+          <div className="game-area col-xs-10 col-sm-11">
             <CandlestickChart />
           </div>
-          <div className="control-panel">
+          <div className="control-panel col-xs-2 col-sm-1">
             <GameControlButton handleClick={this.endGame} icon="settings" />
             <GameControlButton
               handleClick={this.props.gameStart ? this.endGame : this.startGame}
@@ -72,10 +72,10 @@ class GamePage extends Component {
             <GameControlButton handleClick={this.goUp} icon="trendingUp" />
             <GameControlButton handleClick={this.goDown} icon="trendingDown" />
           </div>
-          <div className="game-log">
-            <h2>Game Status</h2>
-            <span className="position">position: {this.props.position}</span>
-          </div>
+        </div>
+        <div className="game-log">
+          <h2>Status</h2>
+          <span className="position">position: {this.props.position}</span>
         </div>
       </div>
     );

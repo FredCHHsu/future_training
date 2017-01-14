@@ -1,5 +1,6 @@
 export const FETCH_DATA = 'FETCH_DATA';
 export const START_GAME = 'START_GAME';
+export const PAUSE_GAME = 'PAUSE_GAME';
 export const GAME_TICK = 'GAME_TICK';
 
 export const BUY = 'buy';

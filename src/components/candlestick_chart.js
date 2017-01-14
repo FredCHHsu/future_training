@@ -4,10 +4,10 @@ import * as d3 from 'd3';
 import { connect } from 'react-redux';
 
 const chartWrapperWidth = 960;
-const chartWrapperheight = 500;
-const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+const chartWrapperHeight = 500;
+const margin = { top: 20, right: 50, bottom: 30, left: 50 };
 const chartWidth = chartWrapperWidth - margin.left - margin.right;
-const chartHeight = chartWrapperheight - margin.top - margin.bottom;
+const chartHeight = chartWrapperHeight - margin.top - margin.bottom;
 
 const xScale = techan.scale.financetime().range([0, chartWidth]);
 const yScale = d3.scaleLinear().range([chartHeight, 0]);
@@ -24,7 +24,8 @@ const tradearrow = techan.plot.tradearrow()
         // .on('mouseout', out);
 
 const xAxis = d3.axisBottom().scale(xScale);
-const yAxis = d3.axisLeft().scale(yScale);
+// const yAxisLeft = d3.axisLeft().scale(yScale);
+const yAxisRight = d3.axisRight().scale(yScale);
 
 const timeAnnotation = techan.plot.axisannotation()
             .axis(xAxis)
@@ -34,7 +35,7 @@ const timeAnnotation = techan.plot.axisannotation()
             .translate([0, chartHeight]);
 
 const priceAnnotation = techan.plot.axisannotation()
-                        .axis(yAxis)
+                        .axis(yAxisRight)
                         .orient('left')
                         .format(d3.format(',.2f'));
 
@@ -56,8 +57,10 @@ class CandlestickChart extends Component {
   }
   componentDidMount() {
     const svg = d3.select('#candlestick-main-chart').append('svg')
-                  .attr('width', chartWidth + margin.left + margin.right)
-                  .attr('height', chartHeight + margin.top + margin.bottom)
+                  .attr('width', '100%')
+                  .attr('height', '100%')
+                  .attr('viewBox', `0 0 ${chartWrapperWidth} ${chartWrapperHeight}`)
+                  .attr('preserveAspectRatio', 'xMinYMin')
                   .append('g')
                   .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -73,12 +76,14 @@ class CandlestickChart extends Component {
 
     svg.append('g')
        .attr('class', 'y axis')
-       .append('text')
-       .attr('transform', 'rotate(-90)')
-       .attr('y', 6)
-       .attr('dy', '.71em')
-       .style('text-anchor', 'end')
-       .text('Price');
+       .attr('transform', `translate(${chartWidth}, 0)`);
+      //  .append('text')
+      //  .attr('class', 'label')
+      //  .attr('transform', 'rotate(-90)')
+      //  .attr('y', 6)
+      //  .attr('dy', '2.71em')
+      //  .style('text-anchor', 'end')
+      //  .text('Price');
 
     svg.append('g')
        .attr('class', 'crosshair');
@@ -105,7 +110,7 @@ class CandlestickChart extends Component {
     svg.selectAll('g.candlestick').datum(data).call(candlestick);
     svg.selectAll('g.tradearrow').datum(trades).call(tradearrow);
     svg.selectAll('g.x.axis').call(xAxis);
-    svg.selectAll('g.y.axis').call(yAxis);
+    svg.selectAll('g.y.axis').call(yAxisRight);
     svg.select('g.crosshair').call(crosshair);
   }
   render() {

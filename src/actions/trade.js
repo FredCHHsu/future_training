@@ -1,21 +1,29 @@
 import { BUY, SHORT, SELL, COVER } from './types';
 
-export const buy = (tickInfo) => ({
-  type: BUY,
-  payload: tickInfo,
-});
+export function buy(tickInfo) {
+  return {
+    type: BUY,
+    payload: tickInfo,
+  };
+}
 
-export const short = (tickInfo) => ({
-  type: SHORT,
-  payload: tickInfo,
-});
+export function short(tickInfo) {
+  return {
+    type: SHORT,
+    payload: tickInfo,
+  };
+}
 
-export const sell = (tickInfo) => ({
-  type: SELL,
-  payload: tickInfo,
-});
+export function sell(tickInfo) {
+  return {
+    type: SELL,
+    payload: tickInfo,
+  };
+}
 
-export const cover = (tickInfo) => ({
-  type: COVER,
-  payload: tickInfo,
-});
+export function cover(tickInfo) {
+  return {
+    type: COVER,
+    payload: tickInfo,
+  };
+}

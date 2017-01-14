@@ -1,4 +1,4 @@
-import { FETCH_DATA, START_GAME, GAME_TICK } from '../actions/types';
+import { FETCH_DATA, START_GAME, PAUSE_GAME, GAME_TICK } from '../actions/types';
 import * as d3 from 'd3';
 
 const parseDate = d3.timeParse('%d-%b-%y');
@@ -30,6 +30,10 @@ export default function (state = initialState, action) {
       // eslint-disable-next-line no-console
       console.log(START_GAME);
       return { ...state, start: true };
+    case PAUSE_GAME:
+      // eslint-disable-next-line no-console
+      console.log(PAUSE_GAME);
+      return { ...state, start: false };
     case GAME_TICK:
       return { ...state, lastTickIndex: state.lastTickIndex + 1 };
     default:

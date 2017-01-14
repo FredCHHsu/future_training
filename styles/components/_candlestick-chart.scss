@@ -1,3 +1,9 @@
+.y.axis {
+  >.label {
+    stroke: #000000;
+  }
+}
+
 path {
   &.candle {
     stroke: #000000;
