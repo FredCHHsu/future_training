@@ -60,16 +60,21 @@ class GamePage extends Component {
     return (
       <div id="index-page">
         <div className="container">
-          <CandlestickChart />
-          <div className="game-panel">
+          <div className="game-area">
+            <CandlestickChart />
+          </div>
+          <div className="control-panel">
+            <GameControlButton handleClick={this.endGame} icon="settings" />
+            <GameControlButton
+              handleClick={this.props.gameStart ? this.endGame : this.startGame}
+              icon={this.props.gameStart ? 'pause' : 'play'}
+            />
             <GameControlButton handleClick={this.goUp} icon="trendingUp" />
-            <span className="position">{this.props.position}</span>
             <GameControlButton handleClick={this.goDown} icon="trendingDown" />
           </div>
-          <div className="game-panel">
-            <GameControlButton handleClick={this.startGame} icon="play" />
-            <GameControlButton handleClick={this.endGame} icon="pause" />
-            <GameControlButton handleClick={this.endGame} icon="settings" />
+          <div className="game-log">
+            <h2>Game Status</h2>
+            <span className="position">position: {this.props.position}</span>
           </div>
         </div>
       </div>
