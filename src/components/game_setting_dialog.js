@@ -38,12 +38,12 @@ class GameSettingsDialog extends Component {
       <FlatButton
         label="Cancel"
         primary={false}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label="Save"
-        primary={true}
-        onTouchTap={this.handleSaveSettings}
+        primary
+        onClick={this.handleSaveSettings}
       />,
     ];
     return (

@@ -3,9 +3,10 @@ import techan from '../vendor/techan';
 import * as d3 from 'd3';
 import { connect } from 'react-redux';
 
-const chartWrapperWidth = 960;
-const chartWrapperHeight = 500;
-const margin = { top: 30, right: 50, bottom: 30, left: 50 };
+const resolutionFactor = 1;
+const chartWrapperWidth = window.innerWidth * resolutionFactor;
+const chartWrapperHeight = window.innerHeight * 0.7 * resolutionFactor;
+const margin = { top: 50, right: 40, bottom: 50, left: 40 };
 const chartWidth = chartWrapperWidth - margin.left - margin.right;
 const chartHeight = chartWrapperHeight - margin.top - margin.bottom;
 
@@ -19,7 +20,12 @@ const candlestick = techan.plot.candlestick()
 const tradearrow = techan.plot.tradearrow()
         .xScale(xScale)
         .yScale(yScale)
-        .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'));
+        .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
+        .y(d => {
+          // Display the buy and sell arrows a bit above and below the price
+          if (d.type === 'buy' || d.type === 'cover') return yScale(d.low) + 5;
+          return yScale(d.high) - 5;
+        });
         // .on('mouseenter', enter)
         // .on('mouseout', out);
 

@@ -62,10 +62,10 @@ class GamePage extends Component {
       <div id="index-page">
         <div className="game-bg">
           <div className="container main-game">
-            <div className="game-area col-xs-10 col-md-11">
+            <div className="game-area">
               <CandlestickChart />
             </div>
-            <div className="control-panel col-xs-2 col-md-1">
+            <div className="control-panel">
               <GameSettingsDialog />
               <GameControlButton
                 handleClick={this.props.gameStart ? this.endGame : this.startGame}
@@ -77,7 +77,6 @@ class GamePage extends Component {
           </div>
         </div>
         <div className="game-log">
-          <h2>Status</h2>
           <span className="position">position: {this.props.position}</span>
         </div>
       </div>

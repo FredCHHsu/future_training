@@ -3,18 +3,29 @@
 }
 
 .main-game {
-  display: flex;
+  // display: flex;
 }
 
 .game-area {
+  height: 80vh;
 }
 
 .control-panel {
   display: flex;
-  margin: 8% 0;
+  margin: 0 auto;
   border-radius: 5px;
   background-color: theme-color(background, light);
-  flex-direction: column;
+  padding: 8px 0;
+  width: 90%;
   align-items: center;
   justify-content: space-around;
+}
+
+.game-log {
+  display: inline-block;
+  position: absolute;
+  top: 70vh;
+  right: 5%;
+  box-shadow: 0 0 5px theme-color(background, light);
+  padding: 0.5em;
 }

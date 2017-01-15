@@ -6,8 +6,6 @@ const INITIAL_STATE = {
   position: 0,
 };
 
-const arrowShift = 1;
-
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case BUY:
@@ -19,11 +17,12 @@ export default function (state = INITIAL_STATE, action) {
         log.push({
           type: action.type,
           date: action.payload.date,
-          // price is the position drawing on chart
-          price: action.type === BUY || action.type === COVER ?
-                 action.payload.low - arrowShift : action.payload.high + arrowShift,
-          realPrice: action.payload.close, // real trade price
+          price: action.payload.close,
           quantity: 1,
+          open: action.payload.open,
+          hight: action.payload.high,
+          low: action.payload.low,
+          close: action.payload.close,
         });
         const position = state.position + (action.type === BUY || action.type === COVER ? 1 : -1);
         return { ...state, log, position };
