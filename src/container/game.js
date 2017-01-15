@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as gameControlActions from '../actions/game';
 import * as tradeActions from '../actions/trade';
 import GameControlButton from '../components/game_control_button';
+import GameSettingsDialog from '../components/game_setting_dialog';
 
 const dataUrl = '/data.csv';
 
@@ -59,18 +60,20 @@ class GamePage extends Component {
   render() {
     return (
       <div id="index-page">
-        <div className="container main-game">
-          <div className="game-area col-xs-10 col-sm-11">
-            <CandlestickChart />
-          </div>
-          <div className="control-panel col-xs-2 col-sm-1">
-            <GameControlButton handleClick={this.endGame} icon="settings" />
-            <GameControlButton
-              handleClick={this.props.gameStart ? this.endGame : this.startGame}
-              icon={this.props.gameStart ? 'pause' : 'play'}
-            />
-            <GameControlButton handleClick={this.goUp} icon="trendingUp" />
-            <GameControlButton handleClick={this.goDown} icon="trendingDown" />
+        <div className="game-bg">
+          <div className="container main-game">
+            <div className="game-area col-xs-10 col-md-11">
+              <CandlestickChart />
+            </div>
+            <div className="control-panel col-xs-2 col-md-1">
+              <GameSettingsDialog />
+              <GameControlButton
+                handleClick={this.props.gameStart ? this.endGame : this.startGame}
+                icon={this.props.gameStart ? 'pause' : 'play'}
+              />
+              <GameControlButton handleClick={this.goUp} icon="trendingUp" />
+              <GameControlButton handleClick={this.goDown} icon="trendingDown" />
+            </div>
           </div>
         </div>
         <div className="game-log">

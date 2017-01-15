@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const chartWrapperWidth = 960;
 const chartWrapperHeight = 500;
-const margin = { top: 20, right: 50, bottom: 30, left: 50 };
+const margin = { top: 30, right: 50, bottom: 30, left: 50 };
 const chartWidth = chartWrapperWidth - margin.left - margin.right;
 const chartHeight = chartWrapperHeight - margin.top - margin.bottom;
 
@@ -23,27 +23,40 @@ const tradearrow = techan.plot.tradearrow()
         // .on('mouseenter', enter)
         // .on('mouseout', out);
 
-const xAxis = d3.axisBottom().scale(xScale);
-// const yAxisLeft = d3.axisLeft().scale(yScale);
+const xAxisTop = d3.axisTop().scale(xScale);
+const xAxisBottom = d3.axisBottom().scale(xScale);
+const yAxisLeft = d3.axisLeft().scale(yScale);
 const yAxisRight = d3.axisRight().scale(yScale);
 
 const timeAnnotation = techan.plot.axisannotation()
-            .axis(xAxis)
+            .axis(xAxisBottom)
             .orient('bottom')
             .format(d3.timeFormat('%Y-%m-%d'))
             .width(65)
             .translate([0, chartHeight]);
 
-const priceAnnotation = techan.plot.axisannotation()
+const timeAnnotationTop = techan.plot.axisannotation()
+            .axis(xAxisTop)
+            .orient('top')
+            .format(d3.timeFormat('%Y-%m-%d'))
+            .width(65);
+
+const priceAnnotationRight = techan.plot.axisannotation()
                         .axis(yAxisRight)
-                        .orient('left')
+                        .orient('right')
+                        .translate([chartWidth, 0])
                         .format(d3.format(',.2f'));
+
+const priceAnnotationLeft = techan.plot.axisannotation()
+                            .axis(yAxisLeft)
+                            .orient('left')
+                            .format(d3.format(',.2f'));
 
 const crosshair = techan.plot.crosshair()
                   .xScale(xScale)
                   .yScale(yScale)
-                  .xAnnotation(timeAnnotation)
-                  .yAnnotation([priceAnnotation]);
+                  .xAnnotation([timeAnnotation, timeAnnotationTop])
+                  .yAnnotation([priceAnnotationLeft, priceAnnotationRight]);
 //                   .on('move', move);
 
 class CandlestickChart extends Component {
@@ -71,11 +84,17 @@ class CandlestickChart extends Component {
        .attr('class', 'tradearrow');
 
     svg.append('g')
-       .attr('class', 'x axis')
+       .attr('class', 'x axis top');
+
+    svg.append('g')
+       .attr('class', 'x axis bottom')
        .attr('transform', `translate(0, ${chartHeight})`);
 
     svg.append('g')
-       .attr('class', 'y axis')
+       .attr('class', 'y axis left');
+
+    svg.append('g')
+       .attr('class', 'y axis right')
        .attr('transform', `translate(${chartWidth}, 0)`);
       //  .append('text')
       //  .attr('class', 'label')
@@ -109,8 +128,10 @@ class CandlestickChart extends Component {
     const svg = this.state.svg;
     svg.selectAll('g.candlestick').datum(data).call(candlestick);
     svg.selectAll('g.tradearrow').datum(trades).call(tradearrow);
-    svg.selectAll('g.x.axis').call(xAxis);
-    svg.selectAll('g.y.axis').call(yAxisRight);
+    svg.selectAll('g.x.axis.top').call(xAxisTop);
+    svg.selectAll('g.x.axis.bottom').call(xAxisBottom);
+    svg.selectAll('g.y.axis.left').call(yAxisLeft);
+    svg.selectAll('g.y.axis.right').call(yAxisRight);
     svg.select('g.crosshair').call(crosshair);
   }
   render() {

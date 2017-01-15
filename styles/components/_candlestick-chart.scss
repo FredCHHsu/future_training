@@ -1,49 +1,58 @@
-.y.axis {
-  >.label {
-    stroke: #000000;
+.axis {
+  >.domain {
+    stroke: theme-color(font, light);
+  }
+
+  >.tick {
+    >line {
+      stroke: theme-color(font, light);
+    }
+
+    >text {
+      stroke: theme-color(font, light);
+    }
   }
 }
 
-path {
-  &.candle {
-    stroke: #000000;
 
-    &.body {
-      stroke-width: 0;
-    }
+.candle {
+  stroke: theme-color(font);
 
-    &.up {
-      fill: theme-color(candlestick, up);
-      stroke: theme-color(candlestick, up);
-    }
-
-    &.down {
-      fill: theme-color(candlestick, down);
-      stroke: theme-color(candlestick, down);
-    }
+  &.body {
+    stroke-width: 0;
   }
 
-  &.tradearrow {
-    // stroke: none;
-    &.buy {
-      fill: theme-color(candlestick, up);
-    }
+  &.up {
+    fill: theme-color(candlestick, up);
+    stroke: theme-color(candlestick, up);
+  }
 
-    &.sell {
-      fill: transparent;
-      stroke-width: 1;
-      stroke: theme-color(candlestick, up);
-    }
+  &.down {
+    fill: theme-color(candlestick, down);
+    stroke: theme-color(candlestick, down);
+  }
+}
 
-    &.short {
-      fill: theme-color(candlestick, down);
-    }
+.tradearrow {
+  // stroke: none;
+  &.buy {
+    fill: theme-color(candlestick, up);
+  }
 
-    &.cover {
-      fill: transparent;
-      stroke-width: 1;
-      stroke: theme-color(candlestick, down);
-    }
+  &.sell {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: theme-color(candlestick, up);
+  }
+
+  &.short {
+    fill: theme-color(candlestick, down);
+  }
+
+  &.cover {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: theme-color(candlestick, down);
   }
 }
 
@@ -51,14 +60,14 @@ path {
   cursor: crosshair;
   font-size: 10px;
 
-  path {
-    &.wire {
-      stroke: theme-color(candlestick);
-      stroke-dasharray: 1, 1;
-    }
+  .wire {
+    stroke: theme-color(candlestick);
+    stroke-dasharray: 1, 1;
   }
 
-  .axisannotation path {
-    fill: theme-color(candlestick);
+  .axisannotation {
+    path {
+      fill: theme-color(candlestick);
+    }
   }
 }

@@ -7,3 +7,5 @@ export const BUY = 'buy';
 export const SHORT = 'short';
 export const SELL = 'sell';
 export const COVER = 'cover';
+
+export const SET_START_DATE = 'SET_START_DATE';
