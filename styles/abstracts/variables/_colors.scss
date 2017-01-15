@@ -19,12 +19,19 @@ $theme: (
     base: #ddd,
   ),
 
+  background: (
+    dark: #212121, // grey900
+    base: #9E9E9E, // grey500
+    light: #F5F5F5, // grey100
+  ),
+
   font: (
-    base: #222,
+    base: #212121,
+    light: #9E9E9E, // grey100
   ),
 
   default: (
-    base: #aaa,
+    base: #9E9E9E,
   ),
 );
 

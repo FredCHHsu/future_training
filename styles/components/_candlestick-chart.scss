@@ -1,41 +1,39 @@
-path {
-  &.candle {
-    stroke: #000000;
+.axis {
+  >.domain {
+    stroke: theme-color(font, light);
+  }
 
-    &.body {
-      stroke-width: 0;
+  >.tick {
+    >line {
+      stroke: theme-color(font, light);
     }
 
-    &.up {
-      fill: theme-color(candlestick, up);
-      stroke: theme-color(candlestick, up);
-    }
-
-    &.down {
-      fill: theme-color(candlestick, down);
-      stroke: theme-color(candlestick, down);
+    >text {
+      stroke: theme-color(font, light);
     }
   }
 }
 
-.crosshair {
-  cursor: crosshair;
-  font-size: 10px;
 
-  path {
-    &.wire {
-      stroke: theme-color(candlestick);
-      stroke-dasharray: 1, 1;
-    }
+.candle {
+  stroke: theme-color(font);
+
+  &.body {
+    stroke-width: 0;
   }
 
-  .axisannotation path {
-    fill: theme-color(candlestick);
+  &.up {
+    fill: theme-color(candlestick, up);
+    stroke: theme-color(candlestick, up);
+  }
+
+  &.down {
+    fill: theme-color(candlestick, down);
+    stroke: theme-color(candlestick, down);
   }
 }
 
-
-path.tradearrow {
+.tradearrow {
   // stroke: none;
   &.buy {
     fill: theme-color(candlestick, up);
@@ -56,17 +54,20 @@ path.tradearrow {
     stroke-width: 1;
     stroke: theme-color(candlestick, down);
   }
+}
 
-  path.highlight {
-    fill: none;
-    stroke-width: 2;
+.crosshair {
+  cursor: crosshair;
+  font-size: 10px;
 
-    &.buy, &.cover {
-      stroke: #0000FF;
-    }
+  .wire {
+    stroke: theme-color(candlestick);
+    stroke-dasharray: 1, 1;
+  }
 
-    &.sell, &.short {
-      stroke: #9900FF;
+  .axisannotation {
+    path {
+      fill: theme-color(candlestick);
     }
   }
 }

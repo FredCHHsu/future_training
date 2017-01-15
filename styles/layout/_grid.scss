@@ -4,8 +4,43 @@
 //
 //---------------------------
 
-.susy-container,
-.container {
+$max-container-width: 1440px;
+
+.container,
+%container { // constrain max-width of content
   @include container; // susy provided
-  max-width: 960px;
+  max-width: $max-container-width;
+}
+
+$size-collection: ('xs', 'sm', 'md', 'lg', 'xl');
+$total-columns: 12;
+$column-padding: 12px;
+
+@each $size in $size-collection {
+  @for $i from 1 to $total-columns {
+    .col-#{$size}-#{$i} {
+      padding: $column-padding;
+      @if $size == xs {
+        @include susy-media($media-xs-up) {
+          @include span($i)
+        }
+      } @else if $size == sm {
+        @include susy-media($media-sm-up) {
+          @include span($i)
+        }
+      } @else if $size == md {
+        @include susy-media($media-md-up) {
+          @include span($i)
+        }
+      } @else if $size == lg {
+        @include susy-media($media-lg-up) {
+          @include span($i)
+        }
+      } @else if $size == xl {
+        @include susy-media($media-xl) {
+          @include span($i)
+        }
+      }
+    }
+  }
 }

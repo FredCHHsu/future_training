@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as gameControlActions from '../actions/game';
 import * as tradeActions from '../actions/trade';
+import GameControlButton from '../components/game_control_button';
+import GameSettingsDialog from '../components/game_setting_dialog';
 
 const dataUrl = '/data.csv';
 
@@ -39,7 +41,7 @@ class GamePage extends Component {
   endGame() {
     clearInterval(this.state.game);
     this.setState({ game: null });
-    console.log('END GAME');
+    this.props.gameControl.pauseGame();
   }
   goUp() {
     if (this.props.position >= 0) {
@@ -58,19 +60,25 @@ class GamePage extends Component {
   render() {
     return (
       <div id="index-page">
-        <div className="container">
-          <CandlestickChart />
-          <div className="game-panel">
-            <button className="game-play -buy" onClick={this.goUp}>Buy / Cover</button>
-            <span className="position">{this.props.position}</span>
-            <button className="game-play -sell" onClick={this.goDown}>Sell / Short</button>
+        <div className="game-bg">
+          <div className="container main-game">
+            <div className="game-area col-xs-10 col-md-11">
+              <CandlestickChart />
+            </div>
+            <div className="control-panel col-xs-2 col-md-1">
+              <GameSettingsDialog />
+              <GameControlButton
+                handleClick={this.props.gameStart ? this.endGame : this.startGame}
+                icon={this.props.gameStart ? 'pause' : 'play'}
+              />
+              <GameControlButton handleClick={this.goUp} icon="trendingUp" />
+              <GameControlButton handleClick={this.goDown} icon="trendingDown" />
+            </div>
           </div>
-          <div className="game-panel">
-            <button className="game-play -control" onClick={this.startGame}>
-              <i className="icon-control-play" /></button>
-            <button className="game-play -control" onClick={this.endGame}>
-              <i className="icon-control-pause" /></button>
-          </div>
+        </div>
+        <div className="game-log">
+          <h2>Status</h2>
+          <span className="position">position: {this.props.position}</span>
         </div>
       </div>
     );

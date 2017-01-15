@@ -1,19 +1,29 @@
 import axios from 'axios';
 
-import { GAME_TICK, START_GAME, FETCH_DATA } from './types';
+import { GAME_TICK, START_GAME, PAUSE_GAME, FETCH_DATA } from './types';
 
-export const gameTick = () => ({
-  type: GAME_TICK,
-});
+export function gameTick() {
+  return {
+    type: GAME_TICK,
+  };
+}
 
-export const startGame = () => ({
-  type: START_GAME,
-});
+export function startGame() {
+  return {
+    type: START_GAME,
+  };
+}
 
-export const fetchData = (url) => {
+export function pauseGame() {
+  return {
+    type: PAUSE_GAME,
+  };
+}
+
+export function fetchData(url) {
   const request = axios.get(url);
   return ({
     type: FETCH_DATA,
     payload: request,
   });
-};
+}
