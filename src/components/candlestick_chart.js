@@ -23,8 +23,8 @@ const tradearrow = techan.plot.tradearrow()
         .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
         .y(d => {
           // Display the buy and sell arrows a bit above and below the price
-          if (d.type === 'buy' || d.type === 'cover') return yScale(d.low) + 5;
-          return yScale(d.high) - 5;
+          if (d.type === 'buy' || d.type === 'cover') return yScale(d.low - 5);
+          return yScale(d.high + 5);
         });
         // .on('mouseenter', enter)
         // .on('mouseout', out);
@@ -50,13 +50,13 @@ const timeAnnotationTop = techan.plot.axisannotation()
 const priceAnnotationRight = techan.plot.axisannotation()
                         .axis(yAxisRight)
                         .orient('right')
-                        .translate([chartWidth, 0])
-                        .format(d3.format(',.2f'));
+                        .translate([chartWidth, 0]);
+                        // .format(d3.format(',.2f'));
 
 const priceAnnotationLeft = techan.plot.axisannotation()
                             .axis(yAxisLeft)
-                            .orient('left')
-                            .format(d3.format(',.2f'));
+                            .orient('left');
+                            // .format(d3.format(',.2f'));
 
 const crosshair = techan.plot.crosshair()
                   .xScale(xScale)

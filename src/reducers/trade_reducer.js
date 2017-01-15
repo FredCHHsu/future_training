@@ -20,7 +20,7 @@ export default function (state = INITIAL_STATE, action) {
           price: action.payload.close,
           quantity: 1,
           open: action.payload.open,
-          hight: action.payload.high,
+          high: action.payload.high,
           low: action.payload.low,
           close: action.payload.close,
         });

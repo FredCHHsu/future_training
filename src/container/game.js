@@ -7,7 +7,7 @@ import * as tradeActions from '../actions/trade';
 import GameControlButton from '../components/game_control_button';
 import GameSettingsDialog from '../components/game_setting_dialog';
 
-const dataUrl = '/data.csv';
+const dataUrl = '/data/txf_1998_2015.csv';
 
 class GamePage extends Component {
   constructor(props) {

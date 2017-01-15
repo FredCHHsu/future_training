@@ -22,6 +22,10 @@
     stroke-width: 0;
   }
 
+  &.wick {
+    stroke-width: 2px !important;
+  }
+
   &.up {
     fill: theme-color(candlestick, up);
     stroke: theme-color(candlestick, up);

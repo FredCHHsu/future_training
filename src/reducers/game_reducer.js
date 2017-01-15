@@ -4,7 +4,7 @@ import { FETCH_DATA,
        } from '../actions/types';
 import * as d3 from 'd3';
 
-const parseDate = d3.timeParse('%d-%b-%y');
+const parseDate = d3.timeParse('%Y/%m/%d');
 
 const initialState = {
   start: false,
@@ -22,12 +22,12 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_DATA: {
       const composedData = d3.csvParse(action.payload.data).map(d => ({
-        date: parseDate(d.Date),
-        open: +d.Open,
-        high: +d.High,
-        low: +d.Low,
-        close: +d.Close,
-        volume: +d.Volume,
+        date: parseDate(d.date),
+        open: +d.open,
+        high: +d.high,
+        low: +d.low,
+        close: +d.close,
+        volume: +d.volume,
       })).sort((a, b) => d3.ascending(a.date, b.date));
       return { ...state,
         data: composedData,
