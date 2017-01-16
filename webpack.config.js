@@ -1,5 +1,21 @@
 const webpack = require('webpack');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+const plugins = isProduction ?
+[
+  new webpack.DefinePlugin({
+    NODE_ENV: JSON.stringify('production'),
+  }),
+  new webpack.optimize.UglifyJsPlugin({
+    compress: { warnings: false },
+  }),
+] : [
+  new webpack.DefinePlugin({
+    NODE_ENV: JSON.stringify('production'),
+  }),
+];
+
 module.exports = {
   entry: [
     'react-hot-loader/patch',
@@ -29,10 +45,6 @@ module.exports = {
         ],
         exclude: /node_modules/,
       },
-      {
-        test: /\.csv$/,
-        loader: 'dsv-loader',
-      },
     ],
   },
   eslint: {
@@ -42,11 +54,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      NODE_ENV: JSON.stringify('production'),
-    }),
-  ],
+  plugins,
   devServer: {
     historyApiFallback: true,
     contentBase: './public',

@@ -5,7 +5,7 @@ import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import PlayArrow from 'material-ui/svg-icons/av/play-arrow';
 import Pause from 'material-ui/svg-icons/av/pause';
 import Settings from 'material-ui/svg-icons/action/settings';
-import { red500, green500, grey500 } from 'material-ui/styles/colors';
+import { red500, green500, blue500 } from 'material-ui/styles/colors';
 
 const iconCollection = {
   trendingUp: <TrendingUp />,
@@ -25,7 +25,7 @@ const GameStartButton = (props) => {
   return (
     <FloatingActionButton
       onClick={handleClick}
-      backgroundColor={colorSelection[icon] ? colorSelection[icon] : grey500}
+      backgroundColor={colorSelection[icon] ? colorSelection[icon] : blue500}
     >
       {iconCollection[icon]}
     </FloatingActionButton>

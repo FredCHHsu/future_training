@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import * as gameControlActions from '../actions/game';
 import * as tradeActions from '../actions/trade';
 import GameControlButton from '../components/game_control_button';
-import GameSettingsDialog from '../components/game_setting_dialog';
+import GameSettingsDialog from './game_setting_dialog';
+import ChartSettingDialog from './chart_setting_dialog';
 
 const dataUrl = '/data/txf_1998_2015.csv';
 
@@ -67,6 +68,7 @@ class GamePage extends Component {
             </div>
             <div className="control-panel">
               <GameSettingsDialog />
+              <ChartSettingDialog />
               <GameControlButton
                 handleClick={this.props.gameStart ? this.endGame : this.startGame}
                 icon={this.props.gameStart ? 'pause' : 'play'}
