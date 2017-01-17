@@ -49,20 +49,10 @@ const timeAnnotationTop = techan.plot.axisannotation()
 const priceScale = d3.scaleLinear().range([dimension.priceChart.height, 0]);
 const priceAxisLeft = d3.axisLeft().scale(priceScale);
 const priceAxisRight = d3.axisRight().scale(priceScale);
+
 const candlestick = techan.plot.candlestick()
                     .xScale(timeScale)
                     .yScale(priceScale);
-
-const priceAnnotationRight = techan.plot.axisannotation()
-                        .axis(priceAxisRight)
-                        .orient('right')
-                        .translate([dimension.plot.width, 0]);
-                        // .format(d3.format(',.2f'));
-
-const priceAnnotationLeft = techan.plot.axisannotation()
-                            .axis(priceAxisLeft)
-                            .orient('left');
-                            // .format(d3.format(',.2f'));
 
 const tradearrow = techan.plot.tradearrow()
                   .xScale(timeScale)
@@ -76,6 +66,26 @@ const tradearrow = techan.plot.tradearrow()
                   // .on('mouseenter', enter)
                   // .on('mouseout', out);
 
+// crosshair
+const priceAnnotationRight = techan.plot.axisannotation()
+                        .axis(priceAxisRight)
+                        .orient('right')
+                        .translate([dimension.plot.width, 0]);
+                        // .format(d3.format(',.2f'));
+
+const priceAnnotationLeft = techan.plot.axisannotation()
+                            .axis(priceAxisLeft)
+                            .orient('left');
+                            // .format(d3.format(',.2f'));
+
+const priceCrosshair = techan.plot.crosshair()
+                      .xScale(timeScale)
+                      .yScale(priceScale)
+                      .xAnnotation([timeAnnotation, timeAnnotationTop])
+                      .yAnnotation([priceAnnotationLeft, priceAnnotationRight])
+                      .verticalWireRange([0, dimension.plot.height]);
+//                   .on('move', move);
+
 // volume chart
 const volumeScale = d3.scaleLinear()
                       .range([dimension.priceChart.height + dimension.volumeChart.height,
@@ -87,14 +97,23 @@ const volume = techan.plot.volume()
                 .xScale(timeScale)
                 .yScale(volumeScale);
 
-// crosshair
-const crosshair = techan.plot.crosshair()
-                  .xScale(timeScale)
-                  .yScale(priceScale)
-                  .xAnnotation([timeAnnotation, timeAnnotationTop])
-                  .yAnnotation([priceAnnotationLeft, priceAnnotationRight])
-                  .verticalWireRange([0, dimension.plot.height]);
-//                   .on('move', move);
+const volumeAnnotationRight = techan.plot.axisannotation()
+                        .axis(volumeAxisRight)
+                        .orient('right')
+                        .translate([dimension.plot.width, 0]);
+                        // .format(d3.format(',.2f'));
+
+const volumeAnnotationLeft = techan.plot.axisannotation()
+                            .axis(volumeAxisLeft)
+                            .orient('left');
+                            // .format(d3.format(',.2f'));
+
+const volumeCrosshair = techan.plot.crosshair()
+                      .xScale(timeScale)
+                      .yScale(volumeScale)
+                      .xAnnotation([timeAnnotation, timeAnnotationTop])
+                      .yAnnotation([volumeAnnotationLeft, volumeAnnotationRight])
+                      .verticalWireRange([0, dimension.plot.height]);
 
 class CandlestickChart extends Component {
   constructor(props) {
@@ -143,6 +162,9 @@ class CandlestickChart extends Component {
     svg.append('g')
        .attr('class', 'tradearrow');
 
+    svg.append('g')
+       .attr('class', 'price crosshair');
+
 // volume chart
     svg.append('g')
        .attr('class', 'volume');
@@ -154,10 +176,8 @@ class CandlestickChart extends Component {
     svg.append('g')
        .attr('class', 'volume axis left');
 
-// crosshair
-
     svg.append('g')
-       .attr('class', 'crosshair');
+       .attr('class', 'volume crosshair');
 
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ svg });
@@ -184,12 +204,13 @@ class CandlestickChart extends Component {
     svg.select('g.price.axis.left').call(priceAxisLeft);
     svg.select('g.price.axis.right').call(priceAxisRight);
     svg.select('g.tradearrow').datum(trades).call(tradearrow);
+    svg.select('g.price.crosshair').call(priceCrosshair);
 
     volumeScale.domain(techan.scale.plot.volume(data).domain());
     svg.select('g.volume').datum(data).call(volume);
     svg.select('g.volume.axis.left').call(volumeAxisLeft);
     svg.select('g.volume.axis.right').call(volumeAxisRight);
-    svg.select('g.crosshair').call(crosshair);
+    svg.select('g.volume.crosshair').call(volumeCrosshair);
   }
   render() {
     return (<div id="candlestick-main-chart"></div>);
