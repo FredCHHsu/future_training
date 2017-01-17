@@ -14,9 +14,10 @@
 
 $theme: (
   candlestick: (
-    up: #d00,
-    down: #090,
-    base: #ddd,
+    up: #d32f2f, // red700
+    down: #388e3c, // green700
+    base: #9E9E9E, // grey500
+    volume: #616161, // grey700
   ),
 
   background: (

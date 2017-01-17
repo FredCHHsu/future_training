@@ -1,6 +1,7 @@
 .axis {
   >.domain {
     stroke: theme-color(font, light);
+    fill: transparent;
   }
 
   >.tick {
@@ -74,4 +75,14 @@
       fill: theme-color(candlestick);
     }
   }
+}
+
+.volume {
+  fill: theme-color(candlestick, volume);
+  // &.up {
+  //   fill: theme-color(candlestick, up);
+  // }
+  // &.down {
+  //   fill: theme-color(candlestick, down);
+  // }
 }
