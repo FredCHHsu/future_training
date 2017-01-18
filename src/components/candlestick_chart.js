@@ -7,7 +7,7 @@ const resolutionFactor = 1;
 const dimension = {
   chartWrapper: {
     width: window.innerWidth * resolutionFactor,
-    height: window.innerHeight * 0.7 * resolutionFactor,
+    height: window.innerHeight * 0.8 * resolutionFactor,
   },
   margin: { top: 50, right: 40, bottom: 50, left: 40 },
 };
@@ -19,12 +19,17 @@ dimension.plot = {
 
 dimension.priceChart = {
   width: dimension.plot.width,
-  height: dimension.plot.height * 0.75,
+  height: dimension.plot.height * 0.6,
 };
 
 dimension.volumeChart = {
   width: dimension.plot.width,
-  height: dimension.plot.height * 0.25,
+  height: dimension.plot.height * 0.2,
+};
+
+dimension.indicatorChart = {
+  width: dimension.plot.width,
+  height: dimension.plot.height * 0.2,
 };
 
 // time as x Axis
@@ -103,18 +108,47 @@ const volumeAnnotationRight = techan.plot.axisannotation()
                         .axis(volumeAxisRight)
                         .orient('right')
                         .translate([dimension.plot.width, 0]);
-                        // .format(d3.format(',.2f'));
 
 const volumeAnnotationLeft = techan.plot.axisannotation()
                             .axis(volumeAxisLeft)
                             .orient('left');
-                            // .format(d3.format(',.2f'));
 
 const volumeCrosshair = techan.plot.crosshair()
                       .xScale(timeScale)
                       .yScale(volumeScale)
                       .xAnnotation([timeAnnotation, timeAnnotationTop])
                       .yAnnotation([volumeAnnotationLeft, volumeAnnotationRight])
+                      .verticalWireRange([0, dimension.plot.height]);
+
+// indicator
+const indicatorScale = d3.scaleLinear()
+                      .range([
+                        dimension.priceChart.height +
+                        dimension.volumeChart.height +
+                        dimension.indicatorChart.height,
+                        dimension.priceChart.height +
+                        dimension.volumeChart.height + 5,
+                      ]);
+const indicatorAxisLeft = d3.axisLeft().scale(indicatorScale).ticks(4);
+const indicatorAxisRight = d3.axisRight().scale(indicatorScale).ticks(4);
+const indicator = techan.plot.atr()
+                .xScale(timeScale)
+                .yScale(indicatorScale);
+
+const indicatorAnnotationRight = techan.plot.axisannotation()
+                        .axis(indicatorAxisRight)
+                        .orient('right')
+                        .translate([dimension.plot.width, 0]);
+
+const indicatorAnnotationLeft = techan.plot.axisannotation()
+                            .axis(indicatorAxisLeft)
+                            .orient('left');
+
+const indicatorCrosshair = techan.plot.crosshair()
+                      .xScale(timeScale)
+                      .yScale(indicatorScale)
+                      .xAnnotation([timeAnnotation, timeAnnotationTop])
+                      .yAnnotation([indicatorAnnotationLeft, indicatorAnnotationRight])
                       .verticalWireRange([0, dimension.plot.height]);
 
 class CandlestickChart extends Component {
@@ -181,6 +215,23 @@ class CandlestickChart extends Component {
     svg.append('g')
        .attr('class', 'volume crosshair');
 
+// indicator chart
+    svg.append('g')
+       .attr('class', 'indicator atr');
+
+    svg.append('g')
+       .attr('class', 'indicator axis right')
+       .attr('transform', `translate(${dimension.plot.width}, 0)`);
+
+    svg.append('g')
+       .attr('class', 'indicator axis left');
+
+    svg.append('g')
+       .attr('class', 'indicator crosshair');
+
+    svg.append('g')
+       .attr('class', 'indicator crosshair');
+
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ svg });
   }
@@ -213,6 +264,13 @@ class CandlestickChart extends Component {
     svg.select('g.volume.axis.left').call(volumeAxisLeft);
     svg.select('g.volume.axis.right').call(volumeAxisRight);
     svg.select('g.volume.crosshair').call(volumeCrosshair);
+
+    const indicatorData = techan.indicator.atr().period(10)(data);
+    indicatorScale.domain(techan.scale.plot.atr(indicatorData).domain());
+    svg.select('g.indicator.atr').datum(indicatorData).call(indicator);
+    svg.select('g.indicator.axis.left').call(indicatorAxisLeft);
+    svg.select('g.indicator.axis.right').call(indicatorAxisRight);
+    svg.select('g.indicator.crosshair').call(indicatorCrosshair);
   }
   render() {
     return (<div id="candlestick-main-chart"></div>);
