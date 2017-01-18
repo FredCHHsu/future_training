@@ -1,0 +1,15 @@
+.crosshair {
+  cursor: crosshair;
+  font-size: 10px;
+
+  .wire {
+    stroke: theme-color(candlestick);
+    stroke-dasharray: 1, 1;
+  }
+
+  .axisannotation {
+    path {
+      fill: theme-color(candlestick);
+    }
+  }
+}

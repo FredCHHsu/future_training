@@ -1,0 +1,22 @@
+.tradearrow {
+  // stroke: none;
+  &.buy {
+    fill: theme-color(candlestick, up);
+  }
+
+  &.sell {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: theme-color(candlestick, up);
+  }
+
+  &.short {
+    fill: theme-color(candlestick, down);
+  }
+
+  &.cover {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: theme-color(candlestick, down);
+  }
+}

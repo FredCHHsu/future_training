@@ -1,0 +1,21 @@
+.candle {
+  stroke: theme-color(font);
+
+  &.body {
+    stroke-width: 0;
+  }
+
+  &.wick {
+    // stroke-width: 2px !important;
+  }
+
+  &.up {
+    fill: theme-color(candlestick, up);
+    stroke: theme-color(candlestick, up);
+  }
+
+  &.down {
+    fill: theme-color(candlestick, down);
+    stroke: theme-color(candlestick, down);
+  }
+}

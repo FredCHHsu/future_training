@@ -1,0 +1,17 @@
+.volume {
+  fill: theme-color(candlestick, volume);
+  // &.up {
+  //   fill: theme-color(candlestick, up);
+  // }
+  // &.down {
+  //   fill: theme-color(candlestick, down);
+  // }
+}
+
+.atr {
+  path {
+    fill: none;
+    stroke-width: 1;
+    stroke: theme-color(indicator, yellow500);
+  }
+}

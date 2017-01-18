@@ -1,0 +1,16 @@
+.axis {
+  >.domain {
+    stroke: theme-color(font, light);
+    fill: transparent;
+  }
+
+  >.tick {
+    >line {
+      stroke: theme-color(font, light);
+    }
+
+    >text {
+      stroke: theme-color(font, light);
+    }
+  }
+}

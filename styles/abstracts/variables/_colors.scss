@@ -14,8 +14,8 @@
 
 $theme: (
   candlestick: (
-    up: #d32f2f, // red700
-    down: #388e3c, // green700
+    up: #F44336, // red500
+    down: #4CAF50, // green500
     base: #9E9E9E, // grey500
     volume: #616161, // grey700
   ),
@@ -24,6 +24,28 @@ $theme: (
     dark: #212121, // grey900
     base: #9E9E9E, // grey500
     light: #F5F5F5, // grey100
+  ),
+
+  indicator: (  // all material 500,
+    base: #000000,
+    red500: #F44336,
+    pink500: #E91E63,
+    purple500: #9C27B0,
+    deeppurple500: #673AB7,
+    indigo500: #3F51B5,
+    blue500: #2196F3,
+    lightblue500: #03A9F4,
+    cyan500: #00BCD4,
+    teal500: #009688,
+    green500: #4CAF50,
+    lightgreen500: #8BC34A,
+    lime500: #CDDC39,
+    yellow500: #FFEB3B,
+    amber500: #FFC107,
+    orange500: #FF9800,
+    deeporange500: #FF5722,
+    brown500: #795548,
+    bluegrey500: #607D8B,
   ),
 
   font: (
