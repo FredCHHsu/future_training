@@ -7,7 +7,7 @@
 }
 
 .game-area {
-  height: 80vh;
+  height: 85vh;
 }
 
 .control-panel {
@@ -24,7 +24,7 @@
 .game-log {
   display: inline-block;
   position: absolute;
-  top: 70vh;
+  bottom: 16vh;
   right: 5%;
   box-shadow: 0 0 5px theme-color(background, light);
   padding: 0.5em;

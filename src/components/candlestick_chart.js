@@ -34,8 +34,8 @@ dimension.indicatorChart = {
 
 // time as x Axis
 const timeScale = techan.scale.financetime().range([0, dimension.plot.width]);
-const xAxisTop = d3.axisTop().scale(timeScale);
-const xAxisBottom = d3.axisBottom().scale(timeScale);
+const xAxisTop = d3.axisTop().scale(timeScale).ticks(5);
+const xAxisBottom = d3.axisBottom().scale(timeScale).ticks(5);
 
 const timeAnnotation = techan.plot.axisannotation()
             .axis(xAxisBottom)
