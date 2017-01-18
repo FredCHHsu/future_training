@@ -1,17 +1,28 @@
 .volume {
   fill: theme-color(candlestick, volume);
-  // &.up {
-  //   fill: theme-color(candlestick, up);
-  // }
-  // &.down {
-  //   fill: theme-color(candlestick, down);
-  // }
+}
+
+.indicator {
+  .line {
+    fill: none;
+    stroke-width: 1;
+  }
 }
 
 .atr {
-  path {
-    fill: none;
-    stroke-width: 1;
-    stroke: theme-color(indicator, yellow500);
+  stroke: theme-color(indicator, yellow500);
+}
+
+.sma {
+  &.ma-10 {
+    stroke: theme-color(indicator, bluegrey500);
+  }
+
+  &.ma-20 {
+    stroke: theme-color(indicator, orange500);
+  }
+
+  &.ma-60 {
+    stroke: theme-color(indicator, deeppurple500);
   }
 }

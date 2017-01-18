@@ -34,8 +34,8 @@ dimension.indicatorChart = {
 
 // time as x Axis
 const timeScale = techan.scale.financetime().range([0, dimension.plot.width]);
-const xAxisTop = d3.axisTop().scale(timeScale);
-const xAxisBottom = d3.axisBottom().scale(timeScale);
+const xAxisTop = d3.axisTop().scale(timeScale).ticks(5);
+const xAxisBottom = d3.axisBottom().scale(timeScale).ticks(5);
 
 const timeAnnotation = techan.plot.axisannotation()
             .axis(xAxisBottom)
@@ -70,6 +70,10 @@ const tradearrow = techan.plot.tradearrow()
                   });
                   // .on('mouseenter', enter)
                   // .on('mouseout', out);
+
+const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
+
+const maPeriod = [10, 20, 60];
 
 // crosshair
 const priceAnnotationRight = techan.plot.axisannotation()
@@ -178,59 +182,62 @@ class CandlestickChart extends Component {
        .attr('transform', `translate(0, ${dimension.plot.height})`);
 
 // price chart
-    svg.append('g')
-       .attr('class', 'candlestick');
+    const priceGroup = svg.append('g')
+                           .attr('class', 'candlestick');
+
+    priceGroup.append('g')
+              .attr('class', 'price axis left');
+
+    priceGroup.append('g')
+              .attr('class', 'price axis right')
+              .attr('transform', `translate(${dimension.plot.width}, 0)`);
+              //  .append('text')
+              //  .attr('class', 'label')
+              //  .attr('transform', 'rotate(-90)')
+              //  .attr('y', 6)
+              //  .attr('dy', '2.71em')
+              //  .style('text-anchor', 'end')
+              //  .text('Price');
+
+    maPeriod.forEach(period => {
+      priceGroup.append('g')
+                .attr('class', `indicator sma ma-${period}`);
+    });
+
+    priceGroup.append('g')
+              .attr('class', 'tradearrow');
 
     svg.append('g')
-       .attr('class', 'price axis left');
-
-    svg.append('g')
-       .attr('class', 'price axis right')
-       .attr('transform', `translate(${dimension.plot.width}, 0)`);
-      //  .append('text')
-      //  .attr('class', 'label')
-      //  .attr('transform', 'rotate(-90)')
-      //  .attr('y', 6)
-      //  .attr('dy', '2.71em')
-      //  .style('text-anchor', 'end')
-      //  .text('Price');
-
-    svg.append('g')
-       .attr('class', 'tradearrow');
-
-    svg.append('g')
-       .attr('class', 'price crosshair');
+              .attr('class', 'price crosshair');
 
 // volume chart
-    svg.append('g')
-       .attr('class', 'volume');
+    const volumeGroup = svg.append('g')
+                           .attr('class', 'volume');
+
+    volumeGroup.append('g')
+               .attr('class', 'volume axis right')
+               .attr('transform', `translate(${dimension.plot.width}, 0)`);
+
+    volumeGroup.append('g')
+               .attr('class', 'volume axis left');
 
     svg.append('g')
-       .attr('class', 'volume axis right')
-       .attr('transform', `translate(${dimension.plot.width}, 0)`);
-
-    svg.append('g')
-       .attr('class', 'volume axis left');
-
-    svg.append('g')
-       .attr('class', 'volume crosshair');
+               .attr('class', 'volume crosshair');
 
 // indicator chart
-    svg.append('g')
-       .attr('class', 'indicator atr');
+    const indicatorGroup = svg.append('g')
+                              .attr('class', 'indicator atr');
+
+    indicatorGroup.append('g')
+                  .attr('class', 'indicator axis right')
+                  .attr('transform', `translate(${dimension.plot.width}, 0)`);
+
+    indicatorGroup.append('g')
+                  .attr('class', 'indicator axis left');
 
     svg.append('g')
-       .attr('class', 'indicator axis right')
-       .attr('transform', `translate(${dimension.plot.width}, 0)`);
+                  .attr('class', 'indicator crosshair');
 
-    svg.append('g')
-       .attr('class', 'indicator axis left');
-
-    svg.append('g')
-       .attr('class', 'indicator crosshair');
-
-    svg.append('g')
-       .attr('class', 'indicator crosshair');
 
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ svg });
@@ -258,6 +265,10 @@ class CandlestickChart extends Component {
     svg.select('g.price.axis.right').call(priceAxisRight);
     svg.select('g.tradearrow').datum(trades).call(tradearrow);
     svg.select('g.price.crosshair').call(priceCrosshair);
+    maPeriod.forEach(period => {
+      svg.select(`g.sma.ma-${period}`)
+         .datum(techan.indicator.sma().period(period)(data)).call(sma);
+    });
 
     volumeScale.domain(techan.scale.plot.volume(data).domain());
     svg.select('g.volume').datum(data).call(volume);
