@@ -13,7 +13,7 @@ const dimension = {
 };
 
 dimension.plot = {
-  width: dimension.chartWrapper.width - dimension.margin.left - dimension.margin.left,
+  width: dimension.chartWrapper.width - dimension.margin.right - dimension.margin.left,
   height: dimension.chartWrapper.height - dimension.margin.top - dimension.margin.bottom,
 };
 
