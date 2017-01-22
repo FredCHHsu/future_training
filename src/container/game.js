@@ -8,7 +8,8 @@ import GameControlButton from '../components/game_control_button';
 import GameSettingsDialog from './game_setting_dialog';
 import ChartSettingDialog from './chart_setting_dialog';
 
-const dataUrl = '/data/txf_1998_2015.csv';
+// const dataUrl = '/data/txf_1998_2015.csv';
+const dataUrl = '/data/TX_01_16.txt';
 
 class GamePage extends Component {
   constructor(props) {
