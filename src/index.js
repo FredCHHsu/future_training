@@ -3,8 +3,8 @@ import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
 const injectTapEventPlugin = require('react-tap-event-plugin');
-import AppWrapper from './app_wrapper';
-import configureStore from './configure_store';
+import AppWrapper from './AppWrapper';
+import configureStore from './configureStore';
 
 injectTapEventPlugin();
 const store = configureStore();
@@ -17,8 +17,8 @@ ReactDOM.render(
 );
 
 if (module.hot) {
-  module.hot.accept('./app_wrapper', () => {
-    const NextApp = require('./app_wrapper').default;
+  module.hot.accept('./AppWrapper', () => {
+    const NextApp = require('./AppWrapper').default;
     ReactDOM.render(
       <NextApp store={store} />,
       document.querySelector('#app-entry-point')

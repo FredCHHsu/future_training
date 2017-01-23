@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as gameControlActions from '../actions/game';
 import * as tradeActions from '../actions/trade';
-import GameControlButton from '../components/game_control_button';
-import GameSettingsDialog from './game_setting_dialog';
-import ChartSettingDialog from './chart_setting_dialog';
+import GameControlButton from '../components/GameControlButton';
+import GameSettingsDialog from './GameSettingDialog';
+import ChartSettingDialog from './ChartSettingDialog';
 
 // const dataUrl = '/data/txf_1998_2015.csv';
 const dataUrl = '/data/TX_01_16.txt';

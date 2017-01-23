@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import gameTheme from '../game_theme';
+import gameTheme from '../gameTheme';
 
 const App = (props) =>
   <MuiThemeProvider muiTheme={getMuiTheme(gameTheme)}>

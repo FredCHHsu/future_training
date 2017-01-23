@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import game from './game_reducer';
-import chart from './chart_reducer';
-import trade from './trade_reducer';
+import game from './gameReducer';
+import chart from './chartReducer';
+import trade from './tradeReducer';
 
 const Reducers = combineReducers({
   game,
