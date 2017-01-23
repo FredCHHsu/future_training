@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import CandlestickChart from '../components/candlestick_chart';
+import GameChart from '../components/chart/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as gameControlActions from '../actions/game';
@@ -65,7 +65,7 @@ class GamePage extends Component {
         <div className="game-bg">
           <div className="container main-game">
             <div className="game-area">
-              <CandlestickChart />
+              <GameChart />
             </div>
             <div className="control-panel">
               <GameSettingsDialog />

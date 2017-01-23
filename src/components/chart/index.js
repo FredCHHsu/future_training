@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import techan from '../vendor/techan';
+import techan from '../../vendor/techan';
 import * as d3 from 'd3';
 import { connect } from 'react-redux';
 
