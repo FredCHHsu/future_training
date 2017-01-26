@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import techan from '../../vendor/techan';
 import * as d3 from 'd3';
 import { connect } from 'react-redux';
+import Axis from './Axis';
 
 const resolutionFactor = 1;
 const dimension = {
@@ -165,21 +166,16 @@ class CandlestickChart extends Component {
     this.draw = this.draw.bind(this);
   }
   componentDidMount() {
-    const svg = d3.select('#candlestick-main-chart').append('svg')
-                  .attr('width', '100%')
-                  .attr('height', '100%')
-                  .attr('viewBox',
-                        `0 0 ${dimension.chartWrapper.width} ${dimension.chartWrapper.height}`)
-                  .attr('preserveAspectRatio', 'xMinYMin')
-                  .append('g')
-                  .attr('transform', `translate(${dimension.margin.left},${dimension.margin.top})`);
+// const svg = d3.select('#candlestick-main-chart').append('svg')
+//               .attr('width', '100%')
+//               .attr('height', '100%')
+//               .attr('viewBox',
+//                     `0 0 ${dimension.chartWrapper.width} ${dimension.chartWrapper.height}`)
+//               .attr('preserveAspectRatio', 'xMinYMin')
+//               .append('g')
+//               .attr('transform', `translate(${dimension.margin.left},${dimension.margin.top})`);
 
-    svg.append('g')
-       .attr('class', 'x axis top');
-
-    svg.append('g')
-       .attr('class', 'x axis bottom')
-       .attr('transform', `translate(0, ${dimension.plot.height})`);
+    const svg = d3.select('#plot');
 
 // price chart
     const priceGroup = svg.append('g')
@@ -256,7 +252,7 @@ class CandlestickChart extends Component {
   draw(data, trades = this.props.tradeLog) {
     const svg = this.state.svg;
     timeScale.domain(data.map(candlestick.accessor().d));
-    svg.select('g.x.axis.top').call(xAxisTop);
+    // svg.select('g.x.axis.top').call(xAxisTop);
     svg.select('g.x.axis.bottom').call(xAxisBottom);
 
     priceScale.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
@@ -284,7 +280,25 @@ class CandlestickChart extends Component {
     svg.select('g.indicator.crosshair').call(indicatorCrosshair);
   }
   render() {
-    return (<div id="candlestick-main-chart"></div>);
+    return (
+      <svg
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${dimension.chartWrapper.width} ${dimension.chartWrapper.height}`}
+        preserveAspectRatio="xMinYMin"
+      >
+        <g
+          id="plot"
+          transform={`translate(${dimension.margin.left},${dimension.margin.top})`}
+        >
+          <Axis />
+          <g
+            className="x axis bottom"
+            transform={`translate(0, ${dimension.plot.height})`}
+          ></g>
+        </g>
+      </svg>
+    );
   }
 }
 
