@@ -238,15 +238,14 @@ class CandlestickChart extends Component {
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ svg });
   }
-  componentDidUpdate() {
-    if (this.props.data && !this.state.chartInitilized) {
-      this.draw(this.props.data.slice(0, this.props.barsInChart));
+  componentWillUpdate(nextProps) {
+    if (nextProps.data && !this.state.chartInitilized) {
+      this.draw(nextProps.data);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ chartInitilized: true });
-    } else if (this.props.data) {
-      // draw last n(barsInChart) candlesticks
-      this.draw(this.props.data.slice(this.props.lastTickOnChart - this.props.barsInChart,
-                                      this.props.lastTickOnChart));
+    } else if (nextProps.data) {
+      // draw last n(barsOnChart) candlesticks
+      this.draw(nextProps.data);
     }
   }
   draw(data, trades = this.props.tradeLog) {
@@ -291,11 +290,8 @@ class CandlestickChart extends Component {
           id="plot"
           transform={`translate(${dimension.margin.left},${dimension.margin.top})`}
         >
-          <Axis />
-          <g
-            className="x axis bottom"
-            transform={`translate(0, ${dimension.plot.height})`}
-          ></g>
+          <Axis position="top" />
+          <Axis position="bottom" />
         </g>
       </svg>
     );
@@ -305,14 +301,14 @@ class CandlestickChart extends Component {
 CandlestickChart.propTypes = {
   data: PropTypes.array,
   lastTickOnChart: PropTypes.number,
-  barsInChart: PropTypes.number,
+  barsOnChart: PropTypes.number,
   tradeLog: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
-  data: state.game.data,
-  lastTickOnChart: state.game.lastTickIndex + 1,
-  barsInChart: state.chart.barsInChart,
+  data: state.game.dataOnChart,
+  lastTickOnChart: state.game.lastTickIndex,
+  barsOnChart: state.game.barsOnChart,
   tradeLog: state.trade.log,
 });
 

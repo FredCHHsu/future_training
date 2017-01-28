@@ -1,3 +1,6 @@
+import * as d3 from 'd3';
+import techan from '../vendor/techan';
+
 const resolutionFactor = 1;
 
 const chartWrapper = {
@@ -27,8 +30,14 @@ const indicatorChart = {
   height: plot.height * 0.2,
 };
 
+const timeScale = techan.scale.financetime().range([0, plot.width]);
+const candlestick = techan.plot.candlestick().xScale(timeScale);
+
+const xAxisTop = d3.axisTop().scale(timeScale).ticks(5);
+const xAxisBottom = d3.axisBottom().scale(timeScale).ticks(5);
+
+
 const INITIAL_STATE = {
-  barsInChart: 100,
   dimension: {
     chartWrapper,
     margin,
@@ -36,6 +45,12 @@ const INITIAL_STATE = {
     priceChart,
     volumeChart,
     indicatorChart,
+  },
+  timeScale,
+  candlestick,
+  xAxis: {
+    top: xAxisTop,
+    bottom: xAxisBottom,
   },
 };
 

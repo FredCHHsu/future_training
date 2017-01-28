@@ -9,13 +9,15 @@ const parseDate = d3.timeParse('%Y/%m/%d');
 const initialState = {
   start: false,
   startDate: null,
-  maxDate: null,
-  minDate: null,
+  maxDate: null, // full data
+  minDate: null, // full data
   // endDate: '2014/03/11',
   // barPeroid: '1min',
   durationBetweenBars: 1000,
   lastTickIndex: 99,
+  barsOnChart: 100,
   data: null,
+  dataOnChart: null,
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +33,7 @@ export default function (state = initialState, action) {
       })).sort((a, b) => d3.ascending(a.date, b.date));
       return { ...state,
         data: composedData,
+        dataOnChart: composedData.slice(0, state.lastTickIndex + 1),
         startDate: composedData[state.lastTickIndex].date,
         minDate: composedData[0].date,
         maxDate: composedData[composedData.length - 1].date,
@@ -44,8 +47,15 @@ export default function (state = initialState, action) {
       // eslint-disable-next-line no-console
       console.log(PAUSE_GAME);
       return { ...state, start: false };
-    case GAME_TICK:
-      return { ...state, lastTickIndex: state.lastTickIndex + 1 };
+    case GAME_TICK: {
+      const nextLastTickIndex = state.lastTickIndex + 1;
+      return {
+        ...state,
+        lastTickIndex: nextLastTickIndex,
+        dataOnChart: state.data.slice((nextLastTickIndex + 1 - state.barsOnChart),
+                                       nextLastTickIndex + 1),
+      };
+    }
     case SET_START_DATE: {
       const dataIsExist = state.data.findIndex(d => d.date.getTime() === action.payload.getTime());
       return { ...state, startDate: action.payload, lastTickIndex: dataIsExist };
