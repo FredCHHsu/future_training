@@ -31,10 +31,26 @@ const indicatorChart = {
 };
 
 const timeScale = techan.scale.financetime().range([0, plot.width]);
-const candlestick = techan.plot.candlestick().xScale(timeScale);
-
 const xAxisTop = d3.axisTop().scale(timeScale).ticks(5);
 const xAxisBottom = d3.axisBottom().scale(timeScale).ticks(5);
+
+const priceScale = d3.scaleLinear().range([priceChart.height, 0]);
+const candlestick = techan.plot.candlestick()
+                    .xScale(timeScale)
+                    .yScale(priceScale);
+const priceAxisLeft = d3.axisLeft().scale(priceScale);
+const priceAxisRight = d3.axisRight().scale(priceScale);
+const tradearrow = techan.plot.tradearrow()
+                  .xScale(timeScale)
+                  .yScale(priceScale)
+                  .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
+                  .y(d => {
+                    // Display the buy and sell arrows a bit above and below the price
+                    if (d.type === 'buy' || d.type === 'cover') return priceScale(d.low - 5);
+                    return priceScale(d.high + 5);
+                  });
+const maPeriods = [10, 20, 60];
+const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
 
 
 const INITIAL_STATE = {
@@ -47,11 +63,17 @@ const INITIAL_STATE = {
     indicatorChart,
   },
   timeScale,
-  candlestick,
   xAxis: {
     top: xAxisTop,
     bottom: xAxisBottom,
   },
+  priceScale,
+  candlestick,
+  priceAxisLeft,
+  priceAxisRight,
+  tradearrow,
+  maPeriods,
+  sma,
 };
 
 export default (state = INITIAL_STATE, action) => {

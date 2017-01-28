@@ -3,6 +3,7 @@ import techan from '../../vendor/techan';
 import * as d3 from 'd3';
 import { connect } from 'react-redux';
 import Axis from './Axis';
+import PriceChart from './PriceChart';
 
 const resolutionFactor = 1;
 const dimension = {
@@ -60,19 +61,20 @@ const candlestick = techan.plot.candlestick()
                     .xScale(timeScale)
                     .yScale(priceScale);
 
-const tradearrow = techan.plot.tradearrow()
-                  .xScale(timeScale)
-                  .yScale(priceScale)
-                  .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
-                  .y(d => {
-                    // Display the buy and sell arrows a bit above and below the price
-                    if (d.type === 'buy' || d.type === 'cover') return priceScale(d.low - 5);
-                    return priceScale(d.high + 5);
-                  });
+// const tradearrow = techan.plot.tradearrow()
+//                   .xScale(timeScale)
+//                   .yScale(priceScale)
+//                   .orient(d =>
+// (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
+//                   .y(d => {
+//                     // Display the buy and sell arrows a bit above and below the price
+//                     if (d.type === 'buy' || d.type === 'cover') return priceScale(d.low - 5);
+//                     return priceScale(d.high + 5);
+//                   });
                   // .on('mouseenter', enter)
                   // .on('mouseout', out);
 
-const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
+// const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
 
 const maPeriod = [10, 20, 60];
 
@@ -248,20 +250,20 @@ class CandlestickChart extends Component {
       this.draw(this.props.data);
     }
   }
-  draw(data, trades = this.props.tradeLog) {
+  draw(data) {
     const svg = this.state.svg;
     timeScale.domain(data.map(candlestick.accessor().d));
 
-    priceScale.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
-    svg.select('g.candlestick').datum(data).call(candlestick);
-    svg.select('g.price.axis.left').call(priceAxisLeft);
-    svg.select('g.price.axis.right').call(priceAxisRight);
-    svg.select('g.tradearrow').datum(trades).call(tradearrow);
+    // priceScale.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
+    // svg.select('g.candlestick').datum(data).call(candlestick);
+    // svg.select('g.price.axis.left').call(priceAxisLeft);
+    // svg.select('g.price.axis.right').call(priceAxisRight);
+    // svg.select('g.tradearrow').datum(trades).call(tradearrow);
     svg.select('g.price.crosshair').call(priceCrosshair);
-    maPeriod.forEach(period => {
-      svg.select(`g.sma.ma-${period}`)
-         .datum(techan.indicator.sma().period(period)(data)).call(sma);
-    });
+    // maPeriod.forEach(period => {
+    //   svg.select(`g.sma.ma-${period}`)
+    //      .datum(techan.indicator.sma().period(period)(data)).call(sma);
+    // });
 
     volumeScale.domain(techan.scale.plot.volume(data).domain());
     svg.select('g.volume').datum(data).call(volume);
@@ -290,6 +292,7 @@ class CandlestickChart extends Component {
         >
           <Axis position="top" />
           <Axis position="bottom" />
+          <PriceChart />
         </g>
       </svg>
     );
