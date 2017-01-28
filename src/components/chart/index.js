@@ -238,21 +238,19 @@ class CandlestickChart extends Component {
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ svg });
   }
-  componentWillUpdate(nextProps) {
-    if (nextProps.data && !this.state.chartInitilized) {
-      this.draw(nextProps.data);
+  componentDidUpdate() {
+    if (this.props.data && !this.state.chartInitilized) {
+      this.draw(this.props.data);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ chartInitilized: true });
-    } else if (nextProps.data) {
+    } else if (this.props.data) {
       // draw last n(barsOnChart) candlesticks
-      this.draw(nextProps.data);
+      this.draw(this.props.data);
     }
   }
   draw(data, trades = this.props.tradeLog) {
     const svg = this.state.svg;
     timeScale.domain(data.map(candlestick.accessor().d));
-    // svg.select('g.x.axis.top').call(xAxisTop);
-    svg.select('g.x.axis.bottom').call(xAxisBottom);
 
     priceScale.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
     svg.select('g.candlestick').datum(data).call(candlestick);

@@ -3,13 +3,6 @@ import { connect } from 'react-redux';
 import * as d3 from 'd3';
 
 class Axis extends Component {
-  componentWillMount() {
-    const { timeScale, candlestick, xAxis } = this.props;
-    if (this.props.data) {
-      timeScale.domain(this.props.data.map(candlestick.accessor().d));
-      d3.select(`g.x.axis.${this.props.position}`).call(xAxis);
-    }
-  }
   componentWillUpdate(nextProps) {
     const { timeScale, candlestick, xAxis } = this.props;
     if (nextProps.data) {
