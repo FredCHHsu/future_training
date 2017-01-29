@@ -3,6 +3,8 @@ import techan from '../../vendor/techan';
 import * as d3 from 'd3';
 import { connect } from 'react-redux';
 import Axis from './Axis';
+import PriceChart from './PriceChart';
+import VolumeChart from './VolumeChart';
 
 const resolutionFactor = 1;
 const dimension = {
@@ -60,21 +62,22 @@ const candlestick = techan.plot.candlestick()
                     .xScale(timeScale)
                     .yScale(priceScale);
 
-const tradearrow = techan.plot.tradearrow()
-                  .xScale(timeScale)
-                  .yScale(priceScale)
-                  .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
-                  .y(d => {
-                    // Display the buy and sell arrows a bit above and below the price
-                    if (d.type === 'buy' || d.type === 'cover') return priceScale(d.low - 5);
-                    return priceScale(d.high + 5);
-                  });
+// const tradearrow = techan.plot.tradearrow()
+//                   .xScale(timeScale)
+//                   .yScale(priceScale)
+//                   .orient(d =>
+// (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
+//                   .y(d => {
+//                     // Display the buy and sell arrows a bit above and below the price
+//                     if (d.type === 'buy' || d.type === 'cover') return priceScale(d.low - 5);
+//                     return priceScale(d.high + 5);
+//                   });
                   // .on('mouseenter', enter)
                   // .on('mouseout', out);
 
-const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
+// const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
 
-const maPeriod = [10, 20, 60];
+// const maPeriod = [10, 20, 60];
 
 // crosshair
 const priceAnnotationRight = techan.plot.axisannotation()
@@ -178,15 +181,15 @@ class CandlestickChart extends Component {
     const svg = d3.select('#plot');
 
 // price chart
-    const priceGroup = svg.append('g')
-                           .attr('class', 'candlestick');
-
-    priceGroup.append('g')
-              .attr('class', 'price axis left');
-
-    priceGroup.append('g')
-              .attr('class', 'price axis right')
-              .attr('transform', `translate(${dimension.plot.width}, 0)`);
+    // const priceGroup = svg.append('g')
+    //                        .attr('class', 'candlestick');
+    //
+    // priceGroup.append('g')
+    //           .attr('class', 'price axis left');
+    //
+    // priceGroup.append('g')
+    //           .attr('class', 'price axis right')
+    //           .attr('transform', `translate(${dimension.plot.width}, 0)`);
               //  .append('text')
               //  .attr('class', 'label')
               //  .attr('transform', 'rotate(-90)')
@@ -195,27 +198,27 @@ class CandlestickChart extends Component {
               //  .style('text-anchor', 'end')
               //  .text('Price');
 
-    maPeriod.forEach(period => {
-      priceGroup.append('g')
-                .attr('class', `indicator sma ma-${period}`);
-    });
+    // maPeriod.forEach(period => {
+    //   priceGroup.append('g')
+    //             .attr('class', `indicator sma ma-${period}`);
+    // });
 
-    priceGroup.append('g')
-              .attr('class', 'tradearrow');
+    // priceGroup.append('g')
+    //           .attr('class', 'tradearrow');
 
     svg.append('g')
               .attr('class', 'price crosshair');
 
 // volume chart
-    const volumeGroup = svg.append('g')
-                           .attr('class', 'volume');
-
-    volumeGroup.append('g')
-               .attr('class', 'volume axis right')
-               .attr('transform', `translate(${dimension.plot.width}, 0)`);
-
-    volumeGroup.append('g')
-               .attr('class', 'volume axis left');
+    // const volumeGroup = svg.append('g')
+    //                        .attr('class', 'volume');
+    //
+    // volumeGroup.append('g')
+    //            .attr('class', 'volume axis right')
+    //            .attr('transform', `translate(${dimension.plot.width}, 0)`);
+    //
+    // volumeGroup.append('g')
+    //            .attr('class', 'volume axis left');
 
     svg.append('g')
                .attr('class', 'volume crosshair');
@@ -238,37 +241,35 @@ class CandlestickChart extends Component {
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ svg });
   }
-  componentWillUpdate(nextProps) {
-    if (nextProps.data && !this.state.chartInitilized) {
-      this.draw(nextProps.data);
+  componentDidUpdate() {
+    if (this.props.data && !this.state.chartInitilized) {
+      this.draw(this.props.data);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ chartInitilized: true });
-    } else if (nextProps.data) {
+    } else if (this.props.data) {
       // draw last n(barsOnChart) candlesticks
-      this.draw(nextProps.data);
+      this.draw(this.props.data);
     }
   }
-  draw(data, trades = this.props.tradeLog) {
+  draw(data) {
     const svg = this.state.svg;
     timeScale.domain(data.map(candlestick.accessor().d));
-    // svg.select('g.x.axis.top').call(xAxisTop);
-    svg.select('g.x.axis.bottom').call(xAxisBottom);
 
-    priceScale.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
-    svg.select('g.candlestick').datum(data).call(candlestick);
-    svg.select('g.price.axis.left').call(priceAxisLeft);
-    svg.select('g.price.axis.right').call(priceAxisRight);
-    svg.select('g.tradearrow').datum(trades).call(tradearrow);
+    // priceScale.domain(techan.scale.plot.ohlc(data, candlestick.accessor()).domain());
+    // svg.select('g.candlestick').datum(data).call(candlestick);
+    // svg.select('g.price.axis.left').call(priceAxisLeft);
+    // svg.select('g.price.axis.right').call(priceAxisRight);
+    // svg.select('g.tradearrow').datum(trades).call(tradearrow);
     svg.select('g.price.crosshair').call(priceCrosshair);
-    maPeriod.forEach(period => {
-      svg.select(`g.sma.ma-${period}`)
-         .datum(techan.indicator.sma().period(period)(data)).call(sma);
-    });
+    // maPeriod.forEach(period => {
+    //   svg.select(`g.sma.ma-${period}`)
+    //      .datum(techan.indicator.sma().period(period)(data)).call(sma);
+    // });
 
-    volumeScale.domain(techan.scale.plot.volume(data).domain());
-    svg.select('g.volume').datum(data).call(volume);
-    svg.select('g.volume.axis.left').call(volumeAxisLeft);
-    svg.select('g.volume.axis.right').call(volumeAxisRight);
+    // volumeScale.domain(techan.scale.plot.volume(data).domain());
+    // svg.select('g.volume').datum(data).call(volume);
+    // svg.select('g.volume.axis.left').call(volumeAxisLeft);
+    // svg.select('g.volume.axis.right').call(volumeAxisRight);
     svg.select('g.volume.crosshair').call(volumeCrosshair);
 
     const indicatorData = techan.indicator.atr().period(10)(data);
@@ -290,8 +291,10 @@ class CandlestickChart extends Component {
           id="plot"
           transform={`translate(${dimension.margin.left},${dimension.margin.top})`}
         >
-          <Axis position="top" />
-          <Axis position="bottom" />
+          <Axis name="time" type="x" position="top" />
+          <Axis name="time" type="x" position="bottom" />
+          <PriceChart />
+          <VolumeChart />
         </g>
       </svg>
     );
