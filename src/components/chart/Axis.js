@@ -1,17 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
-import techan from '../../vendor/techan';
+// import techan from '../../vendor/techan';
 
 class Axis extends Component {
   componentWillUpdate(nextProps) {
-    const { name, type, position, scale, candlestick, axis } = this.props;
+    const { scale, domain, axis, name, type, position } = this.props;
     if (nextProps.data) {
-      if (name === 'time') {
-        scale.domain(nextProps.data.map(candlestick.accessor().d));
-      } else if (name === 'price') {
-        scale.domain(techan.scale.plot.ohlc(nextProps.data, candlestick.accessor()).domain());
-      }
+      scale.domain(domain(nextProps.data));
       d3.select(`g.axis.${name}.${type}.${position}`).call(axis);
     }
   }
@@ -30,11 +26,11 @@ class Axis extends Component {
 }
 
 Axis.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.array.isRequired,
   dimension: PropTypes.object,
-  scale: PropTypes.func,
-  candlestick: PropTypes.func,
-  axis: PropTypes.func,
+  scale: PropTypes.func.isRequired,
+  domain: PropTypes.func.isRequired,
+  axis: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired, // x or y
   position: PropTypes.string.isRequired,
@@ -43,8 +39,8 @@ Axis.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   data: state.game.dataOnChart,
   dimension: state.chart.dimension,
-  candlestick: state.chart.candlestick,
   scale: state.chart.axis[ownProps.name].scale,
+  domain: state.chart.axis[ownProps.name].domain,
   axis: state.chart.axis[ownProps.name][ownProps.position],
 });
 

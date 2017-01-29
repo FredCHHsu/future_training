@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import { connect } from 'react-redux';
 import Axis from './Axis';
 import PriceChart from './PriceChart';
+import VolumeChart from './VolumeChart';
 
 const resolutionFactor = 1;
 const dimension = {
@@ -76,7 +77,7 @@ const candlestick = techan.plot.candlestick()
 
 // const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
 
-const maPeriod = [10, 20, 60];
+// const maPeriod = [10, 20, 60];
 
 // crosshair
 const priceAnnotationRight = techan.plot.axisannotation()
@@ -180,15 +181,15 @@ class CandlestickChart extends Component {
     const svg = d3.select('#plot');
 
 // price chart
-    const priceGroup = svg.append('g')
-                           .attr('class', 'candlestick');
-
-    priceGroup.append('g')
-              .attr('class', 'price axis left');
-
-    priceGroup.append('g')
-              .attr('class', 'price axis right')
-              .attr('transform', `translate(${dimension.plot.width}, 0)`);
+    // const priceGroup = svg.append('g')
+    //                        .attr('class', 'candlestick');
+    //
+    // priceGroup.append('g')
+    //           .attr('class', 'price axis left');
+    //
+    // priceGroup.append('g')
+    //           .attr('class', 'price axis right')
+    //           .attr('transform', `translate(${dimension.plot.width}, 0)`);
               //  .append('text')
               //  .attr('class', 'label')
               //  .attr('transform', 'rotate(-90)')
@@ -197,27 +198,27 @@ class CandlestickChart extends Component {
               //  .style('text-anchor', 'end')
               //  .text('Price');
 
-    maPeriod.forEach(period => {
-      priceGroup.append('g')
-                .attr('class', `indicator sma ma-${period}`);
-    });
+    // maPeriod.forEach(period => {
+    //   priceGroup.append('g')
+    //             .attr('class', `indicator sma ma-${period}`);
+    // });
 
-    priceGroup.append('g')
-              .attr('class', 'tradearrow');
+    // priceGroup.append('g')
+    //           .attr('class', 'tradearrow');
 
     svg.append('g')
               .attr('class', 'price crosshair');
 
 // volume chart
-    const volumeGroup = svg.append('g')
-                           .attr('class', 'volume');
-
-    volumeGroup.append('g')
-               .attr('class', 'volume axis right')
-               .attr('transform', `translate(${dimension.plot.width}, 0)`);
-
-    volumeGroup.append('g')
-               .attr('class', 'volume axis left');
+    // const volumeGroup = svg.append('g')
+    //                        .attr('class', 'volume');
+    //
+    // volumeGroup.append('g')
+    //            .attr('class', 'volume axis right')
+    //            .attr('transform', `translate(${dimension.plot.width}, 0)`);
+    //
+    // volumeGroup.append('g')
+    //            .attr('class', 'volume axis left');
 
     svg.append('g')
                .attr('class', 'volume crosshair');
@@ -265,10 +266,10 @@ class CandlestickChart extends Component {
     //      .datum(techan.indicator.sma().period(period)(data)).call(sma);
     // });
 
-    volumeScale.domain(techan.scale.plot.volume(data).domain());
-    svg.select('g.volume').datum(data).call(volume);
-    svg.select('g.volume.axis.left').call(volumeAxisLeft);
-    svg.select('g.volume.axis.right').call(volumeAxisRight);
+    // volumeScale.domain(techan.scale.plot.volume(data).domain());
+    // svg.select('g.volume').datum(data).call(volume);
+    // svg.select('g.volume.axis.left').call(volumeAxisLeft);
+    // svg.select('g.volume.axis.right').call(volumeAxisRight);
     svg.select('g.volume.crosshair').call(volumeCrosshair);
 
     const indicatorData = techan.indicator.atr().period(10)(data);
@@ -290,9 +291,10 @@ class CandlestickChart extends Component {
           id="plot"
           transform={`translate(${dimension.margin.left},${dimension.margin.top})`}
         >
-          <Axis position="top" />
-          <Axis position="bottom" />
+          <Axis name="time" type="x" position="top" />
+          <Axis name="time" type="x" position="bottom" />
           <PriceChart />
+          <VolumeChart />
         </g>
       </svg>
     );

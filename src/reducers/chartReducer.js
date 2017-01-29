@@ -1,3 +1,5 @@
+import { GAME_TICK } from '../actions/types.js';
+
 import * as d3 from 'd3';
 import techan from '../vendor/techan';
 
@@ -52,6 +54,17 @@ const tradearrow = techan.plot.tradearrow()
 const maPeriods = [10, 20, 60];
 const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
 
+const volumeScale = d3.scaleLinear()
+                      .range([
+                        priceChart.height + volumeChart.height,
+                        priceChart.height + 5,
+                      ]);
+const volumeAxisLeft = d3.axisLeft().scale(volumeScale).ticks(4);
+const volumeAxisRight = d3.axisRight().scale(volumeScale).ticks(4);
+const volume = techan.plot.volume()
+                .accessor(candlestick.accessor())
+                .xScale(timeScale)
+                .yScale(volumeScale);
 
 const INITIAL_STATE = {
   dimension: {
@@ -62,22 +75,40 @@ const INITIAL_STATE = {
     volumeChart,
     indicatorChart,
   },
-  timeScale,
-  xAxis: {
-    top: xAxisTop,
-    bottom: xAxisBottom,
+  axis: {
+    time: {
+      top: xAxisTop,
+      bottom: xAxisBottom,
+      domain: data => data.map(candlestick.accessor().d),
+      scale: timeScale,
+    },
+    price: {
+      left: priceAxisLeft,
+      right: priceAxisRight,
+      domain: data => techan.scale.plot.ohlc(data, candlestick.accessor()).domain(),
+      scale: priceScale,
+    },
+    volume: {
+      left: volumeAxisLeft,
+      right: volumeAxisRight,
+      domain: data => techan.scale.plot.volume(data).domain(),
+      scale: volumeScale,
+    },
   },
-  priceScale,
   candlestick,
-  priceAxisLeft,
-  priceAxisRight,
   tradearrow,
   maPeriods,
   sma,
+  indicator: {
+    volume,
+  },
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case GAME_TICK:
+
+      return state;
     default:
       return state;
   }
