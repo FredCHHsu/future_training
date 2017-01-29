@@ -1,21 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
+import techan from '../../vendor/techan';
 
 class Axis extends Component {
   componentWillUpdate(nextProps) {
-    const { timeScale, candlestick, xAxis } = this.props;
+    const { name, type, position, scale, candlestick, axis } = this.props;
     if (nextProps.data) {
-      timeScale.domain(nextProps.data.map(candlestick.accessor().d));
-      d3.select(`g.x.axis.${this.props.position}`).call(xAxis);
+      if (name === 'time') {
+        scale.domain(nextProps.data.map(candlestick.accessor().d));
+      } else if (name === 'price') {
+        scale.domain(techan.scale.plot.ohlc(nextProps.data, candlestick.accessor()).domain());
+      }
+      d3.select(`g.axis.${name}.${type}.${position}`).call(axis);
     }
   }
   render() {
-    const isTopAxis = this.props.position === 'top';
+    const { name, type, position, dimension } = this.props;
+    const isBottomAxis = position === 'bottom';
+    const isRightAxis = position === 'right';
     return (
       <g
-        className={`x axis ${this.props.position}`}
-        transform={isTopAxis ? '' : `translate(0, ${this.props.dimension.plot.height})`}
+        className={`axis ${name} ${type} ${position}`}
+        // eslint-disable-next-line max-len
+        transform={`translate(${isRightAxis ? dimension.plot.width : 0}, ${isBottomAxis ? dimension.plot.height : 0})`}
       >
       </g>);
   }
@@ -24,18 +32,20 @@ class Axis extends Component {
 Axis.propTypes = {
   data: PropTypes.array,
   dimension: PropTypes.object,
-  timeScale: PropTypes.func,
+  scale: PropTypes.func,
   candlestick: PropTypes.func,
-  xAxis: PropTypes.func,
-  position: PropTypes.string,
+  axis: PropTypes.func,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired, // x or y
+  position: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
   data: state.game.dataOnChart,
   dimension: state.chart.dimension,
-  timeScale: state.chart.timeScale,
   candlestick: state.chart.candlestick,
-  xAxis: state.chart.xAxis[ownProps.position],
+  scale: state.chart.axis[ownProps.name].scale,
+  axis: state.chart.axis[ownProps.name][ownProps.position],
 });
 
 export default connect(mapStateToProps, null)(Axis);
