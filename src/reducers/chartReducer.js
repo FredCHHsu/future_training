@@ -1,4 +1,4 @@
-import { GAME_TICK } from '../actions/types.js';
+import { GAME_TICK, FETCH_DATA } from '../actions/types.js';
 
 import * as d3 from 'd3';
 import techan from '../vendor/techan';
@@ -33,8 +33,8 @@ const indicatorChart = {
 };
 
 const timeScale = techan.scale.financetime().range([0, plot.width]);
-const xAxisTop = d3.axisTop().scale(timeScale).ticks(5);
-const xAxisBottom = d3.axisBottom().scale(timeScale).ticks(5);
+const timeAxisTop = d3.axisTop().scale(timeScale).ticks(5);
+const timeAxisBottom = d3.axisBottom().scale(timeScale).ticks(5);
 
 const priceScale = d3.scaleLinear().range([priceChart.height, 0]);
 const candlestick = techan.plot.candlestick()
@@ -42,17 +42,6 @@ const candlestick = techan.plot.candlestick()
                     .yScale(priceScale);
 const priceAxisLeft = d3.axisLeft().scale(priceScale);
 const priceAxisRight = d3.axisRight().scale(priceScale);
-const tradearrow = techan.plot.tradearrow()
-                  .xScale(timeScale)
-                  .yScale(priceScale)
-                  .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
-                  .y(d => {
-                    // Display the buy and sell arrows a bit above and below the price
-                    if (d.type === 'buy' || d.type === 'cover') return priceScale(d.low - 5);
-                    return priceScale(d.high + 5);
-                  });
-const maPeriods = [10, 20, 60];
-const sma = techan.plot.sma().xScale(timeScale).yScale(priceScale);
 
 const volumeScale = d3.scaleLinear()
                       .range([
@@ -61,10 +50,14 @@ const volumeScale = d3.scaleLinear()
                       ]);
 const volumeAxisLeft = d3.axisLeft().scale(volumeScale).ticks(4);
 const volumeAxisRight = d3.axisRight().scale(volumeScale).ticks(4);
-const volume = techan.plot.volume()
-                .accessor(candlestick.accessor())
-                .xScale(timeScale)
-                .yScale(volumeScale);
+
+
+const indicatorScale = d3.scaleLinear()
+                      .range([
+                        priceChart.height + volumeChart.height + indicatorChart.height,
+                        priceChart.height + volumeChart.height + 5]);
+const indicatorAxisLeft = d3.axisLeft().scale(indicatorScale).ticks(4);
+const indicatorAxisRight = d3.axisRight().scale(indicatorScale).ticks(4);
 
 const INITIAL_STATE = {
   dimension: {
@@ -77,8 +70,8 @@ const INITIAL_STATE = {
   },
   axis: {
     time: {
-      top: xAxisTop,
-      bottom: xAxisBottom,
+      top: timeAxisTop,
+      bottom: timeAxisBottom,
       domain: data => data.map(candlestick.accessor().d),
       scale: timeScale,
     },
@@ -94,20 +87,82 @@ const INITIAL_STATE = {
       domain: data => techan.scale.plot.volume(data).domain(),
       scale: volumeScale,
     },
+    atr: {
+      left: indicatorAxisLeft,
+      right: indicatorAxisRight,
+      domain: atrData => techan.scale.plot.atr(atrData).domain(),
+      scale: indicatorScale,
+    },
+  },
+  annotation: {
+    time: {
+      top: techan.plot.axisannotation()
+        .axis(timeAxisTop).orient('top')
+        .format(d3.timeFormat('%Y-%m-%d')).width(65),
+      bottom: techan.plot.axisannotation()
+        .axis(timeAxisBottom).orient('bottom')
+        .format(d3.timeFormat('%Y-%m-%d')).width(65)
+        .translate([0, plot.height]),
+    },
+    price: {
+      left: techan.plot.axisannotation()
+        .axis(priceAxisLeft).orient('left'),
+        // .format(d3.format(',.2f'));
+      right: techan.plot.axisannotation()
+        .axis(priceAxisRight).orient('right')
+        .translate([plot.width, 0]),
+        // .format(d3.format(',.2f'));
+    },
+    volume: {
+      left: techan.plot.axisannotation()
+        .axis(volumeAxisLeft).orient('left'),
+        // .format(d3.format(',.2f'));
+      right: techan.plot.axisannotation()
+        .axis(volumeAxisRight).orient('right')
+        .translate([plot.width, 0]),
+        // .format(d3.format(',.2f'));
+    },
+    atr: {
+      left: techan.plot.axisannotation()
+        .axis(indicatorAxisLeft).orient('left'),
+        // .format(d3.format(',.2f'));
+      right: techan.plot.axisannotation()
+        .axis(indicatorAxisRight).orient('right')
+        .translate([plot.width, 0]),
+        // .format(d3.format(',.2f'));
+    },
   },
   candlestick,
-  tradearrow,
-  maPeriods,
-  sma,
+  tradearrow: techan.plot.tradearrow()
+                .xScale(timeScale)
+                .yScale(priceScale)
+                .orient(d => (d.type.includes('buy') || d.type.includes('cover') ? 'up' : 'down'))
+                .y(d => {
+                  // Display the buy and sell arrows a bit above and below the price
+                  if (d.type === 'buy' || d.type === 'cover') return priceScale(d.low - 5);
+                  return priceScale(d.high + 5);
+                }),
+  maPeriods: [10, 20, 60],
+  sma: techan.plot.sma().xScale(timeScale).yScale(priceScale),
   indicator: {
-    volume,
+    volume: techan.plot.volume()
+              .accessor(candlestick.accessor())
+              .xScale(timeScale).yScale(volumeScale),
+    atr: techan.plot.atr()
+           .xScale(timeScale).yScale(indicatorScale),
   },
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case FETCH_DATA: {
+      const composedData = action.payload;
+      return { ...state,
+        dataOnChart: composedData.slice(0, state.lastTickIndex + 1),
+      };
+    }
     case GAME_TICK:
-
+      // update domain here...
       return state;
     default:
       return state;

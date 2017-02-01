@@ -1,9 +1,11 @@
 /* eslint global-require: 0*/
 import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 const createStoreWithMiddleware = applyMiddleware(
-  promise
+  promise,
+  thunk
 )(createStore);
 
 export default function configuredStore(initialState) {

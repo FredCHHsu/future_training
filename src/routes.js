@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
-import GamePage from './container/game';
+import GamePage from './container/Game';
 
 export default (
   <Route path="/" component={App}>

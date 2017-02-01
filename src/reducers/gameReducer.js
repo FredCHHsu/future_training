@@ -2,9 +2,6 @@ import { FETCH_DATA,
          START_GAME, PAUSE_GAME, GAME_TICK,
          SET_START_DATE,
        } from '../actions/types';
-import * as d3 from 'd3';
-
-const parseDate = d3.timeParse('%Y/%m/%d');
 
 const initialState = {
   start: false,
@@ -23,14 +20,7 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_DATA: {
-      const composedData = d3.csvParse(action.payload.data).map(d => ({
-        date: parseDate(d.date),
-        open: +d.open,
-        high: +d.high,
-        low: +d.low,
-        close: +d.close,
-        volume: +d.volume,
-      })).sort((a, b) => d3.ascending(a.date, b.date));
+      const composedData = action.payload;
       return { ...state,
         data: composedData,
         dataOnChart: composedData.slice(0, state.lastTickIndex + 1),
