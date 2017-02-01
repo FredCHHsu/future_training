@@ -33,22 +33,31 @@ const indicatorChart = {
 };
 
 const timeScale = techan.scale.financetime().range([0, plot.width]);
+const timeAxisTop = d3.axisTop().scale(timeScale).ticks(5);
+const timeAxisBottom = d3.axisBottom().scale(timeScale).ticks(5);
 
 const priceScale = d3.scaleLinear().range([priceChart.height, 0]);
 const candlestick = techan.plot.candlestick()
                     .xScale(timeScale)
                     .yScale(priceScale);
+const priceAxisLeft = d3.axisLeft().scale(priceScale);
+const priceAxisRight = d3.axisRight().scale(priceScale);
 
 const volumeScale = d3.scaleLinear()
                       .range([
                         priceChart.height + volumeChart.height,
                         priceChart.height + 5,
                       ]);
+const volumeAxisLeft = d3.axisLeft().scale(volumeScale).ticks(4);
+const volumeAxisRight = d3.axisRight().scale(volumeScale).ticks(4);
+
 
 const indicatorScale = d3.scaleLinear()
                       .range([
                         priceChart.height + volumeChart.height + indicatorChart.height,
                         priceChart.height + volumeChart.height + 5]);
+const indicatorAxisLeft = d3.axisLeft().scale(indicatorScale).ticks(4);
+const indicatorAxisRight = d3.axisRight().scale(indicatorScale).ticks(4);
 
 const INITIAL_STATE = {
   dimension: {
@@ -61,28 +70,66 @@ const INITIAL_STATE = {
   },
   axis: {
     time: {
-      top: d3.axisTop().scale(timeScale).ticks(5),
-      bottom: d3.axisBottom().scale(timeScale).ticks(5),
+      top: timeAxisTop,
+      bottom: timeAxisBottom,
       domain: data => data.map(candlestick.accessor().d),
       scale: timeScale,
     },
     price: {
-      left: d3.axisLeft().scale(priceScale),
-      right: d3.axisRight().scale(priceScale),
+      left: priceAxisLeft,
+      right: priceAxisRight,
       domain: data => techan.scale.plot.ohlc(data, candlestick.accessor()).domain(),
       scale: priceScale,
     },
     volume: {
-      left: d3.axisLeft().scale(volumeScale).ticks(4),
-      right: d3.axisRight().scale(volumeScale).ticks(4),
+      left: volumeAxisLeft,
+      right: volumeAxisRight,
       domain: data => techan.scale.plot.volume(data).domain(),
       scale: volumeScale,
     },
     atr: {
-      left: d3.axisLeft().scale(indicatorScale).ticks(4),
-      right: d3.axisRight().scale(indicatorScale).ticks(4),
+      left: indicatorAxisLeft,
+      right: indicatorAxisRight,
       domain: atrData => techan.scale.plot.atr(atrData).domain(),
       scale: indicatorScale,
+    },
+  },
+  annotation: {
+    time: {
+      top: techan.plot.axisannotation()
+        .axis(timeAxisTop).orient('top')
+        .format(d3.timeFormat('%Y-%m-%d')).width(65),
+      bottom: techan.plot.axisannotation()
+        .axis(timeAxisBottom).orient('bottom')
+        .format(d3.timeFormat('%Y-%m-%d')).width(65)
+        .translate([0, plot.height]),
+    },
+    price: {
+      left: techan.plot.axisannotation()
+        .axis(priceAxisLeft).orient('left'),
+        // .format(d3.format(',.2f'));
+      right: techan.plot.axisannotation()
+        .axis(priceAxisRight).orient('right')
+        .translate([plot.width, 0]),
+        // .format(d3.format(',.2f'));
+    },
+    volume: {
+      left: techan.plot.axisannotation()
+        .axis(volumeAxisLeft).orient('left'),
+        // .format(d3.format(',.2f'));
+      right: techan.plot.axisannotation()
+        .axis(volumeAxisRight).orient('right')
+        .translate([plot.width, 0]),
+        // .format(d3.format(',.2f'));
+    },
+    atr: {
+      left: techan.plot.axisannotation()
+        .axis(indicatorAxisLeft).orient('left'),
+        // .format(d3.format(',.2f'));
+      right: techan.plot.axisannotation()
+        .axis(indicatorAxisRight).orient('right')
+        .translate([plot.width, 0]),
+        // .format(d3.format(',.2f'));
     },
   },
   candlestick,

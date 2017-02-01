@@ -10,7 +10,9 @@
 }
 
 .atr {
-  stroke: theme-color(indicator, yellow500);
+  .line {
+    stroke: theme-color(indicator, yellow500);
+  }
 }
 
 .sma {

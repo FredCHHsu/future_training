@@ -18,7 +18,6 @@ class IndicatorChart extends Component {
     const { type, indicatorData, scale, getDomain, indicator } = this.props;
     scale.domain(getDomain(indicatorData));
     d3.select(`g.indicator.${type}`).datum(indicatorData).call(indicator);
-    console.log('update indicator');
   }
   render() {
     const { indicatorData, type } = this.props;
