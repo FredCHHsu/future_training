@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Axis from './Axis';
 import PriceChart from './PriceChart';
 import VolumeChart from './VolumeChart';
+import IndicatorChart from './IndicatorChart';
 
 const resolutionFactor = 1;
 const dimension = {
@@ -224,15 +225,15 @@ class CandlestickChart extends Component {
                .attr('class', 'volume crosshair');
 
 // indicator chart
-    const indicatorGroup = svg.append('g')
-                              .attr('class', 'indicator atr');
-
-    indicatorGroup.append('g')
-                  .attr('class', 'indicator axis right')
-                  .attr('transform', `translate(${dimension.plot.width}, 0)`);
-
-    indicatorGroup.append('g')
-                  .attr('class', 'indicator axis left');
+    // const indicatorGroup = svg.append('g')
+    //                           .attr('class', 'indicator atr');
+    //
+    // indicatorGroup.append('g')
+    //               .attr('class', 'indicator axis right')
+    //               .attr('transform', `translate(${dimension.plot.width}, 0)`);
+    //
+    // indicatorGroup.append('g')
+    //               .attr('class', 'indicator axis left');
 
     svg.append('g')
                   .attr('class', 'indicator crosshair');
@@ -272,11 +273,11 @@ class CandlestickChart extends Component {
     // svg.select('g.volume.axis.right').call(volumeAxisRight);
     svg.select('g.volume.crosshair').call(volumeCrosshair);
 
-    const indicatorData = techan.indicator.atr().period(10)(data);
-    indicatorScale.domain(techan.scale.plot.atr(indicatorData).domain());
-    svg.select('g.indicator.atr').datum(indicatorData).call(indicator);
-    svg.select('g.indicator.axis.left').call(indicatorAxisLeft);
-    svg.select('g.indicator.axis.right').call(indicatorAxisRight);
+    // const indicatorData = techan.indicator.atr().period(10)(data);
+    // indicatorScale.domain(techan.scale.plot.atr(indicatorData).domain());
+    // svg.select('g.indicator.atr').datum(indicatorData).call(indicator);
+    // svg.select('g.indicator.axis.left').call(indicatorAxisLeft);
+    // svg.select('g.indicator.axis.right').call(indicatorAxisRight);
     svg.select('g.indicator.crosshair').call(indicatorCrosshair);
   }
   render() {
@@ -295,6 +296,7 @@ class CandlestickChart extends Component {
           <Axis name="time" type="x" position="bottom" />
           <PriceChart />
           <VolumeChart />
+          <IndicatorChart type="atr" period={10} />
         </g>
       </svg>
     );
