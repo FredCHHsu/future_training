@@ -156,10 +156,11 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_DATA: {
-      const composedData = action.payload;
-      return { ...state,
-        dataOnChart: composedData.slice(0, state.lastTickIndex + 1),
-      };
+      // const composedData = action.payload;
+      // return { ...state,
+      //   dataOnChart: composedData.slice(0, state.lastTickIndex + 1),
+      // };
+      return state;
     }
     case GAME_TICK:
       // update domain here...

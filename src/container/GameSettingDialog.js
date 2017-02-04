@@ -8,6 +8,12 @@ import Settings from 'material-ui/svg-icons/action/settings';
 import { connect } from 'react-redux';
 import { setStartDate } from '../actions/settings';
 
+const isSameDate = (d1, d2) => (
+  d1.getFullYear() === d2.getFullYear()
+  && d1.getMonth() === d2.getMonth()
+  && d1.getDate() === d2.getDate()
+);
+
 class GameSettingsDialog extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +25,7 @@ class GameSettingsDialog extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSaveSettings = this.handleSaveSettings.bind(this);
+    this.disableDates = this.disableDates.bind(this);
   }
   handleOpen() {
     this.setState({ open: true });
@@ -32,6 +39,9 @@ class GameSettingsDialog extends Component {
   }
   handleDateChange(event, date) {
     this.setState({ date });
+  }
+  disableDates(date) {
+    return this.props.data.find(datum => isSameDate(datum.date, date)) === undefined;
   }
   render() {
     const actions = [
@@ -69,6 +79,7 @@ class GameSettingsDialog extends Component {
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             firstDayOfWeek={0}
+            shouldDisableDate={this.disableDates}
           />
         </Dialog>
       </div>
@@ -78,6 +89,7 @@ class GameSettingsDialog extends Component {
 
 GameSettingsDialog.propTypes = {
   setStartDate: PropTypes.func,
+  data: PropTypes.array,
   startDate: PropTypes.object,
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
@@ -85,6 +97,7 @@ GameSettingsDialog.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    data: state.game.data,
     startDate: state.game.startDate,
     minDate: state.game.minDate,
     maxDate: state.game.maxDate,
