@@ -8,7 +8,7 @@ import VolumeChart from './VolumeChart';
 import IndicatorChart from './IndicatorChart';
 import Crosshair from './Crosshair';
 
-const CandlestickChart = (props) =>
+const MainChart = (props) =>
   <svg
     width="100%"
     height="100%"
@@ -30,7 +30,7 @@ const CandlestickChart = (props) =>
     </g>
   </svg>;
 
-CandlestickChart.propTypes = {
+MainChart.propTypes = {
   chartWrapper: PropTypes.object,
   margin: PropTypes.object,
 };
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => ({
   margin: state.chart.dimension.margin,
 });
 
-export default connect(mapStateToProps, null)(CandlestickChart);
+export default connect(mapStateToProps, null)(MainChart);
