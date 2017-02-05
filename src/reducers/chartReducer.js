@@ -6,7 +6,7 @@ import techan from '../vendor/techan';
 const resolutionFactor = 1;
 
 const chartWrapper = {
-  width: window.innerWidth * resolutionFactor,
+  width: window.innerWidth < 1440 ? window.innerWidth * resolutionFactor : 1440,
   height: window.innerHeight * 0.8 * resolutionFactor,
 };
 
@@ -16,6 +16,8 @@ const plot = {
   width: chartWrapper.width - margin.right - margin.left,
   height: chartWrapper.height - margin.top - margin.bottom,
 };
+
+console.log(plot);
 
 const priceChart = {
   width: plot.width,
