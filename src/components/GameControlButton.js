@@ -20,7 +20,7 @@ const colorSelection = {
   trendingDown: green500,
 };
 
-const GameStartButton = (props) => {
+const GameControlButton = (props) => {
   const { handleClick, icon } = props;
   return (
     <FloatingActionButton
@@ -32,9 +32,9 @@ const GameStartButton = (props) => {
   );
 };
 
-GameStartButton.propTypes = {
+GameControlButton.propTypes = {
   handleClick: PropTypes.func,
   icon: PropTypes.string,
 };
 
-export default GameStartButton;
+export default GameControlButton;

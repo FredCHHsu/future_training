@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import { grey500 } from 'material-ui/styles/colors';
+import MenuItem from 'material-ui/MenuItem';
 import Settings from 'material-ui/svg-icons/action/settings';
 import { connect } from 'react-redux';
 import { setStartDate } from '../actions/settings';
@@ -58,12 +57,11 @@ class GameSettingsDialog extends Component {
     ];
     return (
       <div>
-        <FloatingActionButton
-          onClick={this.handleOpen}
-          backgroundColor={grey500}
-        >
-          <Settings />
-        </FloatingActionButton>
+        <MenuItem
+          onTouchTap={this.handleOpen}
+          primaryText="Game Settings"
+          leftIcon={<Settings />}
+        />
         <Dialog
           title="Game Settings"
           actions={actions}

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import { grey500 } from 'material-ui/styles/colors';
+import MenuItem from 'material-ui/MenuItem';
 import MultilineChart from 'material-ui/svg-icons/editor/multiline-chart';
 import { connect } from 'react-redux';
 
@@ -41,12 +40,11 @@ class ChartSettingDialog extends Component {
     ];
     return (
       <div>
-        <FloatingActionButton
+        <MenuItem
           onClick={this.handleOpen}
-          backgroundColor={grey500}
-        >
-          <MultilineChart />
-        </FloatingActionButton>
+          primaryText="Chart Settings"
+          leftIcon={<MultilineChart />}
+        />
         <Dialog
           title="Chart Settings"
           actions={actions}

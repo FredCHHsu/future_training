@@ -7,17 +7,15 @@ const resolutionFactor = 1;
 
 const chartWrapper = {
   width: window.innerWidth < 1440 ? window.innerWidth * resolutionFactor : 1440,
-  height: window.innerHeight * 0.8 * resolutionFactor,
+  height: window.innerHeight * 0.75 * resolutionFactor,
 };
 
-const margin = { top: 50, right: 40, bottom: 50, left: 40 };
+const margin = { top: 30, right: 40, bottom: 30, left: 40 };
 
 const plot = {
   width: chartWrapper.width - margin.right - margin.left,
   height: chartWrapper.height - margin.top - margin.bottom,
 };
-
-console.log(plot);
 
 const priceChart = {
   width: plot.width,
