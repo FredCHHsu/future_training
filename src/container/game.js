@@ -66,15 +66,15 @@ class GamePage extends Component {
               <GameChart />
             </div>
             <div className="control-panel">
-              <div className="game-log">
-                <span className="position">position: {this.props.position}</span>
-              </div>
+              <GameControlButton handleClick={this.goUp} icon="trendingUp" />
               <GameControlButton
                 handleClick={this.props.gameStart ? this.endGame : this.startGame}
                 icon={this.props.gameStart ? 'pause' : 'play'}
               />
-              <GameControlButton handleClick={this.goUp} icon="trendingUp" />
               <GameControlButton handleClick={this.goDown} icon="trendingDown" />
+            </div>
+            <div className="game-log">
+              <span className="position">position: {this.props.position}</span>
             </div>
           </div>
         </div>

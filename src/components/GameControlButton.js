@@ -1,34 +1,47 @@
 import React, { PropTypes } from 'react';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import FlatButton from 'material-ui/FlatButton';
 import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import PlayArrow from 'material-ui/svg-icons/av/play-arrow';
 import Pause from 'material-ui/svg-icons/av/pause';
-import Settings from 'material-ui/svg-icons/action/settings';
-import { red500, green500, blue500 } from 'material-ui/styles/colors';
+import { red300, red500, red900,
+         green300, green500, green900,
+         grey300, grey500, grey700 } from 'material-ui/styles/colors';
 
-const iconCollection = {
+const icons = {
   trendingUp: <TrendingUp />,
   trendingDown: <TrendingDown />,
   play: <PlayArrow />,
   pause: <Pause />,
-  settings: <Settings />,
 };
 
-const colorSelection = {
-  trendingUp: red500,
-  trendingDown: green500,
+const color = {
+  trendingUp: {
+    base: red500,
+    hover: red900,
+    ripple: red300,
+  },
+  trendingDown: {
+    base: green500,
+    hover: green900,
+    ripple: green300,
+  },
 };
+
 
 const GameControlButton = (props) => {
   const { handleClick, icon } = props;
+  // const style = {
+  //   color: color[icon] ? color[icon] : 'white',
+  // };
   return (
-    <FloatingActionButton
+    <FlatButton
       onClick={handleClick}
-      backgroundColor={colorSelection[icon] ? colorSelection[icon] : blue500}
-    >
-      {iconCollection[icon]}
-    </FloatingActionButton>
+      backgroundColor={color[icon] ? color[icon].base : grey500}
+      hoverColor={color[icon] ? color[icon].hover : grey700}
+      rippleColor={color[icon] ? color[icon].ripple : grey300}
+      icon={icons[icon]}
+    />
   );
 };
 

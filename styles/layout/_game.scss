@@ -25,10 +25,12 @@
 }
 
 .game-log {
-  // display: inline-block;
-  // position: fixed;
-  // right: 5%;
-  // bottom: 75px;
-  box-shadow: 0 0 8px theme-color(background, light);
-  padding: 1em 1.5em;
+  display: block;
+  position: fixed;
+  bottom: 48px;
+  // left: 5%;
+  // box-shadow: 0 0 8px theme-color(background, light);
+  // padding: 0.5em;
+  width: 100%;
+  text-align: center;
 }
