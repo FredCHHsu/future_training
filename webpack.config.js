@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production' || process.argv.indexOf('-p') !== -1;
 
 const plugins = isProduction ?
 [
@@ -14,12 +14,19 @@ const plugins = isProduction ?
   new webpack.DefinePlugin({
     NODE_ENV: JSON.stringify('production'),
   }),
+  new webpack.LoaderOptionsPlugin({
+    options: {
+      eslint: {
+        failOnError: false,
+        failOnWarning: false,
+      },
+    },
+  }),
 ];
 
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    'babel-polyfill',
     './src/index.js',
   ],
   output: {
@@ -27,36 +34,30 @@ module.exports = {
     publicPath: '/js', // relative to contentBase
     filename: 'bundle.js',
   },
-  devtool: 'source-map',
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
+        enforce: 'pre',
         loader: 'eslint-loader',
-        configFile: './.eslintrc',
         exclude: /node_modules/,
+        query: {
+          configFile: './.eslintrc',
+        },
       },
-    ],
-    loaders: [
       {
         test: /\.js$/,
-        loaders: [
-          'babel',
-        ],
+        use: ['babel-loader'],
         exclude: /node_modules/,
       },
+      { test: /\.csv$/, loader: 'dsv-loader' },
     ],
-  },
-  eslint: {
-    failOnError: false,
-    failOnWarning: false,
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx'],
   },
   plugins,
-  devServer: {
+  devtool: !isProduction ? 'cheap-module-eval-source-map' : null,
+  devServer: !isProduction ? {
     historyApiFallback: true,
     contentBase: './public',
-  },
+  } : null,
 };
+
