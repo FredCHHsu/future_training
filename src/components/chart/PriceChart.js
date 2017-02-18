@@ -9,7 +9,10 @@ class PriceChart extends Component {
     super(props);
     this.updateChart = this.updateChart.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
+    if (this.props.data) {
+      this.updateChart();
+    }
   }
   componentDidUpdate() {
     this.updateChart();

@@ -17,8 +17,7 @@ class NavBar extends Component {
     this.state = { open: false };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    // this.handleLink = this.handleLink.bind(this);
-    this.renderIcon = this.renderIcon.bind(this);
+    // this.renderIcon = this.renderIcon.bind(this);
   }
   handleToggle() {
     this.setState({ open: !this.state.open });
@@ -29,9 +28,6 @@ class NavBar extends Component {
   // renderIcon() {
   //   return window.location.pathname !== '/' ?
   //     <IconButton><ArrowBack /></IconButton> : null;
-  // }
-  // handleLink(e) {
-  //   console.log(e.target);
   // }
   render() {
     return (

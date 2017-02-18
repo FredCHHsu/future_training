@@ -4,7 +4,19 @@ import * as d3 from 'd3';
 // import techan from '../../vendor/techan';
 
 class Axis extends Component {
+  constructor(props) {
+    super(props);
+    this.updateChart = this.updateChart.bind(this);
+  }
+  componentDidMount() {
+    if (this.props.data) {
+      this.updateChart();
+    }
+  }
   componentDidUpdate() {
+    this.updateChart();
+  }
+  updateChart() {
     const { data, scale, getDomain, axis, name, type, position } = this.props;
     if (data) {
       scale.domain(getDomain(data));
