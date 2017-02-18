@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
+
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import MonetizationOn from 'material-ui/svg-icons/editor/monetization-on';
+import Divider from 'material-ui/Divider';
+import FormatListNumbered from 'material-ui/svg-icons/editor/format-list-numbered';
+
 import GameSettingsDialog from '../container/GameSettingDialog';
 import ChartSettingDialog from '../container/ChartSettingDialog';
-import MenuItem from 'material-ui/MenuItem';
-import FormatListNumbered from 'material-ui/svg-icons/editor/format-list-numbered';
-import { Link } from 'react-router';
 
 class NavBar extends Component {
   constructor(props) {
@@ -14,6 +18,7 @@ class NavBar extends Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     // this.handleLink = this.handleLink.bind(this);
+    this.renderIcon = this.renderIcon.bind(this);
   }
   handleToggle() {
     this.setState({ open: !this.state.open });
@@ -21,6 +26,10 @@ class NavBar extends Component {
   handleClose() {
     this.setState({ open: false });
   }
+  // renderIcon() {
+  //   return window.location.pathname !== '/' ?
+  //     <IconButton><ArrowBack /></IconButton> : null;
+  // }
   // handleLink(e) {
   //   console.log(e.target);
   // }
@@ -35,8 +44,15 @@ class NavBar extends Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
+          <MenuItem
+            primaryText="Game"
+            leftIcon={<MonetizationOn />}
+            onTouchTap={this.handleClose}
+            containerElement={<Link to="/" />}
+          />
           <ChartSettingDialog />
           <GameSettingsDialog />
+          <Divider />
           <MenuItem
             primaryText="Trade Log"
             leftIcon={<FormatListNumbered />}

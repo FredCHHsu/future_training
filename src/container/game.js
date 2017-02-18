@@ -22,7 +22,8 @@ class GamePage extends Component {
   }
   componentWillMount() {
     // console.log(gameControl);
-    this.props.gameControl.fetchData(dataUrl);
+    // this.props.gameControl.fetchData(dataUrl);
+    if (!this.props.gameData) this.props.gameControl.fetchData(dataUrl);
   }
   componentDidUpdate() {
     if (this.props.gameData &&
