@@ -15,6 +15,7 @@ export default function (state = INITIAL_STATE, action) {
       {
         const log = state.log.slice(0);
         log.push({
+          id: log.length + 1,
           type: action.type,
           date: action.payload.date,
           price: action.payload.close,
@@ -23,6 +24,7 @@ export default function (state = INITIAL_STATE, action) {
           high: action.payload.high,
           low: action.payload.low,
           close: action.payload.close,
+          profit: '-',
         });
         const position = state.position + (action.type === BUY || action.type === COVER ? 1 : -1);
         return { ...state, log, position };
