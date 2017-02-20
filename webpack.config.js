@@ -7,9 +7,6 @@ const plugins = isProduction ?
   new webpack.DefinePlugin({
     NODE_ENV: JSON.stringify('production'),
   }),
-  new webpack.optimize.UglifyJsPlugin({
-    compress: { warnings: false },
-  }),
 ] : [
   new webpack.DefinePlugin({
     NODE_ENV: JSON.stringify('production'),
@@ -54,10 +51,10 @@ module.exports = {
     ],
   },
   plugins,
-  devtool: !isProduction ? 'cheap-module-eval-source-map' : null,
+  devtool: !isProduction ? 'cheap-module-eval-source-map' : false,
   devServer: !isProduction ? {
     historyApiFallback: true,
     contentBase: './public',
-  } : null,
+  } : {},
 };
 
