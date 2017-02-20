@@ -3,7 +3,7 @@ import { BUY, SHORT, SELL, COVER } from '../actions/types';
 const INITIAL_STATE = {
   log: [],
   // { date: this.props.data[7].date, type: 'buy', price: this.props.data[7].low, quantity: 1000 },
-  position: 0,
+  openInterest: 0,
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -26,8 +26,9 @@ export default function (state = INITIAL_STATE, action) {
           close: action.payload.close,
           profit: '-',
         });
-        const position = state.position + (action.type === BUY || action.type === COVER ? 1 : -1);
-        return { ...state, log, position };
+        const openInterest = state.openInterest +
+                             (action.type === BUY || action.type === COVER ? 1 : -1);
+        return { ...state, log, openInterest };
       }
     default:
       return state;
