@@ -46,7 +46,7 @@ class GameSettingsDialog extends Component {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={false}
+        primary
         onClick={this.handleClose}
       />,
       <FlatButton

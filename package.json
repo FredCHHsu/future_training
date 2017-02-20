@@ -4,10 +4,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline",
-    "build": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --define process.env.NODE_ENV='\"dev\"'",
     "test": "jest",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "build": "webpack -p --progress --colors && gulp build"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -52,14 +52,14 @@
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
     "susy": "^2.2.12",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.0"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
     "axios": "^0.15.3",
     "d3": "^4.3.0",
     "lodash": "^4.16.6",
-    "material-ui": "^0.16.6",
+    "material-ui": "latest",
     "react": "^15.4.0-rc.4",
     "react-dom": "^15.4.0-rc.4",
     "react-redux": "^4.4.5",

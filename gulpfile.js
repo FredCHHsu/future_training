@@ -90,6 +90,14 @@ gulp.task('pages', () => {
     .pipe($.if(watch, stream()));
 });
 
+// Assets
+// ===========================================
+gulp.task('assets', () => {
+  src.assets = 'assets/**/*';
+  return gulp.src(src.assets)
+    .pipe(gulp.dest(DEST));
+});
+
 // Compile SASS
 // ===========================================
 const preSASSProcessors = [
@@ -110,6 +118,7 @@ gulp.task('before-sass', () => {
   return gulp.src(src.styles)
   .pipe($.postcss(preSASSProcessors, { syntax: scssSyntax }));
 });
+
 // Sass compilation with PostCSS
 gulp.task('sass', () =>
   gulp.src('styles/style.scss')
@@ -122,6 +131,18 @@ gulp.task('sass', () =>
   .pipe(gulp.dest(`${DEST}/css`))
   // Prevent reload full page by update sourcemap
   .pipe($.if(watch, stream({ match: '**/*.css' })))
+);
+
+// Build css production
+gulp.task('sass-production', () =>
+  gulp.src('styles/style.scss')
+  .pipe($.sourcemaps.init())
+  .pipe($.sass({
+    includePaths: ['./node_modules/susy/sass/'],
+  }).on('error', $.sass.logError))
+  .pipe($.postcss(afterProcessorsProduction))
+  .pipe($.sourcemaps.write('./')) // relative to the dest path for seperated map file
+  .pipe(gulp.dest(`${DEST}/css`))
 );
 
 // Build js Bundle Using Webpack
@@ -159,14 +180,14 @@ gulp.task('sass', () =>
 // ===========================================
 gulp.task('build', (cb) => {
   // runSequence(['pages', 'before-sass', 'sass', 'bundle'], cb);
-  runSequence(['pages', 'before-sass', 'sass'], cb);
+  runSequence(['pages', 'assets', 'sass-production'], cb);
 });
 
 // Launch a lightweight HTTP Server
 // ===========================================
 gulp.task('serve', (cb) => {
   watch = true;
-  runSequence('build', () => {
+  runSequence(['pages', 'assets', 'before-sass', 'sass'], () => {
     browserSync({
       notify: true,
       // Run as an https by uncommenting 'https: true'
@@ -186,15 +207,3 @@ gulp.task('serve', (cb) => {
     cb();
   });
 });
-
-
-gulp.task('production', () =>
-  gulp.src('styles/style.scss')
-  .pipe($.sourcemaps.init())
-  .pipe($.sass({
-    includePaths: ['./node_modules/susy/sass/'],
-  }).on('error', $.sass.logError))
-  .pipe($.postcss(afterProcessorsProduction))
-  .pipe($.sourcemaps.write('./')) // relative to the dest path for seperated map file
-  .pipe(gulp.dest(`${DEST}/css`))
-);

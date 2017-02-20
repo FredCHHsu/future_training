@@ -22,7 +22,8 @@ class GamePage extends Component {
   }
   componentWillMount() {
     // console.log(gameControl);
-    this.props.gameControl.fetchData(dataUrl);
+    // this.props.gameControl.fetchData(dataUrl);
+    if (!this.props.gameData) this.props.gameControl.fetchData(dataUrl);
   }
   componentDidUpdate() {
     if (this.props.gameData &&
@@ -44,16 +45,16 @@ class GamePage extends Component {
     this.props.gameControl.pauseGame();
   }
   goUp() {
-    if (this.props.position >= 0) {
+    if (this.props.openInterest >= 0) {
       this.props.trade.buy(this.props.gameData[this.props.lastTickIndex]);
-    } else if (this.props.position < 0) {
+    } else if (this.props.openInterest < 0) {
       this.props.trade.cover(this.props.gameData[this.props.lastTickIndex]);
     }
   }
   goDown() {
-    if (this.props.position > 0) {
+    if (this.props.openInterest > 0) {
       this.props.trade.sell(this.props.gameData[this.props.lastTickIndex]);
-    } else if (this.props.position <= 0) {
+    } else if (this.props.openInterest <= 0) {
       this.props.trade.short(this.props.gameData[this.props.lastTickIndex]);
     }
   }
@@ -73,8 +74,9 @@ class GamePage extends Component {
               />
               <GameControlButton handleClick={this.goDown} icon="trendingDown" />
             </div>
-            <div className="game-log">
-              <span className="position">position: {this.props.position}</span>
+            <div className="game-infos">
+              <span className="info">Open Interest: {this.props.openInterest}</span>
+              <span className="info">Account: {this.props.account}</span>
             </div>
           </div>
         </div>
@@ -90,7 +92,8 @@ GamePage.propTypes = {
   gameSpeed: PropTypes.number,
   gameData: PropTypes.array,
   lastTickIndex: PropTypes.number,
-  position: PropTypes.number,
+  openInterest: PropTypes.number,
+  account: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
@@ -98,7 +101,8 @@ const mapStateToProps = (state) => ({
   gameSpeed: state.game.durationBetweenBars,
   gameData: state.game.data,
   lastTickIndex: state.game.lastTickIndex,
-  position: state.trade.position,
+  openInterest: state.trade.openInterest,
+  account: state.trade.account,
 });
 
 function mapDispatchToProps(dispatch) {

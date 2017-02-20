@@ -29,7 +29,7 @@ class ChartSettingDialog extends Component {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={false}
+        primary
         onClick={this.handleClose}
       />,
       <FlatButton
@@ -41,7 +41,7 @@ class ChartSettingDialog extends Component {
     return (
       <div>
         <MenuItem
-          onClick={this.handleOpen}
+          onTouchTap={this.handleOpen}
           primaryText="Chart Settings"
           leftIcon={<MultilineChart />}
         />
