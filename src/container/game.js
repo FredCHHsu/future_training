@@ -74,8 +74,9 @@ class GamePage extends Component {
               />
               <GameControlButton handleClick={this.goDown} icon="trendingDown" />
             </div>
-            <div className="game-log">
-              <span className="openInterest">Open Interest: {this.props.openInterest}</span>
+            <div className="game-infos">
+              <span className="info">Open Interest: {this.props.openInterest}</span>
+              <span className="info">Account: {this.props.account}</span>
             </div>
           </div>
         </div>
@@ -92,6 +93,7 @@ GamePage.propTypes = {
   gameData: PropTypes.array,
   lastTickIndex: PropTypes.number,
   openInterest: PropTypes.number,
+  account: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
@@ -100,6 +102,7 @@ const mapStateToProps = (state) => ({
   gameData: state.game.data,
   lastTickIndex: state.game.lastTickIndex,
   openInterest: state.trade.openInterest,
+  account: state.trade.account,
 });
 
 function mapDispatchToProps(dispatch) {

@@ -24,7 +24,7 @@
   justify-content: space-around;
 }
 
-.game-log {
+.game-infos {
   display: block;
   position: fixed;
   bottom: 48px;
@@ -33,4 +33,10 @@
   // padding: 0.5em;
   width: 100%;
   text-align: center;
+  >.info {
+    display: inline-block;
+    padding: 0 6px;
+    width: 12em;
+    text-align: left;
+  }
 }

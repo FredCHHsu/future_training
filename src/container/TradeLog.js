@@ -23,7 +23,7 @@ class TradeLog extends Component {
               <TableHeaderColumn style={thStyle}>Type</TableHeaderColumn>
               <TableHeaderColumn style={thStyle}>Price</TableHeaderColumn>
               <TableHeaderColumn style={thStyle}>Quantity</TableHeaderColumn>
-              <TableHeaderColumn style={thStyle}>Profit</TableHeaderColumn>
+              <TableHeaderColumn style={thStyle}>Account</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
