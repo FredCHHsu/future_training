@@ -45,16 +45,16 @@ class GamePage extends Component {
     this.props.gameControl.pauseGame();
   }
   goUp() {
-    if (this.props.openInterest >= 0) {
+    if (this.props.position >= 0) {
       this.props.trade.buy(this.props.gameData[this.props.lastTickIndex]);
-    } else if (this.props.openInterest < 0) {
+    } else if (this.props.position < 0) {
       this.props.trade.cover(this.props.gameData[this.props.lastTickIndex]);
     }
   }
   goDown() {
-    if (this.props.openInterest > 0) {
+    if (this.props.position > 0) {
       this.props.trade.sell(this.props.gameData[this.props.lastTickIndex]);
-    } else if (this.props.openInterest <= 0) {
+    } else if (this.props.position <= 0) {
       this.props.trade.short(this.props.gameData[this.props.lastTickIndex]);
     }
   }
@@ -75,7 +75,7 @@ class GamePage extends Component {
               <GameControlButton handleClick={this.goDown} icon="trendingDown" />
             </div>
             <div className="game-infos">
-              <span className="info">Open Interest: {this.props.openInterest}</span>
+              <span className="info">Position: {this.props.position}</span>
               <span className="info">Account: {this.props.account}</span>
             </div>
           </div>
@@ -92,7 +92,7 @@ GamePage.propTypes = {
   gameSpeed: PropTypes.number,
   gameData: PropTypes.array,
   lastTickIndex: PropTypes.number,
-  openInterest: PropTypes.number,
+  position: PropTypes.number,
   account: PropTypes.number,
 };
 
@@ -101,7 +101,7 @@ const mapStateToProps = (state) => ({
   gameSpeed: state.game.durationBetweenBars,
   gameData: state.game.data,
   lastTickIndex: state.game.lastTickIndex,
-  openInterest: state.trade.openInterest,
+  position: state.trade.position,
   account: state.trade.account,
 });
 
