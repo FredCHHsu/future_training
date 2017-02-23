@@ -14,10 +14,23 @@ import ChartSettingDialog from '../container/ChartSettingDialog';
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = {
+      open: false,
+      onLargeScreen: window.innerWidth >= 1200,
+    };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     // this.renderIcon = this.renderIcon.bind(this);
+    this.updateLayout = this.updateLayout.bind(this);
+  }
+  componentWillMount() {
+    window.addEventListener('resize', this.updateLayout);
+  }
+  componentWillUnMount() {
+    window.removeEventListener('resize', this.updateLayout);
+  }
+  updateLayout() {
+    this.setState({ onLargeScreen: window.innerWidth >= 1200 });
   }
   handleToggle() {
     this.setState({ open: !this.state.open });
@@ -30,16 +43,21 @@ class NavBar extends Component {
   //     <IconButton><ArrowBack /></IconButton> : null;
   // }
   render() {
+    const { onLargeScreen } = this.state;
     return (
       <AppBar
         title="TTrainer"
         onLeftIconButtonTouchTap={this.handleToggle}
       >
         <Drawer
-          docked={false}
-          open={this.state.open}
+          docked={onLargeScreen}
+          open={onLargeScreen || this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
+          <AppBar
+            title="TTrainer"
+            showMenuIconButton={false}
+          />
           <MenuItem
             primaryText="Game"
             leftIcon={<MonetizationOn />}

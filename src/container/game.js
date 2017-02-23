@@ -60,7 +60,7 @@ class GamePage extends Component {
   }
   render() {
     return (
-      <div id="index-page">
+      <div id="index-page" className="page-container">
         <div className="game-bg">
           <div className="container main-game">
             <div className="game-area">

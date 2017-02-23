@@ -3,16 +3,16 @@
 }
 
 .main-game {
-  // display: flex;
+  position: relative;
 }
 
 .game-area {
-  height: 75vh;
+  height: calc(100vh - 64px);
 }
 
 .control-panel {
   display: flex;
-  position: fixed;
+  position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
@@ -26,7 +26,7 @@
 
 .game-infos {
   display: block;
-  position: fixed;
+  position: absolute;
   bottom: 48px;
   // left: 5%;
   // box-shadow: 0 0 8px theme-color(background, light);
@@ -36,7 +36,7 @@
   >.info {
     display: inline-block;
     padding: 0 6px;
-    width: 12em;
+    width: 10em;
     text-align: left;
   }
 }

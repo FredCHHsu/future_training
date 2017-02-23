@@ -8,3 +8,9 @@
 // resulting stylesheet. It is really up to you.
 //
 //---------------------------
+
+.page-container {
+  @include susy-media($media-lg-up) {
+    padding-left: 256px;
+  }
+}

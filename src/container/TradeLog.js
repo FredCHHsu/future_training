@@ -8,7 +8,7 @@ const thStyle = { lineHeight: '56px' };
 const tdStyle = { lineHeight: '48px' };
 
 const TradeLog = (props) =>
-  <div className="trade-log">
+  <div className="page-container trade-log">
     <Table fixedHeader height="calc(100vh - 64px - 56px - 1px)">
       <TableHeader
         displaySelectAll={false}
