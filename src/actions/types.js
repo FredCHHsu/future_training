@@ -8,4 +8,6 @@ export const SHORT = 'short';
 export const SELL = 'sell';
 export const COVER = 'cover';
 
+export const ZOOM = 'ZOOM';
+
 export const SET_START_DATE = 'SET_START_DATE';

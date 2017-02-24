@@ -22,12 +22,16 @@
   max-width: 1440px;
   align-items: center;
   justify-content: space-around;
+
+  &.-chart {
+    bottom: 52px;
+  }
 }
 
 .game-infos {
   display: block;
   position: absolute;
-  bottom: 48px;
+  bottom: 104px;
   // left: 5%;
   // box-shadow: 0 0 8px theme-color(background, light);
   // padding: 0.5em;

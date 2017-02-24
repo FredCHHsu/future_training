@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import GameControlButton from '../components/GameControlButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as gameControlActions from '../actions/game';
 import * as tradeActions from '../actions/trade';
+import GameControlButton from '../components/GameControlButton';
 
 class GamePlayPanel extends Component {
   constructor(props) {

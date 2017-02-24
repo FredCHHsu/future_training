@@ -4,6 +4,9 @@ import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import PlayArrow from 'material-ui/svg-icons/av/play-arrow';
 import Pause from 'material-ui/svg-icons/av/pause';
+import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
+import ZoomOut from 'material-ui/svg-icons/action/zoom-out';
+
 import { red300, red500, red900,
          green300, green500, green900,
          grey300, grey500, grey700 } from 'material-ui/styles/colors';
@@ -13,6 +16,8 @@ const icons = {
   trendingDown: <TrendingDown />,
   play: <PlayArrow />,
   pause: <Pause />,
+  zoomIn: <ZoomIn />,
+  zoomOut: <ZoomOut />,
 };
 
 const color = {
@@ -36,7 +41,7 @@ const GameControlButton = (props) => {
   // };
   return (
     <FlatButton
-      onClick={handleClick}
+      onTouchTap={handleClick}
       backgroundColor={color[icon] ? color[icon].base : grey500}
       hoverColor={color[icon] ? color[icon].hover : grey700}
       rippleColor={color[icon] ? color[icon].ripple : grey300}

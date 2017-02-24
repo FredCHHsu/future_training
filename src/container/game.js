@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
-import GameChart from '../components/chart/index';
 import { connect } from 'react-redux';
 import { fetchData } from '../actions/game';
+import GameChart from '../components/chart/index';
 import GamePlayPanel from './GamePlayPanel';
+import ChartControlPanel from './ChartControlPanel';
 
 // const dataUrl = '/data/txf_1998_2015.csv';
 const dataUrl = '/data/TX_01_16.txt';
@@ -19,6 +20,7 @@ class GamePage extends Component {
             <div className="game-area">
               <GameChart />
             </div>
+            <ChartControlPanel />
             <GamePlayPanel />
             <div className="game-infos">
               <span className="info">Position: {this.props.position}</span>
