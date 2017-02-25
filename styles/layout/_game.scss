@@ -6,13 +6,16 @@
   position: relative;
 }
 
+$appbar-height: 64px;
+$chart-control-panel-height: 52px;
+$game-control-panel-height: 52px;
 .game-area {
-  height: calc(100vh - 64px);
+  height: calc(100vh - #{$appbar-height + $chart-control-panel-height + $game-control-panel-height});
 }
 
 .control-panel {
   display: flex;
-  position: absolute;
+  // position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
@@ -20,23 +23,25 @@
   padding: 8px 0;
   width: 100%;
   max-width: 1440px;
+  height: 52px;
   align-items: center;
   justify-content: space-around;
 
   &.-chart {
-    bottom: 52px;
+    position: relative;
   }
 }
 
 .game-infos {
   display: block;
   position: absolute;
-  bottom: 104px;
+  bottom: 52px;
   // left: 5%;
   // box-shadow: 0 0 8px theme-color(background, light);
   // padding: 0.5em;
   width: 100%;
   text-align: center;
+
   >.info {
     display: inline-block;
     padding: 0 6px;

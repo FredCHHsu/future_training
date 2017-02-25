@@ -1,13 +1,23 @@
 import { GAME_TICK, FETCH_DATA } from '../actions/types.js';
-
+import isMobile from '../tools/isMobile';
 import * as d3 from 'd3';
 import techan from '../vendor/techan';
 
-const resolutionFactor = 1;
+const leftMenuWidth = 256;
+const appbarHeight = 64;
+const chartControlPanelHeight = 52;
+const gameControlPanelHeight = 52;
+const resolutionFactor = isMobile ? 2 : 1;
+const gameInfoHeight = 16;
 
 const chartWrapper = {
-  width: window.innerWidth < 1440 ? window.innerWidth * resolutionFactor : 1440,
-  height: window.innerHeight * 0.75 * resolutionFactor,
+  width: resolutionFactor *
+    (window.innerWidth > 1200 ?
+      window.innerWidth - leftMenuWidth :
+      window.innerWidth),
+  height: resolutionFactor *
+    ((isMobile ? screen.height * 0.9 : window.innerHeight)
+    - (appbarHeight + chartControlPanelHeight + gameControlPanelHeight + gameInfoHeight)),
 };
 
 const margin = { top: 30, right: 40, bottom: 30, left: 40 };

@@ -16,11 +16,11 @@ class GamePage extends Component {
     return (
       <div id="index-page" className="page-container">
         <div className="game-bg">
-          <div className="container main-game">
+          <div className="main-game">
+            <ChartControlPanel />
             <div className="game-area">
               <GameChart />
             </div>
-            <ChartControlPanel />
             <GamePlayPanel />
             <div className="game-infos">
               <span className="info">Position: {this.props.position}</span>
