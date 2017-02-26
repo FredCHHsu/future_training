@@ -41,7 +41,7 @@ GamePage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  gameData: state.game.data,
+  gameData: state.chart.data,
   position: state.trade.position,
   account: state.trade.account,
 });

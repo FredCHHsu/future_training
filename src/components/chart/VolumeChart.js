@@ -35,7 +35,7 @@ VolumeChart.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.game.dataOnChart,
+  data: state.chart.dataOnChart,
   volume: state.chart.indicator.volume,
 });
 

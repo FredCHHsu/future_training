@@ -95,10 +95,10 @@ GameSettingsDialog.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    data: state.game.data,
-    startDate: state.game.startDate,
-    minDate: state.game.minDate,
-    maxDate: state.game.maxDate,
+    data: state.chart.data,
+    startDate: state.chart.startDate,
+    minDate: state.chart.minDate,
+    maxDate: state.chart.maxDate,
   };
 }
 export default connect(mapStateToProps, { setStartDate })(GameSettingsDialog);

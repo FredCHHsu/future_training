@@ -13,7 +13,7 @@ class GamePlayPanel extends Component {
     this.goUp = this.goUp.bind(this);
     this.goDown = this.goDown.bind(this);
     this.state = {
-      game: null,
+      gameTick: null,
     };
   }
   componentDidUpdate() {
@@ -25,17 +25,17 @@ class GamePlayPanel extends Component {
   }
   startGame() {
     const { gameControl, gameSpeed } = this.props;
-    if (!this.state.game) {
+    if (!this.state.gameTick) {
       gameControl.startGame();
       this.setState({
-        game: setInterval(gameControl.gameTick, gameSpeed),
+        gameTick: setInterval(gameControl.gameTick, gameSpeed),
       });
     }
   }
   endGame() {
     const { gameControl } = this.props;
-    clearInterval(this.state.game);
-    this.setState({ game: null });
+    clearInterval(this.state.gameTick);
+    this.setState({ gameTick: null });
     gameControl.pauseGame();
   }
   goUp() {
@@ -81,9 +81,9 @@ GamePlayPanel.propTypes = {
 
 const mapStateToProps = (state) => ({
   gameStart: state.game.start,
-  gameSpeed: state.game.durationBetweenBars,
-  gameData: state.game.data,
-  lastTickIndex: state.game.lastTickIndex,
+  gameSpeed: state.chart.durationBetweenBars,
+  gameData: state.chart.data,
+  lastTickIndex: state.chart.lastTickIndex,
   position: state.trade.position,
 });
 

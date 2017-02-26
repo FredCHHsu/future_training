@@ -53,7 +53,7 @@ PriceChart.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.game.dataOnChart,
+  data: state.chart.dataOnChart,
   candlestick: state.chart.candlestick,
   tradearrow: state.chart.tradearrow,
   trades: state.trade.log,

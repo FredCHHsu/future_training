@@ -42,8 +42,8 @@ IndicatorChart.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  // data: state.game.dataOnChart,
-  indicatorData: techan.indicator.atr().period(ownProps.period)(state.game.dataOnChart || []),
+  // data: state.chart.dataOnChart,
+  indicatorData: techan.indicator.atr().period(ownProps.period)(state.chart.dataOnChart || []),
   indicator: state.chart.indicator[ownProps.type],
   scale: state.chart.axis[ownProps.type].scale,
   getDomain: state.chart.axis[ownProps.type].domain,

@@ -49,7 +49,7 @@ Axis.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  data: ownProps.data || state.game.dataOnChart,
+  data: ownProps.data || state.chart.dataOnChart,
   dimension: state.chart.dimension,
   scale: state.chart.axis[ownProps.name].scale,
   getDomain: state.chart.axis[ownProps.name].domain,
