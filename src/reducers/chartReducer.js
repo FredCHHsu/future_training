@@ -1,6 +1,7 @@
 import { GAME_TICK,
          FETCH_DATA,
          SET_START_DATE,
+         ZOOM,
          } from '../actions/types.js';
 import CHART_INITIAL_STATE from './chartInitialState';
 
@@ -33,13 +34,29 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         lastTickIndex: nextLastTickIndex,
-        dataOnChart: state.data.slice((nextLastTickIndex + 1 - state.barsOnChart),
-                                       nextLastTickIndex + 1),
+        dataOnChart: state.data.slice(
+          (nextLastTickIndex + 1 - state.barsOnChart), nextLastTickIndex + 1),
       };
     }
     case SET_START_DATE: {
       const dataIsExist = state.data.findIndex(d => d.date.getTime() === action.payload.getTime());
       return { ...state, startDate: action.payload, lastTickIndex: dataIsExist };
+    }
+    case ZOOM: {
+      let barsOnChart = state.barsOnChart;
+      if (action.zoomType === 'in') {
+        if (barsOnChart === 10) return state;
+        barsOnChart -= 10;
+      } else if (action.zoomType === 'out') {
+        if (state.lastTickIndex - barsOnChart <= 0 || barsOnChart >= 300) return state;
+        barsOnChart += 10;
+      }
+      return {
+        ...state,
+        barsOnChart,
+        dataOnChart: state.data.slice(
+          (state.lastTickIndex + 1 - barsOnChart), state.lastTickIndex),
+      };
     }
     default:
       return state;
