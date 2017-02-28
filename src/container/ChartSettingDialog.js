@@ -52,7 +52,7 @@ class ChartSettingDialog extends Component {
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          huh!?
+          Coming Soon...
         </Dialog>
       </div>
     );

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { zoom, manualTick } from '../actions/chart';
 
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
 import ZoomOut from 'material-ui/svg-icons/action/zoom-out';
 import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
@@ -11,27 +11,22 @@ import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 
 class ChartControlPanel extends Component {
   componentDidMount() {
-    console.log('huh?');
   }
   render() {
     return (
       <div className="control-panel -chart">
-        <FlatButton
-          onClick={() => this.props.manualTick('back')}
-          icon={<ArrowBack />}
-        />
-        <FlatButton
-          onClick={() => this.props.zoom('out')}
-          icon={<ZoomOut />}
-        />
-        <FlatButton
-          onClick={() => this.props.zoom('in')}
-          icon={<ZoomIn />}
-        />
-        <FlatButton
-          onClick={() => this.props.manualTick('forward')}
-          icon={<ArrowForward />}
-        />
+        <IconButton onClick={() => this.props.manualTick('back')} >
+          <ArrowBack />
+        </IconButton>
+        <IconButton onClick={() => this.props.zoom('out')}>
+          <ZoomOut />
+        </IconButton>
+        <IconButton onClick={() => this.props.zoom('in')} >
+          <ZoomIn />
+        </IconButton>
+        <IconButton onClick={() => this.props.manualTick('forward')} >
+          <ArrowForward />
+        </IconButton>
       </div>
     );
   }

@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   data: null,
   dataOnChart: null,
   barsOnChart: 100,
-  lastTickIndex: 99,
+  lastTickIndex: +localStorage.getItem('lastTickIndex') || 99,
   minDate: null,
   maxDate: null,
   durationBetweenBars: 1000,
@@ -22,9 +22,10 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_DATA: {
       const composedData = action.payload;
+      const sliceEnd = state.lastTickIndex + 1;
       return { ...state,
         data: composedData,
-        dataOnChart: composedData.slice(0, state.lastTickIndex + 1),
+        dataOnChart: composedData.slice(sliceEnd - state.barsOnChart, sliceEnd),
         startDate: composedData[state.lastTickIndex].date,
         minDate: composedData[0].date,
         maxDate: composedData[composedData.length - 1].date,
@@ -32,8 +33,8 @@ export default (state = INITIAL_STATE, action) => {
     }
     case GAME_TICK: {
       const nextLastTickIndex = state.lastTickIndex + 1;
-      console.log(nextLastTickIndex);
       const sliceEnd = nextLastTickIndex + 1;
+      localStorage.setItem('lastTickIndex', nextLastTickIndex);
       return {
         ...state,
         lastTickIndex: nextLastTickIndex,
@@ -42,8 +43,16 @@ export default (state = INITIAL_STATE, action) => {
       };
     }
     case SET_START_DATE: {
-      const dataIsExist = state.data.findIndex(d => d.date.getTime() === action.payload.getTime());
-      return { ...state, startDate: action.payload, lastTickIndex: dataIsExist };
+      const lastTickIndex = state.data.findIndex(d =>
+                              d.date.getTime() === action.payload.getTime());
+      localStorage.setItem('lastTickIndex', lastTickIndex);
+      const sliceEnd = lastTickIndex + 1;
+      localStorage.setItem('lastTickIndex', lastTickIndex);
+      return { ...state,
+        startDate: action.payload,
+        lastTickIndex,
+        dataOnChart: state.data.slice((sliceEnd - state.barsOnChart), sliceEnd),
+      };
     }
     case ZOOM: {
       let barsOnChart = state.barsOnChart;
@@ -74,6 +83,7 @@ export default (state = INITIAL_STATE, action) => {
         lastTickIndex += shiftPerClick;
       }
       sliceEnd = lastTickIndex + 1;
+      localStorage.setItem('lastTickIndex', lastTickIndex);
       return {
         ...state,
         lastTickIndex,

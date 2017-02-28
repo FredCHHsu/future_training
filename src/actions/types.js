@@ -7,6 +7,8 @@ export const BUY = 'buy';
 export const SHORT = 'short';
 export const SELL = 'sell';
 export const COVER = 'cover';
+export const SAVE_TRADE_LOG = 'SAVE_TRADE_LOG';
+export const RESET_TRADE_LOG = 'RESET_TRADE_LOG';
 
 export const ZOOM = 'ZOOM';
 export const MANUAL_TICK = 'MANUAL_TICK';

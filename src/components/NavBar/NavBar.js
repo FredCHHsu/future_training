@@ -8,8 +8,9 @@ import MonetizationOn from 'material-ui/svg-icons/editor/monetization-on';
 import Divider from 'material-ui/Divider';
 import FormatListNumbered from 'material-ui/svg-icons/editor/format-list-numbered';
 
-import GameSettingsDialog from '../container/GameSettingDialog';
-import ChartSettingDialog from '../container/ChartSettingDialog';
+import GameSettingsDialog from '../../container/GameSettingDialog';
+import ChartSettingDialog from '../../container/ChartSettingDialog';
+import TradeLogActionsMenu from './TradeLogActionsMenu';
 
 class NavBar extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class NavBar extends Component {
       <AppBar
         title="TTrainer"
         onLeftIconButtonTouchTap={this.handleToggle}
+        iconElementRight={window.location.pathname === '/tradelog' ? <TradeLogActionsMenu /> : null}
       >
         <Drawer
           docked={onLargeScreen}
