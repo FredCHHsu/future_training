@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { zoom } from '../actions/chart';
-// import GameControlButton from '../components/GameControlButton';
+import { zoom, manualTick } from '../actions/chart';
+
 import FlatButton from 'material-ui/FlatButton';
 import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
 import ZoomOut from 'material-ui/svg-icons/action/zoom-out';
@@ -17,6 +17,7 @@ class ChartControlPanel extends Component {
     return (
       <div className="control-panel -chart">
         <FlatButton
+          onClick={() => this.props.manualTick('back')}
           icon={<ArrowBack />}
         />
         <FlatButton
@@ -28,6 +29,7 @@ class ChartControlPanel extends Component {
           icon={<ZoomIn />}
         />
         <FlatButton
+          onClick={() => this.props.manualTick('forward')}
           icon={<ArrowForward />}
         />
       </div>
@@ -37,6 +39,7 @@ class ChartControlPanel extends Component {
 
 ChartControlPanel.propTypes = {
   zoom: PropTypes.func,
+  manualTick: PropTypes.func,
 };
 
-export default connect(null, { zoom })(ChartControlPanel);
+export default connect(null, { zoom, manualTick })(ChartControlPanel);

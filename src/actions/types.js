@@ -9,5 +9,6 @@ export const SELL = 'sell';
 export const COVER = 'cover';
 
 export const ZOOM = 'ZOOM';
+export const MANUAL_TICK = 'MANUAL_TICK';
 
 export const SET_START_DATE = 'SET_START_DATE';

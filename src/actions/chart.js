@@ -1,8 +1,15 @@
-import { ZOOM } from './types';
+import { ZOOM, MANUAL_TICK } from './types';
 
-export function zoom(type) {
+export function zoom(zoomType) {
   return {
     type: ZOOM,
-    zoomType: type,
+    zoomType,
+  };
+}
+
+export function manualTick(direction) {
+  return {
+    type: MANUAL_TICK,
+    direction,
   };
 }

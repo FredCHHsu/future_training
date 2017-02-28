@@ -2,6 +2,7 @@ import { GAME_TICK,
          FETCH_DATA,
          SET_START_DATE,
          ZOOM,
+         MANUAL_TICK,
          } from '../actions/types.js';
 import CHART_INITIAL_STATE from './chartInitialState';
 
@@ -31,11 +32,13 @@ export default (state = INITIAL_STATE, action) => {
     }
     case GAME_TICK: {
       const nextLastTickIndex = state.lastTickIndex + 1;
+      console.log(nextLastTickIndex);
+      const sliceEnd = nextLastTickIndex + 1;
       return {
         ...state,
         lastTickIndex: nextLastTickIndex,
         dataOnChart: state.data.slice(
-          (nextLastTickIndex + 1 - state.barsOnChart), nextLastTickIndex + 1),
+          (sliceEnd - state.barsOnChart), sliceEnd),
       };
     }
     case SET_START_DATE: {
@@ -51,11 +54,30 @@ export default (state = INITIAL_STATE, action) => {
         if (state.lastTickIndex - barsOnChart <= 0 || barsOnChart >= 300) return state;
         barsOnChart += 10;
       }
+      const sliceEnd = state.lastTickIndex + 1;
       return {
         ...state,
         barsOnChart,
-        dataOnChart: state.data.slice(
-          (state.lastTickIndex + 1 - barsOnChart), state.lastTickIndex),
+        dataOnChart: state.data.slice((sliceEnd - barsOnChart), sliceEnd + 1),
+      };
+    }
+    case MANUAL_TICK: {
+      const shiftPerClick = 1;
+      let lastTickIndex = state.lastTickIndex;
+      let sliceEnd = lastTickIndex + 1;
+      if (action.direction === 'back') {
+        if (sliceEnd - state.barsOnChart - shiftPerClick < 0) {
+          return state;
+        }
+        lastTickIndex -= shiftPerClick;
+      } else if (action.direction === 'forward') {
+        lastTickIndex += shiftPerClick;
+      }
+      sliceEnd = lastTickIndex + 1;
+      return {
+        ...state,
+        lastTickIndex,
+        dataOnChart: state.data.slice((sliceEnd - state.barsOnChart), sliceEnd),
       };
     }
     default:
